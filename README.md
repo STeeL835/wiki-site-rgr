@@ -1,2 +1,2 @@
 # wiki-site-rgr
-University project on MVC
+University project on ASP.NET MVC
