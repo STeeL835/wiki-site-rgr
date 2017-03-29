@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WikiSite.Entities;
 
 namespace WikiSite.DAL.Abstract
@@ -17,7 +14,7 @@ namespace WikiSite.DAL.Abstract
 		/// managed by an SQL Database.
 		/// </remarks>
 		/// <param name="user">User DTO</param>
-	    void AddUser(UserDTO user);
+	    bool AddUser(UserDTO user);
 		/// <summary>
 		/// Updates user info in a database
 		/// </summary>
@@ -26,12 +23,12 @@ namespace WikiSite.DAL.Abstract
 		/// managed by an SQL Database.
 		/// </remarks>
 		/// <param name="user">User DTO with the same ID and new data</param>
-		void UpdateUser(UserDTO user);
+		bool UpdateUser(UserDTO user);
 		/// <summary>
 		/// Removes user from a database.
 		/// </summary>
 		/// <param name="userId">GUID of user to delete</param>
-	    void RemoveUser(Guid userId);
+	    bool RemoveUser(Guid userId);
 
 		/// <summary>
 		/// Gets all users from database

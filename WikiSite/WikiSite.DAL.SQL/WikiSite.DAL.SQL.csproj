@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2F51132C-74AC-4E82-8B41-E1E477495DB7}</ProjectGuid>
+    <ProjectGuid>{5570BF78-7DB6-4E02-8542-4A86DB841AB9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WikiSite.DAL.Abstract</RootNamespace>
-    <AssemblyName>WikiSite.DAL.Abstract</AssemblyName>
+    <RootNamespace>WikiSite.DAL.SQL</RootNamespace>
+    <AssemblyName>WikiSite.DAL.SQL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,11 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntryNotFoundException.cs" />
-    <Compile Include="IUsersDAL.cs" />
+    <Compile Include="UsersDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
+      <Project>{2F51132C-74AC-4E82-8B41-E1E477495DB7}</Project>
+      <Name>WikiSite.DAL.Abstract</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
       <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
       <Name>WikiSite.Entities</Name>
