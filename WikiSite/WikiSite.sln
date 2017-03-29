@@ -5,6 +5,18 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiSite.Entities", "WikiSite.Entities\WikiSite.Entities.csproj", "{DF40A42E-4722-4B15-96B2-41E3449277B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entities", "Entities", "{D37B8D73-CDF6-4C21-ACF5-5582E0C906AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PL", "PL", "{D89F30A1-E6A5-49EA-9BC5-47EE47FE522D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{19F38235-B05B-4433-BCB9-F6EA886F513F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{433563F5-0341-4346-9F42-E85FF6D3D839}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DI", "DI", "{15A8148E-D229-4BB0-92E2-2293218531A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiSite.PL.Console", "WikiSite.PL.Console\WikiSite.PL.Console.csproj", "{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +27,16 @@ Global
 		{DF40A42E-4722-4B15-96B2-41E3449277B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF40A42E-4722-4B15-96B2-41E3449277B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF40A42E-4722-4B15-96B2-41E3449277B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF40A42E-4722-4B15-96B2-41E3449277B4} = {D37B8D73-CDF6-4C21-ACF5-5582E0C906AD}
+		{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0} = {D89F30A1-E6A5-49EA-9BC5-47EE47FE522D}
 	EndGlobalSection
 EndGlobal
