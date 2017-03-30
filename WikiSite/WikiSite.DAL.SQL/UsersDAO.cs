@@ -178,7 +178,7 @@ namespace WikiSite.DAL.SQL
 					};
 				}
 			}
-			throw new EntryNotFoundException($"Product with id {userId} was not found");
+			throw new EntryNotFoundException($"User with id {userId} was not found");
 		}
 
 	    /// <summary>
@@ -209,7 +209,7 @@ namespace WikiSite.DAL.SQL
 					};
 				}
 			}
-			throw new EntryNotFoundException($"Product with id {userShortId} was not found");
+			throw new EntryNotFoundException($"User with id {userShortId} was not found");
 		}
 
 	    /// <summary>

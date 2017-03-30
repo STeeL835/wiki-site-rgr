@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Security.Cryptography;
 
 namespace WikiSite.Entities
 {
-	public class CredentialsDTO
+	public class UserCredentialsDTO
 	{
 		public Guid Id { get; set; }
 		public string Login { get; set; }
-		public string PasswordHash { get; set; }
+		public byte[] PasswordHash { get; set; }
 	}
 }
