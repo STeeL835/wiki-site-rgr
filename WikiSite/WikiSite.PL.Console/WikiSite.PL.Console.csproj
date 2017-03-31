@@ -43,11 +43,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MenuOrganizer.cs" />
+    <Compile Include="Models\UserCredentialsVM.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
+      <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
+      <Name>WikiSite.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
