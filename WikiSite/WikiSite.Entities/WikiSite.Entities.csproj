@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleContentDTO.cs" />
+    <Compile Include="ArticleDTO.cs" />
+    <Compile Include="ArticleVersionDTO.cs" />
     <Compile Include="UserCredentialsDTO.cs" />
     <Compile Include="UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
