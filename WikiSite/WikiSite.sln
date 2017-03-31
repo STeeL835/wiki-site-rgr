@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiSite.BLL.Default", "Wik
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiSite.BLL.Abstract", "WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj", "{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WikiSite.DI.Provider", "WikiSite.DI.Provider\WikiSite.DI.Provider.csproj", "{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,5 +72,6 @@ Global
 		{5570BF78-7DB6-4E02-8542-4A86DB841AB9} = {19F38235-B05B-4433-BCB9-F6EA886F513F}
 		{6F99A9F2-2735-4D26-9B2E-32D0A0CD41CF} = {433563F5-0341-4346-9F42-E85FF6D3D839}
 		{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1} = {433563F5-0341-4346-9F42-E85FF6D3D839}
+		{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B} = {15A8148E-D229-4BB0-92E2-2293218531A7}
 	EndGlobalSection
 EndGlobal

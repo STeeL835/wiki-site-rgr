@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8BBFC23D-5DBC-40A1-8EF3-5C53195ABEF0}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WikiSite.PL.Console</RootNamespace>
-    <AssemblyName>WikiSite.PL.Console</AssemblyName>
+    <RootNamespace>WikiSite.DI.Provider</RootNamespace>
+    <AssemblyName>WikiSite.DI.Provider</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,11 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,16 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuOrganizer.cs" />
-    <Compile Include="Models\UserCredentialsVM.cs" />
-    <Compile Include="Models\UserVM.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Provider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PromptHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">
@@ -66,13 +53,13 @@
       <Project>{6F99A9F2-2735-4D26-9B2E-32D0A0CD41CF}</Project>
       <Name>WikiSite.BLL.Default</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WikiSite.DI.Provider\WikiSite.DI.Provider.csproj">
-      <Project>{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}</Project>
-      <Name>WikiSite.DI.Provider</Name>
+    <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
+      <Project>{2F51132C-74AC-4E82-8B41-E1E477495DB7}</Project>
+      <Name>WikiSite.DAL.Abstract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
-      <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
-      <Name>WikiSite.Entities</Name>
+    <ProjectReference Include="..\WikiSite.DAL.SQL\WikiSite.DAL.SQL.csproj">
+      <Project>{5570BF78-7DB6-4E02-8542-4A86DB841AB9}</Project>
+      <Name>WikiSite.DAL.SQL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
