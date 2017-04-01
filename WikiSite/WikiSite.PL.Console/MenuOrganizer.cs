@@ -15,6 +15,7 @@ namespace Warehouse.PL.Console
 
 		public int ActionsAmount { get; private set; }
 		public bool ClearOnChoosingEnabled { get; set; } = true;
+		public bool ClearOnShowingEnabled { get; set; } = true;
 		public bool ExitOnPerform { get; set; } = false;
 		public string ExitTitle { get; set; }
 
@@ -94,7 +95,7 @@ namespace Warehouse.PL.Console
 			string result;
 			do
 			{
-				System.Console.Clear();
+				if (ClearOnShowingEnabled) System.Console.Clear();
 				if (_lastResult != null)
 				{
 					System.Console.WriteLine(_lastResult);
