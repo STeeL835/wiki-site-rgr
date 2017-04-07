@@ -1,7 +1,7 @@
 ﻿using System;
 using WikiSite.Entities;
 
-namespace WikiSite.PL.Console.Models
+namespace WikiSite.PL.ASP.Models
 {
 	public class UserVM
 	{

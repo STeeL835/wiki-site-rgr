@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using WikiSite.Entities;
 
-namespace WikiSite.PL.Console.Models
+namespace WikiSite.PL.ASP.Models
 {
 	public class UserCredentialsVM
 	{
