@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUserCredentialsBLL.cs" />
-    <Compile Include="IUsersBLL.cs" />
+    <Compile Include="User Related\IRolesBLL.cs" />
+    <Compile Include="User Related\IUsersBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

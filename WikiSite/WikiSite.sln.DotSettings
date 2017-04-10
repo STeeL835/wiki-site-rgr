@@ -1,0 +1,76 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Categories/=SQL_0020queries/@EntryIndexedValue">SQL queries</s:String>
+	
+	
+	
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Field/=Object/InitialRange/@EntryValue">1</s:Int64>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Shortcut/@EntryValue">sqlGetDto</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Description/@EntryValue">Template for getting data from sql server</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Text/@EntryValue">public $Object$DTO Get$Object$(Guid id)&#xD;
+{&#xD;
+	using (var connection = new SqlConnection(ConnectionString))&#xD;
+	{&#xD;
+		var sqlCom = new SqlCommand("SELECT * FROM [$Table$] " +&#xD;
+									"WHERE Id = @id", connection);&#xD;
+		sqlCom.Parameters.AddWithValue("@id", id);&#xD;
+&#xD;
+		connection.Open();&#xD;
+		var reader = sqlCom.ExecuteReader();&#xD;
+		while (reader.Read())&#xD;
+		{&#xD;
+			return new $Object$DTO&#xD;
+			{&#xD;
+				Id = (Guid)reader["Id"],&#xD;
+				$END$&#xD;
+			};&#xD;
+		}&#xD;
+	}&#xD;
+	throw new EntryNotFoundException($"$Object$ with id {id} was not found");&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Field/=Table/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Field/=Table/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Field/=Object/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=2E3B16454B426440BBAA28303C311AB7/Field/=Object/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Applicability/=File/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/CustomProperties/=Extension/@EntryIndexedValue">txt</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/CustomProperties/=FileName/@EntryIndexedValue">ObjectsDAO</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/CustomProperties/=ValidateFileName/@EntryIndexedValue">True</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Description/@EntryValue">Template for DAO classes</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=CONFIGKEY/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=CONFIGKEY/Order/@EntryValue">3</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=HEADER/Expression/@EntryValue">fileheader()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=HEADER/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=NAMESPACE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=NAMESPACE/Expression/@EntryValue">getDefaultNamespace()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=NAMESPACE/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=NAMESPACE/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=Object/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=Object/Expression/@EntryValue">getFileNameWithoutExtension()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Field/=Object/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Scope/=E8F0594528C33E45BBFEC6CFE851095D/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Scope/=E8F0594528C33E45BBFEC6CFE851095D/Type/@EntryValue">InCSharpProjectFile</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=BF33CF82B7880C41B9B40D5625BB0850/Text/@EntryValue">$HEADER$namespace $NAMESPACE$&#xD;
+{&#xD;
+	public class $Object$sDAO : I$Object$sDAL&#xD;
+	{&#xD;
+		private static readonly string ConnectionString;&#xD;
+&#xD;
+		static $Object$sDAO()&#xD;
+		{&#xD;
+			ConnectionString = ConfigurationManager.ConnectionStrings["$CONFIGKEY$"].ConnectionString;&#xD;
+		}&#xD;
+	}&#xD;
+}</s:String>
+	
+	
+	
+	</wpf:ResourceDictionary>

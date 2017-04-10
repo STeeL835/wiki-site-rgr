@@ -117,14 +117,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-overrides.css" />
+    <Content Include="Content\custom\bootstrap-overrides.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootswatch\lumen\bootstrap.css" />
     <Content Include="Content\bootswatch\lumen\bootstrap.min.css" />
-    <Content Include="Content\styles.css" />
+    <Content Include="Content\custom\styles.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -135,6 +135,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -148,7 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DebugUserController.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,11 +167,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\DebugUser\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -176,8 +181,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">
+      <Project>{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}</Project>
+      <Name>WikiSite.BLL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WikiSite.DI.Provider\WikiSite.DI.Provider.csproj">
+      <Project>{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}</Project>
+      <Name>WikiSite.DI.Provider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
       <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
       <Name>WikiSite.Entities</Name>

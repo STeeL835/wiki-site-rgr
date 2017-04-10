@@ -9,10 +9,12 @@ namespace WikiSite.DI.Provider
 {
     public class Provider
     {
-		public static IUsersDAL UserDAO { get; private set; }
+		public static IUsersDAL UsersDAO { get; private set; }
 		public static IUserCredentialsDAL CredentialsDAO { get; private set; }
+		public static IRolesDAL RolesDAO { get; private set; }
 
-		public static IUsersBLL UserBLO { get; private set; }
+		public static IUsersBLL UsersBLO { get; private set; }
+		public static IRolesBLL RolesBLO { get; private set; }
 
 		static Provider()
 		{
@@ -45,8 +47,9 @@ namespace WikiSite.DI.Provider
 			switch (configValue.ToUpperInvariant())
 			{
 				case "SQL":
-					UserDAO = new WikiSite.DAL.SQL.UsersDAO();
+					UsersDAO = new WikiSite.DAL.SQL.UsersDAO();
 					CredentialsDAO = new WikiSite.DAL.SQL.UserCredentialsDAO();
+					RolesDAO = new WikiSite.DAL.SQL.RolesDAO();
 					break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [DAL] key value: {configValue}");
@@ -58,7 +61,8 @@ namespace WikiSite.DI.Provider
 			switch (configValue.ToUpperInvariant())
 			{
 				case "DEFAULT":
-					UserBLO = new UsersBLO(UserDAO, CredentialsDAO);
+					UsersBLO = new UsersBLO(UsersDAO, CredentialsDAO);
+					RolesBLO = new RolesBLO(RolesDAO);
 					break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}");

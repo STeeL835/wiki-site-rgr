@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleContentDTO.cs" />
-    <Compile Include="ArticleDTO.cs" />
-    <Compile Include="ArticleVersionDTO.cs" />
-    <Compile Include="UserCredentialsDTO.cs" />
-    <Compile Include="UserDTO.cs" />
+    <Compile Include="Articles Related\ArticleContentDTO.cs" />
+    <Compile Include="Articles Related\ArticleDTO.cs" />
+    <Compile Include="Articles Related\ArticleVersionDTO.cs" />
+    <Compile Include="Users Related\RoleDTO.cs" />
+    <Compile Include="Users Related\UserCredentialsDTO.cs" />
+    <Compile Include="Users Related\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

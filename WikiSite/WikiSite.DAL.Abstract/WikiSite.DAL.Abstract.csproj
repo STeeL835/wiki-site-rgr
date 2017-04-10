@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryNotFoundException.cs" />
-    <Compile Include="IUserCredentialsDAL.cs" />
-    <Compile Include="IUsersDAL.cs" />
+    <Compile Include="Users Related\IRolesDAL.cs" />
+    <Compile Include="Users Related\IUserCredentialsDAL.cs" />
+    <Compile Include="Users Related\IUsersDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

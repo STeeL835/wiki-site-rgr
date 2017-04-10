@@ -17,6 +17,7 @@ namespace WikiSite.PL.ASP
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+				//namespaces: new []{ "WikiSite.PL.ASP" }
             );
         }
     }

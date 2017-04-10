@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using WikiSite.BLL.Abstract;
+using WikiSite.DI.Provider;
 using WikiSite.Entities;
 
 namespace WikiSite.PL.ASP.Models
 {
 	public class UserVM
 	{
+		#region Instance
+
 		private Guid _id;
 		private Guid _credentialsId;
 		private string _nickname;
@@ -73,5 +79,23 @@ namespace WikiSite.PL.ASP.Models
 				About = dto.About,
 				SmallId = dto.SmallId
 			};
+
+		#endregion
+
+		#region Static
+
+		private static IUsersBLL _bll;
+
+		static UserVM()
+		{
+			_bll = Provider.UsersBLO;
+		}
+
+		public static IEnumerable<UserVM> GetAllUsers()
+		{
+			return _bll.GetUsers().Select(dto => (UserVM) dto);
+		}
+
+		#endregion
 	}
 }
