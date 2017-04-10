@@ -82,13 +82,11 @@ namespace WikiSite.DAL.SQL
 	    /// <param name="userId">GUID of user to delete</param>
 	    public bool RemoveUser(Guid userId)
 	    {
-		    var user = GetUser(userId);
-
 			int affectedRows;
 			using (var connection = new SqlConnection(ConnectionString))
 			{
-				var sqlCom = new SqlCommand("DELETE FROM [Credentials] WHERE Id = @cred_id", connection);
-				sqlCom.Parameters.AddWithValue("@cred_id", user.CredentialsId);
+				var sqlCom = new SqlCommand("DELETE FROM [Users] WHERE Id = @id", connection);
+				sqlCom.Parameters.AddWithValue("@id", userId);
 				connection.Open();
 
 				affectedRows = sqlCom.ExecuteNonQuery();
@@ -185,7 +183,7 @@ namespace WikiSite.DAL.SQL
 	    /// Gets a certain user from a database
 	    /// </summary>
 	    /// <param name="userShortId">Incremental ID (number) of user to get</param>
-	    /// <returns>DTO of a user</returns>
+	    /// <returns>DTO of a user, null if there's no such a user</returns>
 	    public UserDTO GetUser(int userShortId)
 	    {
 			using (var connection = new SqlConnection(ConnectionString))
@@ -209,7 +207,7 @@ namespace WikiSite.DAL.SQL
 					};
 				}
 			}
-			throw new EntryNotFoundException($"User with id {userShortId} was not found");
+			return null;
 		}
 
 	    /// <summary>

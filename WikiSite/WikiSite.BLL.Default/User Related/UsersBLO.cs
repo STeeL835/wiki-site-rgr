@@ -9,12 +9,16 @@ namespace WikiSite.BLL.Default
 {
 	public class UsersBLO : IUsersBLL
 	{
-		private IUsersDAL _dal;
+		private IUsersDAL _usersDAL;
+		private IUserCredentialsDAL _credentialsDAL;
 
-		public UsersBLO(IUsersDAL dal)
+		public UsersBLO(IUsersDAL usersDAL, IUserCredentialsDAL credentialsDAL)
 		{
-			if (dal == null) throw new ArgumentNullException(nameof(dal), "DAL instance is null");
-			_dal = dal;
+			if (usersDAL == null) throw new ArgumentNullException(nameof(usersDAL), "Users DAL instance is null");
+			if (credentialsDAL == null) throw new ArgumentNullException(nameof(usersDAL), "Credentials DAL instance is null");
+			
+			_usersDAL = usersDAL;
+			_credentialsDAL = credentialsDAL;
 		}
 
 		/// <summary>
@@ -25,11 +29,15 @@ namespace WikiSite.BLL.Default
 		/// managed by an SQL Database.
 		/// </remarks>
 		/// <param name="user">User DTO</param>
-		public bool AddUser(UserDTO user)
+		/// <param name="credentials">Credentials DTO</param>
+		public bool AddUser(UserDTO user, UserCredentialsDTO credentials)
 		{
 			CheckThrowDTO(user);
+			CheckThrowDTO(credentials);
+			if (user.CredentialsId != credentials.Id)
+				throw new ArgumentException("user's credentials id and actual credentials id doesn't match");
 
-			return _dal.AddUser(user);
+			return _credentialsDAL.AddCredentials(credentials) && _usersDAL.AddUser(user);
 		}
 
 		/// <summary>
@@ -44,7 +52,18 @@ namespace WikiSite.BLL.Default
 		{
 			CheckThrowDTO(user);
 
-			return _dal.UpdateUser(user);
+			return _usersDAL.UpdateUser(user);
+		}
+
+		/// <summary>
+		/// Updates credentials info in database
+		/// </summary>
+		/// <param name="updatedCredentials">Credentials DTO with the same ID and new data</param>
+		/// <returns>Whether the operation was successful</returns>
+		public bool UpdateUserCredentials(UserCredentialsDTO updatedCredentials)
+		{
+			CheckThrowDTO(updatedCredentials);
+			return _credentialsDAL.UpdateCredentials(updatedCredentials);
 		}
 
 		/// <summary>
@@ -55,7 +74,8 @@ namespace WikiSite.BLL.Default
 		{
 			if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId), "Id is empty");
 
-			return _dal.RemoveUser(userId);
+			return _credentialsDAL.RemoveCredentials(GetUser(userId).CredentialsId) && 
+			       _usersDAL.RemoveUser(userId);
 		}
 
 		/// <summary>
@@ -64,7 +84,7 @@ namespace WikiSite.BLL.Default
 		/// <returns>Users' DTOs</returns>
 		public IEnumerable<UserDTO> GetUsers()
 		{
-			return _dal.GetUsers().ToArray(); 
+			return _usersDAL.GetUsers().ToArray(); 
 		}
 
 		/// <summary>
@@ -76,7 +96,7 @@ namespace WikiSite.BLL.Default
 		{
 			if (roleId == Guid.Empty) throw new ArgumentNullException(nameof(roleId), "Id is empty");
 
-			return _dal.GetUsers(roleId).ToArray();
+			return _usersDAL.GetUsers(roleId).ToArray();
 		}
 
 		/// <summary>
@@ -88,19 +108,31 @@ namespace WikiSite.BLL.Default
 		{
 			if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId), "Id is empty");
 
-			return _dal.GetUser(userId);
+			return _usersDAL.GetUser(userId);
 		}
 
 		/// <summary>
 		/// Gets a certain user from a database
 		/// </summary>
 		/// <param name="userShortId">Incremental ID (number) of user to get</param>
-		/// <returns>DTO of a user</returns>
+		/// <returns>DTO of a user, null if there's no such a user</returns>
 		public UserDTO GetUser(int userShortId)
 		{
 			if (userShortId <= 0) throw new ArgumentException("Short user id must be greater than 0");
 
-			return _dal.GetUser(userShortId);
+			return _usersDAL.GetUser(userShortId);
+		}
+
+		/// <summary>
+		/// Checks if a user with these credentials exist in a database
+		/// and returns it.
+		/// </summary>
+		/// <param name="credentials">Credentials to check for in a database</param>
+		/// <returns>DTO of a user, null if there's no such a user</returns>
+		public UserDTO GetUser(UserCredentialsDTO credentials)
+		{
+			CheckThrowDTO(credentials);
+			return _credentialsDAL.CheckCredentials(credentials);
 		}
 
 		/// <summary>
@@ -113,16 +145,24 @@ namespace WikiSite.BLL.Default
 			if (string.IsNullOrWhiteSpace(searchInput) || searchInput.Length < 5)
 				throw new ArgumentNullException(nameof(searchInput), "Search query should be more than 4 charachter long");
 
-			return _dal.SearchUsers(searchInput).ToArray();
+			return _usersDAL.SearchUsers(searchInput).ToArray();
 		}
 
-		public void CheckThrowDTO(UserDTO dto)
+		private void CheckThrowDTO(UserDTO dto)
 		{
-			if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO mustn't be null");
+			if (dto == null) throw new ArgumentNullException(nameof(dto), "User DTO is null");
 
 			if (dto.CredentialsId == Guid.Empty) throw new ArgumentNullException(nameof(dto), "User DTO doesn't contain credentials ID");
 			if (dto.Id == Guid.Empty) throw new ArgumentNullException(nameof(dto), "User DTO doesn't contain ID");
 			if (string.IsNullOrWhiteSpace(dto.Nickname)) throw new ArgumentNullException(nameof(dto), "User DTO doesn't contain a nickname");
+		}
+		private void CheckThrowDTO(UserCredentialsDTO dto)
+		{
+			if (dto == null) throw new ArgumentNullException(nameof(dto), "Credentials DTO is null");
+			
+			if (dto.Id == Guid.Empty) throw new ArgumentNullException(nameof(dto), "Credentials DTO doesn't contain ID");
+			if (string.IsNullOrWhiteSpace(dto.Login)) throw new ArgumentException("Credentials DTO doesn't contain login or it's empty");
+			if (dto.PasswordHash == null || dto.PasswordHash.Length == 0) throw new ArgumentException("Credentials DTO doesn't contain password hash or it's empty");
 		}
 	}
 }

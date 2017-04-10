@@ -51,7 +51,7 @@ namespace WikiSite.DAL.Abstract
 		/// Gets a certain user from a database
 		/// </summary>
 		/// <param name="userShortId">Incremental ID (number) of user to get</param>
-		/// <returns>DTO of a user</returns>
+		/// <returns>DTO of a user, null if there's no such a user</returns>
 		UserDTO GetUser(int userShortId);
 
 		/// <summary>

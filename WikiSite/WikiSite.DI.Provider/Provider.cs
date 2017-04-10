@@ -13,7 +13,6 @@ namespace WikiSite.DI.Provider
 		public static IUserCredentialsDAL CredentialsDAO { get; private set; }
 
 		public static IUsersBLL UserBLO { get; private set; }
-		public static IUserCredentialsBLL CredentialsBLO { get; private set; }
 
 		static Provider()
 		{
@@ -59,8 +58,7 @@ namespace WikiSite.DI.Provider
 			switch (configValue.ToUpperInvariant())
 			{
 				case "DEFAULT":
-					UserBLO = new UsersBLO(UserDAO);
-					CredentialsBLO = new UserCredentialsBLO(CredentialsDAO);
+					UserBLO = new UsersBLO(UserDAO, CredentialsDAO);
 					break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}");
