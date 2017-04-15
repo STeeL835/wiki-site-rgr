@@ -62,7 +62,7 @@ body {
 }
 
 .sidebar-default {
-	background-color: #13131c;
+	background-color: #141424;
 	color:whitesmoke;
 }
 
@@ -140,7 +140,13 @@ body {
 		top: -4em;
 	}
 	
-	.login-form input[type=submit]{
+	.login-form .form-group > a.btn {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	
+	.login-form input[type=submit],
+	.login-form a.btn {
 		position: relative; /* move button to baseline of inputs */
 		bottom: -2em;       /* not margin-top - press effect based on it */
 	}
@@ -179,7 +185,7 @@ body {
 	}
 	
 	.content {
-		padding-left: 300px;
+		margin-left: 300px;
 	}
 	
 	.login-form {
@@ -209,4 +215,11 @@ body {
 	background-image: url(../content/images/sidebar.jpg);
 	background-size: cover;
 	filter: opacity(0.2);
+}
+
+td.table-action {
+	visibility: hidden;
+}
+tr:hover td.table-action {
+	visibility: visible;
 }

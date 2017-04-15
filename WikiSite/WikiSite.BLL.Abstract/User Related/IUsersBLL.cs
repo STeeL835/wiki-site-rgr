@@ -75,5 +75,11 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="searchInput">Search string</param>
 		/// <returns>Collection of users whose nickname matches the criteria</returns>
 		IEnumerable<UserDTO> SearchUsers(string searchInput);
+		/// <summary>
+		/// Checks for login in db. Returns whether login is exist or not
+		/// </summary>
+		/// <param name="login">login string</param>
+		/// <returns>Whether login is exist or not</returns>
+		bool IsLoginExist(string login);
 	}
 }

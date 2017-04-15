@@ -10,5 +10,30 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         {
             return View(UserVM.GetAllUsers());
         }
+
+	    public ActionResult CreateUser()
+	    {
+		    return View();
+	    }
+
+		[HttpPost][ValidateAntiForgeryToken]
+	    public ActionResult CreateUser(SignupModel model)
+	    {
+		    if (ModelState.IsValid)
+		    {
+			    UserVM.AddUser(model.GetUserVM(), model.GetCredentialsVM());
+		    }
+		    return View(model);
+	    }
+
+
+
+
+	    public JsonResult IsLoginExist(string login)
+	    {
+		    var throwError = !UserCredentialsVM.IsLoginExist(login);
+
+			return Json(throwError, JsonRequestBehavior.AllowGet);
+	    }
     }
 }

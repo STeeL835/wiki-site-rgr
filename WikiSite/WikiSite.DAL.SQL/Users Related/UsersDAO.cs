@@ -131,6 +131,7 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("SELECT * FROM [Users] WHERE [Users].[Role_Id] = @role_id", connection);
+				sqlCom.Parameters.AddWithValue("@role_id", roleId);
 				connection.Open();
 				var reader = sqlCom.ExecuteReader();
 				while (reader.Read())

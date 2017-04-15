@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using WikiSite.BLL.Abstract;
+using WikiSite.DI.Provider;
 using WikiSite.Entities;
 
 namespace WikiSite.PL.ASP.Models
 {
 	public class UserCredentialsVM
 	{
+		#region Instance
+
 		private Guid _id;
 		private string _login;
 		private byte[] _passwordHash;
@@ -34,7 +38,7 @@ namespace WikiSite.PL.ASP.Models
 			get { return _passwordHash; }
 			set
 			{
-				if (_passwordHash == null || _passwordHash.Length == 0) throw new ArgumentException("Hash mustn't be empty");
+				if (value == null || value.Length == 0) throw new ArgumentException("Hash mustn't be empty");
 				_passwordHash = value;
 			}
 		}
@@ -43,7 +47,7 @@ namespace WikiSite.PL.ASP.Models
 		{
 			Id = Guid.NewGuid();
 			Login = login;
-			PasswordHash = SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
+			PasswordHash = ComputeHashForPassword(password);
 		}
 
 		public UserCredentialsVM(Guid id, string login, byte[] passwordHash)
@@ -58,5 +62,43 @@ namespace WikiSite.PL.ASP.Models
 
 		public static explicit operator UserCredentialsVM(UserCredentialsDTO dto) =>
 			new UserCredentialsVM(dto.Id, dto.Login, dto.PasswordHash);
+
+		#endregion
+
+		#region Static
+
+		private static IUsersBLL _bll;
+
+		static UserCredentialsVM()
+		{
+			_bll = Provider.UsersBLO;
+		}
+
+		/// <summary>
+		/// Checks whether these credentials exist in db
+		/// </summary>
+		/// <param name="credentials">model for credentials</param>
+		/// <returns>Whether these credentials exist in db</returns>
+		public static bool AreCredentialsExist(UserCredentialsVM credentials)
+		{
+			return _bll.GetUser(credentials) != null;
+		}
+
+		/// <summary>
+		/// Checks for login in db. Returns whether login is exist or not
+		/// </summary>
+		/// <param name="login">login string</param>
+		/// <returns>Whether login is exist or not</returns>
+		public static bool IsLoginExist(string login)
+		{
+			return _bll.IsLoginExist(login);
+		}
+
+		public static byte[] ComputeHashForPassword(string password)
+		{
+			return SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
+		}
+
+		#endregion
 	}
 }

@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewBag.Title - My ASP.NET Application</title>
 
 	<!-- Bootstrap -->
@@ -10,12 +10,16 @@
 	<link rel="stylesheet" href="~/Content/custom/bootstrap-overrides.css">
 
 	<!-- Other styles -->
-	<link rel="stylesheet" href="~/Content/custom/styles.css">
-	
+	<!--	<link rel="stylesheet" href="css/styles.css">-->
+	<link rel="stylesheet" href="~/Content/custom/admin-styles-override.css">
+	@RenderSection("style", false)
+
 	<!-- Scripts -->
 	<script src="~/Scripts/modernizr-2.6.2.js"></script>
 	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
-	
+	@RenderSection("headjs", false)
+
+
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -62,15 +66,15 @@
 		<section class="sidebar animated sidebar-default">
 			<i class="sidebar-image" alt=""></i>
 			<ul>
-				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home", new { area = "" })</li>
-				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
+				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home", new { Area = "Admin"}, null)</li>
+				<li><input class="form-control" type="search" placeholder="Искать везде..."></li>
 				<li class="divider"></li>
-				<li><a href="#!">На главную страницу</a></li>
-				<li><a href="#!">Случайная статья</a></li>
+				<li>@Html.ActionLink("На главную администратора", "Index", "Home", new { Area = "Admin" }, null)</li>
+				<li>@Html.ActionLink("На сайт", "Index", "Home",new { Area = "" }, null)</li>
 				<li class="divider"></li>
-				<li><a href="#!">Редактировать статью</a></li>
-				<li><a href="#!">Версии этой статьи</a></li>
-				<li><a href="#!">Перейти к обсуждению</a></li>
+				<li>@Html.ActionLink("Управление пользователями", "Index", "Users", new { Area = "Admin" }, null)</li>
+				<li><a href="#!">Управление статьями</a></li>
+				<li><a href="#!">Управление комментариями</a></li>
 			</ul>
 		</section>
 
@@ -88,5 +92,8 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="~/Scripts/bootstrap.min.js"></script>
 	<script src="~/Scripts/main.js"></script>
+	@RenderSection("js", false)
+
+
 </body>
 </html>

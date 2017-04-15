@@ -86,7 +86,7 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("INSERT INTO [Credentials] (Id, Login, Password_Hash) " +
-											"VALUES(@id, @login, @hash, @credentials_id, @about)", connection);
+											"VALUES(@id, @login, @hash)", connection);
 				sqlCom.Parameters.AddWithValue("@id", credentials.Id);
 				sqlCom.Parameters.AddWithValue("@login", credentials.Login);
 				sqlCom.Parameters.AddWithValue("@hash", credentials.PasswordHash);
@@ -146,6 +146,27 @@ namespace WikiSite.DAL.SQL
 			}
 
 			return affectedRows == 1;
+		}
+
+		/// <summary>
+		/// Checks for login in db. Returns whether login is exist or not
+		/// </summary>
+		/// <param name="login">login string</param>
+		/// <returns>Whether login is exist or not</returns>
+		public bool IsLoginExist(string login)
+		{
+			if (login == null) throw new ArgumentNullException(nameof(login), "Login string parameter is null");
+
+			using (var connection = new SqlConnection(ConnectionString))
+			{
+				var sqlCom = new SqlCommand("SELECT * FROM [Credentials] " +
+											"WHERE Login = @login", connection);
+				sqlCom.Parameters.AddWithValue("@login", login);
+
+				connection.Open();
+				var reader = sqlCom.ExecuteReader();
+				return reader.Read();
+			}
 		}
 	}
 }

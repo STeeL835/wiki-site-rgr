@@ -148,6 +148,18 @@ namespace WikiSite.BLL.Default
 			return _usersDAL.SearchUsers(searchInput).ToArray();
 		}
 
+		/// <summary>
+		/// Checks for login in db. Returns whether login is exist or not
+		/// </summary>
+		/// <param name="login">login string</param>
+		/// <returns>Whether login is exist or not</returns>
+		public bool IsLoginExist(string login)
+		{
+			if (string.IsNullOrWhiteSpace(login)) throw new ArgumentException("Login string is null or empty");
+
+			return _credentialsDAL.IsLoginExist(login);
+		}
+
 		private void CheckThrowDTO(UserDTO dto)
 		{
 			if (dto == null) throw new ArgumentNullException(nameof(dto), "User DTO is null");

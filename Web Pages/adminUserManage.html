@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>My Name Jeff</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Other styles -->
+<!--	<link rel="stylesheet" href="css/styles.css">-->
+	<link rel="stylesheet" href="css/bootstrap-overrides.css">
+	<link rel="stylesheet" href="css/admin-styles-override.css">
+	
+	<!-- Scripts -->	
+	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div class="wrapper">
+		
+		<!-- Admin panel -->
+		<section class="topbar topbar-default">
+		
+			<a href="#!" class="sidebar-control btn btn-sm btn-inverse">
+				<span class="sr-only">Open sidebar</span>
+				<i class="fa fa-bars"></i>
+			</a>
+			
+			<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right ">
+				<span class="sr-only">Войти</span>
+				<i class="fa fa-user"></i>
+			</a>
+			
+		</section>
+		
+		<!-- Log in panel -->
+		<form class="row login-form animated" action="">
+			<div class="col-xs-12 col-sm-5 form-group">
+				<label for="login-login">Логин</label>
+				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
+			</div>
+				
+			<div class="col-xs-12 col-sm-4 form-group has-error">
+				<label for="login-pass">Пароль</label>
+				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
+			</div>
+				
+			<div class="col-xs-12 col-sm-3 form-group">
+				<input type="submit" class="btn btn-success pull-right" value="Войти">
+				<a href="#!" class="btn btn-primary pull-right">Регистрация</a>
+		</div>
+		</form>
+		
+		<!-- Sidebar menu -->
+		<section class="sidebar animated sidebar-default">
+			<ul>
+				<li class="logo"><a href="#!">My name Jeff</a></li>
+				<li><input class="form-control" type="search" placeholder="Искать везде..."></li>
+				<li class="divider"></li>
+				<li><a href="#!">На главную администратора</a></li>
+				<li><a href="#!">На сайт</a></li>
+				<li class="divider"></li>
+				<li><a href="#!">Управление пользователями</a></li>
+				<li><a href="#!">Управление статьями</a></li>
+				<li><a href="#!">Управление комментариями</a></li>
+			</ul>
+		</section>
+		
+		<!-- Content of a page -->
+		<section class="content animated">
+			<div class="container-fluid admin">
+				<h1 class="page-header">Управление пользователями</h1>
+				
+				<!-- 
+				(tr>td{#}+td{#}+(td>a.btn.btn-link.btn-xs{Vasya_Terminator22814881337})+td{Модератор}+td{#}+td{#}+td.table-action>((a.btn.btn-primary.btn-xs>i.fa.fa-pencil)+(a.btn.btn-danger.btn-xs>i.fa.fa-trash)))*15 
+				-->
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Номер</th>
+							<th>Короткий id</th>
+							<th>Никнейм</th>
+							<th>Роль</th>
+							<th>Количество созданных статей</th>
+							<th>Количество редактированных статей</th>
+							<th>Действия</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					<tr>
+						<td>#</td>
+						<td>#</td>
+						<td><a href="" class="btn btn-link btn-xs">Vasya_Terminator22814881337</a></td>
+						<td>Модератор</td>
+						<td>#</td>
+						<td>#</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>		
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

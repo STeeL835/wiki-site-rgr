@@ -42,3 +42,8 @@ form label {
 	-webkit-box-shadow: inset 0 2px 0 #ff291c;
 	box-shadow: inset 0 2px 0 #ff291c;
 }
+
+/* Admin page header */
+.page-header {
+	font-weight: 600;
+}

@@ -9,6 +9,14 @@
  * Danger:  #ff4136 #ff291c
  * */
 
+/* Button focus */
+.btn.btn-primary:focus {
+	border-color: #cacaca;
+}
+.btn.btn-success:focus {
+	border-color: #1d8621;
+}
+
 /* Dark button */
 .btn-inverse {
 	background-color: #444;

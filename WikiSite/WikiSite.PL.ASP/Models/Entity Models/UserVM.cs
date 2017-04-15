@@ -91,9 +91,77 @@ namespace WikiSite.PL.ASP.Models
 			_bll = Provider.UsersBLO;
 		}
 
+		/// <summary>
+		/// Returns all users
+		/// </summary>
+		/// <returns></returns>
+		public static IEnumerable<UserVM> GetAllUsers(Guid role)
+		{
+			return _bll.GetUsers(role).Select(dto => (UserVM) dto);
+		}
+		
+		/// <summary>
+		/// Returns all users
+		/// </summary>
+		/// <returns></returns>
 		public static IEnumerable<UserVM> GetAllUsers()
 		{
 			return _bll.GetUsers().Select(dto => (UserVM) dto);
+		}
+
+		public static bool AddUser(UserVM user, UserCredentialsVM credentials)
+		{
+			return _bll.AddUser(user, credentials);
+		}
+
+		/// <summary>
+		/// Returns user by it's short id
+		/// </summary>
+		/// <param name="shortId"></param>
+		/// <returns></returns>
+		public static UserVM GetUser(int shortId)
+		{
+			return (UserVM) _bll.GetUser(shortId);
+		}
+
+		/// <summary>
+		/// Returns user by it's guid
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static UserVM GetUser(Guid id)
+		{
+			return (UserVM) _bll.GetUser(id);
+		}
+
+		/// <summary>
+		/// Returns user by it's credentials, if exist
+		/// </summary>
+		/// <param name="credentials"></param>
+		/// <returns></returns>
+		public static UserVM GetCheckCredentials(UserCredentialsVM credentials)
+		{
+			return (UserVM) _bll.GetUser(credentials);
+		}
+
+		/// <summary>
+		/// Removes user from db
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static bool RemoveUser(Guid id)
+		{
+			return _bll.RemoveUser(id);
+		}
+
+		/// <summary>
+		/// Updates info of a user
+		/// </summary>
+		/// <param name="user"></param>
+		/// <returns></returns>
+		public static bool UpdateUser(UserVM user)
+		{
+			return _bll.UpdateUser(user);
 		}
 
 		#endregion

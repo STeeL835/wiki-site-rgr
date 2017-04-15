@@ -39,6 +39,11 @@ namespace WikiSite.DAL.Abstract
 		/// <param name="credentials">credentials id</param>
 		/// <returns>Whether there is credentials with this id, and it was updated</returns>
 		bool UpdateCredentials(UserCredentialsDTO credentials);
-
+		/// <summary>
+		/// Checks for login in db. Returns whether login is exist or not
+		/// </summary>
+		/// <param name="login">login string</param>
+		/// <returns>Whether login is exist or not</returns>
+		bool IsLoginExist(string login);
 	}
 }
