@@ -1,6 +1,15 @@
 @import url("styles.css");
+
+.page-back-button {
+	position: relative;
+	top: -3px;
+}
 	
-@media (min-width:1170px) {
+.page-back-button *{
+	font-size: 30px !important;
+}
+
+@media (min-width:992px) {
 	.content {
 		margin-left: 250px;
 		padding-left: 20px;
@@ -15,4 +24,10 @@
 		width:250px;
 		background-color: crimson
 	}
+
+	.page-back-button {
+		position: absolute;
+		left: -3em;
+	}
+	
 }

@@ -55,3 +55,7 @@ form label {
 h1.page-header {
 	font-weight: 600;
 }
+
+.page-header {
+	position: relative;
+}
