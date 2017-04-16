@@ -64,11 +64,11 @@ namespace WikiSite.DAL.SQL
 				return !reader.Read() ? null : new UserDTO
 				{
 					Id = (Guid)reader["Id"],
-					SmallId = (int)reader["Small_Id"],
+					ShortId = (int)reader["Short_Id"],
 					CredentialsId = (Guid)reader["Credentials_Id"],
 					Nickname = (string)reader["Nickname"],
 					RoleId = (Guid)reader["Role_Id"],
-					About = (string)reader["About"]
+					About = reader["About"] as string
 				};
 			}
 		}

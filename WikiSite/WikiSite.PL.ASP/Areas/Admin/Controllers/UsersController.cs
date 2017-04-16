@@ -11,6 +11,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
             return View(UserVM.GetAllUsers());
         }
 
+
 	    public ActionResult CreateUser()
 	    {
 		    return View();
@@ -37,6 +38,17 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    }
 
 
+	    public ActionResult CheckCredentials()
+	    {
+		    return View();
+	    }
+
+		[HttpPost][ValidateAntiForgeryToken]
+	    public ActionResult CheckCredentials(CredentialsUserModel model)
+	    {
+		    model.User = UserVM.GetCheckCredentials(model.GetCredentials());
+			return View(model);
+	    }
 
 
 	    public JsonResult IsLoginExist(string login)

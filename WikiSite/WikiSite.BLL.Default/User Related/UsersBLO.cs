@@ -132,7 +132,11 @@ namespace WikiSite.BLL.Default
 		/// <returns>DTO of a user, null if there's no such a user</returns>
 		public UserDTO GetUser(UserCredentialsDTO credentials)
 		{
-			CheckThrowDTO(credentials);
+			if (credentials == null) throw new ArgumentNullException(nameof(credentials), "Credentials DTO is null");
+
+			if (string.IsNullOrWhiteSpace(credentials.Login)) throw new ArgumentException("Credentials DTO doesn't contain login or it's empty");
+			if (credentials.PasswordHash == null || credentials.PasswordHash.Length == 0) throw new ArgumentException("Credentials DTO doesn't contain password hash or it's empty");
+
 			return _credentialsDAL.CheckCredentials(credentials);
 		}
 

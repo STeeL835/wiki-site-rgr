@@ -5,7 +5,7 @@ namespace WikiSite.Entities
     public class UserDTO
     {
 		public Guid Id { get; set; }
-		public int SmallId { get; set; }
+		public int ShortId { get; set; }
 		public Guid CredentialsId { get; set; } 
         public string Nickname { get; set; }
 		/// <summary>

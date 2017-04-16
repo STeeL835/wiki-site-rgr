@@ -111,7 +111,7 @@ namespace WikiSite.DAL.SQL
 					yield return new UserDTO
 					{
 						Id = (Guid)reader["Id"],
-						SmallId = (int)reader["Short_Id"],
+						ShortId = (int)reader["Short_Id"],
 						CredentialsId = (Guid)reader["Credentials_Id"],
 						Nickname = (string)reader["Nickname"],
 						RoleId = (Guid)reader["Role_Id"],
@@ -139,11 +139,11 @@ namespace WikiSite.DAL.SQL
 					yield return new UserDTO
 					{
 						Id = (Guid)reader["Id"],
-						SmallId = (int)reader["Small_Id"],
+						ShortId = (int)reader["Short_Id"],
 						CredentialsId = (Guid)reader["Credentials_Id"],
 						Nickname = (string)reader["Nickname"],
 						RoleId = (Guid)reader["Role_Id"],
-						About = (string)reader["About"]
+						About = reader["About"] as string
 					};
 				}
 			}
@@ -169,11 +169,11 @@ namespace WikiSite.DAL.SQL
 					return new UserDTO
 					{
 						Id = (Guid)reader["Id"],
-						SmallId = (int)reader["Small_Id"],
+						ShortId = (int)reader["Short_Id"],
 						CredentialsId = (Guid)reader["Credentials_Id"],
 						Nickname = (string)reader["Nickname"],
 						RoleId = (Guid)reader["Role_Id"],
-						About = (string)reader["About"]
+						About = reader["About"] as string
 					};
 				}
 			}
@@ -200,11 +200,11 @@ namespace WikiSite.DAL.SQL
 					return new UserDTO
 					{
 						Id = (Guid)reader["Id"],
-						SmallId = (int)reader["Small_Id"],
+						ShortId = (int)reader["Short_Id"],
 						CredentialsId = (Guid)reader["Credentials_Id"],
 						Nickname = (string)reader["Nickname"],
 						RoleId = (Guid)reader["Role_Id"],
-						About = (string)reader["About"]
+						About = reader["About"] as string
 					};
 				}
 			}
@@ -221,8 +221,8 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("SELECT * FROM [Users] " +
-											"WHERE Nickname LIKE '%@short_id%'", connection);
-				sqlCom.Parameters.AddWithValue("@short_id", searchInput);
+											"WHERE Nickname LIKE '%@nickname%'", connection);
+				sqlCom.Parameters.AddWithValue("@nickname", searchInput);
 
 				connection.Open();
 				var reader = sqlCom.ExecuteReader();
@@ -231,11 +231,11 @@ namespace WikiSite.DAL.SQL
 					yield return new UserDTO
 					{
 						Id = (Guid)reader["Id"],
-						SmallId = (int)reader["Small_Id"],
+						ShortId = (int)reader["Short_Id"],
 						CredentialsId = (Guid)reader["Credentials_Id"],
 						Nickname = (string)reader["Nickname"],
 						RoleId = (Guid)reader["Role_Id"],
-						About = (string)reader["About"]
+						About = reader["About"] as string
 					};
 				}
 			}

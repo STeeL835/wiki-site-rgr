@@ -71,13 +71,13 @@ namespace WikiSite.PL.ASP.Models
 		}
 
 		public static implicit operator UserDTO(UserVM vm)
-			=> new UserDTO { Id = vm.Id, RoleId = vm.RoleId, CredentialsId = vm.CredentialsId, Nickname = vm._nickname, About = vm.About, SmallId = vm.SmallId};
+			=> new UserDTO { Id = vm.Id, RoleId = vm.RoleId, CredentialsId = vm.CredentialsId, Nickname = vm._nickname, About = vm.About, ShortId = vm.SmallId};
 
 		public static explicit operator UserVM(UserDTO dto) => 
 			new UserVM(dto.Id, dto.CredentialsId, dto.Nickname, dto.RoleId)
 			{
 				About = dto.About,
-				SmallId = dto.SmallId
+				SmallId = dto.ShortId
 			};
 
 		#endregion
@@ -141,7 +141,8 @@ namespace WikiSite.PL.ASP.Models
 		/// <returns></returns>
 		public static UserVM GetCheckCredentials(UserCredentialsVM credentials)
 		{
-			return (UserVM) _bll.GetUser(credentials);
+			var user = _bll.GetUser(credentials);
+			return user == null ? null : (UserVM)user;
 		}
 
 		/// <summary>
