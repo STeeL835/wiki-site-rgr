@@ -1,0 +1,51 @@
+﻿@model WikiSite.PL.ASP.Models.UserVM
+
+@{
+    ViewBag.Title = $"Информация о пользователе {Model.Nickname}";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-header">
+	<a href="@Url.Action("Index")" title="Назад к списку" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+	@ViewBag.Title
+</h1>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShortId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CredentialsId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CredentialsId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nickname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nickname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.About)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.About)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RoleId)
+        </dd>
+
+    </dl>
+</div>

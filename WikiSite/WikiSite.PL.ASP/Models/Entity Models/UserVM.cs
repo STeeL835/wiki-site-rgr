@@ -25,7 +25,7 @@ namespace WikiSite.PL.ASP.Models
 				_id = value;
 			}
 		}
-		public int SmallId { get; private set; }
+		public int ShortId { get; private set; }
 		public Guid CredentialsId
 		{
 			get { return _credentialsId; }
@@ -71,13 +71,13 @@ namespace WikiSite.PL.ASP.Models
 		}
 
 		public static implicit operator UserDTO(UserVM vm)
-			=> new UserDTO { Id = vm.Id, RoleId = vm.RoleId, CredentialsId = vm.CredentialsId, Nickname = vm._nickname, About = vm.About, ShortId = vm.SmallId};
+			=> new UserDTO { Id = vm.Id, RoleId = vm.RoleId, CredentialsId = vm.CredentialsId, Nickname = vm._nickname, About = vm.About, ShortId = vm.ShortId};
 
 		public static explicit operator UserVM(UserDTO dto) => 
 			new UserVM(dto.Id, dto.CredentialsId, dto.Nickname, dto.RoleId)
 			{
 				About = dto.About,
-				SmallId = dto.ShortId
+				ShortId = dto.ShortId
 			};
 
 		#endregion

@@ -223,3 +223,6 @@ td.table-action {
 tr:hover td.table-action {
 	visibility: visible;
 }
+*[data-toggle='popoverx']+.popover>.popover-content{
+	padding: 3px 5px;
+}

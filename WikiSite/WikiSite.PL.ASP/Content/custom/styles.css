@@ -211,3 +211,8 @@ body {
 	background-size: cover;
 	filter: opacity(0.2);
 }
+
+/* Confirm Popovers */
+*[data-toggle='confirm-popover']+.popover>.popover-content {
+	padding: 3px 5px;
+}

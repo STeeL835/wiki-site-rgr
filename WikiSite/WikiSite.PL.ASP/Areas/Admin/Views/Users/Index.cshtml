@@ -6,6 +6,11 @@
 	Layout = "../Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.AlertMessage != null) // Displays alert if it exist
+{
+	<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
+}
+
 <h1 class="page-header">Управление пользователями</h1>
 
 <!-- Main Actions -->
@@ -29,12 +34,20 @@
 @foreach (var user in Model)
 {
 	<tr>
-		<td>@user.SmallId</td>
-		<td><a href="" class="btn btn-link btn-xs">@user.Nickname</a></td>
+		<td>@user.ShortId</td>
+		<td><a href="@Url.Action("UserDetails", "Users", new { id = user.ShortId })" class="btn btn-link btn-xs">@user.Nickname</a></td>
 		<td>@RoleVM.GetRole(user.RoleId).Name</td>
 		<td>#</td>
 		<td>#</td>
-		<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+		<td class="table-action">
+			<a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+			<span>
+				<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+				<output hidden>
+					<a href="@Url.Action("DeleteUser", "Users", new { id = user.ShortId })" class="btn btn-danger btn-sm">Я уверен, удалить</a>
+				</output>
+			</span>
+		</td>
 	</tr>
 }
 	</tbody>

@@ -74,9 +74,8 @@ namespace WikiSite.BLL.Default
 		public bool RemoveUser(Guid userId)
 		{
 			if (userId == Guid.Empty) throw new ArgumentNullException(nameof(userId), "Id is empty");
-
-			return _credentialsDAL.RemoveCredentials(GetUser(userId).CredentialsId) && 
-			       _usersDAL.RemoveUser(userId);
+			var credId = GetUser(userId).CredentialsId;
+			return _usersDAL.RemoveUser(userId) && _credentialsDAL.RemoveCredentials(credId);
 		}
 
 		/// <summary>
