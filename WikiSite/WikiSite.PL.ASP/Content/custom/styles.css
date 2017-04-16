@@ -69,6 +69,7 @@ body {
 .topbar {
 	position: fixed;
 	z-index: 20;
+	top: 0;
 	left: 0;
 	right: 0;
 	height: 40px;
@@ -80,7 +81,7 @@ body {
 }
 
 .content {
-	padding-top: 40px;
+	margin-top: 40px;
 }
 
 .login-form {

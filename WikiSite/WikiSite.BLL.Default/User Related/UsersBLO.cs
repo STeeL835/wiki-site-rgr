@@ -37,7 +37,8 @@ namespace WikiSite.BLL.Default
 			if (user.CredentialsId != credentials.Id)
 				throw new ArgumentException("user's credentials id and actual credentials id doesn't match");
 
-			return _credentialsDAL.AddCredentials(credentials) && _usersDAL.AddUser(user);
+			return !IsLoginExist(credentials.Login) && 
+			       _credentialsDAL.AddCredentials(credentials) && _usersDAL.AddUser(user);
 		}
 
 		/// <summary>

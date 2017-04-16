@@ -37,7 +37,7 @@ namespace WikiSite.DAL.SQL
 				sqlCom.Parameters.AddWithValue("@nickname", user.Nickname);
 				sqlCom.Parameters.AddWithValue("@role_id", user.RoleId == Guid.Empty ? (object)"DEFAULT" : user.RoleId);
 				sqlCom.Parameters.AddWithValue("@credentials_id", user.CredentialsId);
-				sqlCom.Parameters.AddWithValue("@about", user.About);
+				sqlCom.Parameters.AddWithValue("@about", string.IsNullOrWhiteSpace(user.About) ? (object) DBNull.Value : user.About);
 				connection.Open();
 
 				addedRows = sqlCom.ExecuteNonQuery();
