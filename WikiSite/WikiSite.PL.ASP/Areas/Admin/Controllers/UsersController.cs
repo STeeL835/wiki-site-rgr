@@ -21,7 +21,17 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    {
 		    if (ModelState.IsValid)
 		    {
-			    UserVM.AddUser(model.GetUserVM(), model.GetCredentialsVM());
+			    if (UserVM.AddUser(model.GetUserVM(), model.GetCredentialsVM()))
+			    {
+				    ViewBag.AlertMessage = $"Пользователь {model.Nickname} успешно добавлен"; // is is vulnerable for XSS?
+				    ViewBag.AlertClass = "alert-success";
+			    }
+			    else
+			    {
+					ViewBag.AlertMessage = $"Произошла ошибка при добавлении пользователя {model.Nickname}." +
+					                       $"Пользователь не был добавлен"; // is is vulnerable for XSS?
+					ViewBag.AlertClass = "alert-danger";
+				}
 		    }
 		    return View(model);
 	    }
