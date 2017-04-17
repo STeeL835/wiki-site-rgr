@@ -9,8 +9,7 @@ namespace WikiSite.Entities
     public class ArticleContentDTO
     {
         public Guid Id { get; set; }
-        public string ShortDefinition { get; set; }
-        public string TextContent { get; set; }
-        public string ThumbnailURL { get; set; }
+        public string Definition { get; set; }
+        public string Text { get; set; }
     }
 }

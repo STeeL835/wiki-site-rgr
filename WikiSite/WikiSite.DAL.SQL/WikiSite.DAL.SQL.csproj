@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Articles Related\ArticleVersionsDAO.cs" />
     <Compile Include="Users Related\RolesDAO.cs" />
     <Compile Include="Users Related\UserCredentialsDAO.cs" />
     <Compile Include="Users Related\UsersDAO.cs" />
