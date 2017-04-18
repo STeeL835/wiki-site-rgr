@@ -70,6 +70,21 @@
 		}&#xD;
 	}&#xD;
 }</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Description/@EntryValue">Inserts a page header with back button to a page</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Field/=Index/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Field/=Index/Expression/@EntryValue">completeSmart()</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Field/=Index/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Scope/=3CDDF046BEA72B499BFB0E0D6A845C94/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Scope/=3CDDF046BEA72B499BFB0E0D6A845C94/Type/@EntryValue">InRazorFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Shortcut/@EntryValue">admpagehead</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=D762C9274C73AF4E9F5C899896FAC379/Text/@EntryValue">&lt;h1 class="page-header"&gt;&#xD;
+	&lt;a href="@Url.Action("$Index$")" title="Назад к списку" class="btn btn-link page-back-button"&gt;&lt;i class="fa fa-angle-left"&gt;&lt;/i&gt;&lt;/a&gt;&#xD;
+	@ViewBag.Title&#xD;
+&lt;/h1&gt;</s:String>
 	
 	
 	

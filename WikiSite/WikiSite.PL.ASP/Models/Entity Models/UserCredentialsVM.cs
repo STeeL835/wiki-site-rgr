@@ -94,6 +94,31 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.IsLoginExist(login);
 		}
 
+		/// <summary>
+		/// Returns login and password hash
+		/// </summary>
+		/// <param name="credentialsId">user's credentials id</param>
+		/// <returns>Credentials DTO</returns>
+		public static UserCredentialsVM GetCredentials(Guid id)
+		{
+			return (UserCredentialsVM) _bll.GetCredentials(id);
+		}
+
+		/// <summary>
+		/// Updates credentials of a user
+		/// </summary>
+		/// <param name="credentials"></param>
+		/// <returns></returns>
+		public static bool UpdateCredentials(UserCredentialsVM credentials)
+		{
+			return _bll.UpdateUserCredentials(credentials);
+		}
+
+		/// <summary>
+		/// Converts a string password into hash
+		/// </summary>
+		/// <param name="password">password string</param>
+		/// <returns>bytes array that contains (is) hash</returns>
 		public static byte[] ComputeHashForPassword(string password)
 		{
 			return SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(password));

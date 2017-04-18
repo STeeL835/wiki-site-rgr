@@ -68,6 +68,12 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="credentials">Credentials to check for in a database</param>
 		/// <returns>DTO of a user, null if there's no such a user</returns>
 		UserDTO GetUser(UserCredentialsDTO credentials);
+		/// <summary>
+		/// Gets login and password hash
+		/// </summary>
+		/// <param name="credentialsId">user's credentials id</param>
+		/// <returns>Credentials DTO</returns>
+		UserCredentialsDTO GetCredentials(Guid credentialsId);
 		
 		/// <summary>
 		/// Searches for the user in database by it's nickname

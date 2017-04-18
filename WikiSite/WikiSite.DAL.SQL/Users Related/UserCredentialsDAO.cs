@@ -54,7 +54,7 @@ namespace WikiSite.DAL.SQL
 			{
 				var sqlCom = new SqlCommand("SELECT [Users].* " +
 				                            "FROM [Users] " +
-				                            "INNER JOIN [Credentials] ON [Users].[Credentials_Id] = [Credentials].[Id]" +
+				                            "INNER JOIN [Credentials] ON [Users].[Credentials_Id] = [Credentials].[Id] " +
 											"WHERE [Credentials].[Login] = @login AND [Credentials].[Password_Hash] = @hash", connection);
 				sqlCom.Parameters.AddWithValue("@login", credentials.Login);
 				sqlCom.Parameters.AddWithValue("@hash", credentials.PasswordHash);
@@ -135,7 +135,7 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("UPDATE [Credentials] " +
-											"SET Login = @login, Password_Hash = @hash" +
+											"SET Login = @login, Password_Hash = @hash " +
 											"WHERE Id = @id", connection);
 				sqlCom.Parameters.AddWithValue("@id", credentials.Id);
 				sqlCom.Parameters.AddWithValue("@login", credentials.Login);

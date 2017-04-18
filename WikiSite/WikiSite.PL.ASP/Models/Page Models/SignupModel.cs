@@ -56,5 +56,4 @@ namespace WikiSite.PL.ASP.Models
 			return new UserCredentialsVM(_credentialsId, Login, UserCredentialsVM.ComputeHashForPassword(Password));
 		}
 	}
-
 }

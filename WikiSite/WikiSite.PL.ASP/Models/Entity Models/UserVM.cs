@@ -137,6 +137,9 @@ namespace WikiSite.PL.ASP.Models
 		/// <summary>
 		/// Returns user by it's credentials, if exist
 		/// </summary>
+		/// <remarks>
+		/// There guid is not necessary, empty guid can be passed.
+		/// </remarks>
 		/// <param name="credentials"></param>
 		/// <returns></returns>
 		public static UserVM GetCheckCredentials(UserCredentialsVM credentials)

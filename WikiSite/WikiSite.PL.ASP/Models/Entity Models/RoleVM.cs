@@ -46,6 +46,18 @@ namespace WikiSite.PL.ASP.Models
 			}
 		}
 
+		public static RolesEnum GetRoleEnum(Guid id)
+		{
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["UserRoleId"]))
+				return RolesEnum.User;
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["ModeratorRoleId"]))
+				return RolesEnum.Moderator;
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["AdminRoleId"]))
+				return RolesEnum.Admin;
+			
+				throw new ArgumentOutOfRangeException(nameof(id), id, null);
+		}
+
 		#endregion
 
 		public enum RolesEnum

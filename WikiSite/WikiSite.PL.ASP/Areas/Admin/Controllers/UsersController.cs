@@ -42,7 +42,53 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    }
 
 
-	    public ActionResult CheckCredentials()
+	    public ActionResult EditUser(int id)
+	    {
+		    var user = UserVM.GetUser(id);
+		    var cred = UserCredentialsVM.GetCredentials(user.CredentialsId);
+		    var model = new UserEditModel(user);
+
+		    TempData["user"] = user;
+		    TempData["cred"] = cred;
+
+			return View(model);
+		}
+		[HttpPost][ValidateAntiForgeryToken]
+		public ActionResult EditUser(UserEditModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				if (UserVM.UpdateUser(model.GetUserVM((UserVM) TempData["user"])))
+				{
+					ViewBag.AlertMessage = "Информация успешно изменена";
+					ViewBag.AlertClass = "alert-success";
+				}
+				else
+				{
+					ViewBag.AlertMessage = "Произошла ошибка при изменении информации о пользователе." +
+										   "Проверьте правильность данных.";
+					ViewBag.AlertClass = "alert-danger";
+				}
+
+				if (model.ChangePassword)
+				{
+					if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM((UserCredentialsVM) TempData["cred"])))
+					{
+						ViewBag.AlertMessage += "Пароль успешно изменён";
+						ViewBag.AlertClass = ViewBag.AlertClass == "alert-danger" ? "alert-warning" : "alert-success";
+					}
+					else
+					{
+						ViewBag.AlertMessage += "Произошла ошибка при изменении пароля";
+						ViewBag.AlertClass = ViewBag.AlertClass == "alert-success" ? "alert-warning" : "alert-danger";
+					}
+				}
+			}
+			return View(model);
+		}
+
+
+		public ActionResult CheckCredentials()
 	    {
 		    return View();
 	    }
@@ -84,6 +130,14 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    {
 		    var throwError = !UserCredentialsVM.IsLoginExist(login);
 
+			return Json(throwError, JsonRequestBehavior.AllowGet);
+	    }
+
+	    public JsonResult CheckPassword(string password)
+	    {
+		    var throwError =
+			    UserVM.GetCheckCredentials(new UserCredentialsVM(Guid.Empty, ((UserCredentialsVM) TempData["cred"]).Login,
+				    UserCredentialsVM.ComputeHashForPassword(password)));
 			return Json(throwError, JsonRequestBehavior.AllowGet);
 	    }
     }
