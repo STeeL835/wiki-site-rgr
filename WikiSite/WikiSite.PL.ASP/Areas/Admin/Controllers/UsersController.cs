@@ -26,7 +26,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    {
 		    if (ModelState.IsValid)
 		    {
-			    if (UserVM.AddUser(model.GetUserVM(), model.GetCredentialsVM()))
+			    if (UserVM.AddUser(model, model.GetCredentialsVM()))
 			    {
 				    ViewBag.AlertMessage = $"Пользователь {model.Nickname} успешно добавлен"; // is is vulnerable for XSS?
 				    ViewBag.AlertClass = "alert-success";
@@ -58,9 +58,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (UserVM.UpdateUser(model.GetUserVM((UserVM) TempData["user"])))
+				var user = (UserVM) TempData.Peek("user");
+				var cred = (UserCredentialsVM) TempData.Peek("cred");
+
+				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
-					ViewBag.AlertMessage = "Информация успешно изменена";
+					ViewBag.AlertMessage = "Информация успешно изменена.";
 					ViewBag.AlertClass = "alert-success";
 				}
 				else
@@ -72,18 +75,27 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (model.ChangePassword)
 				{
-					if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM((UserCredentialsVM) TempData["cred"])))
+					if (UserCredentialsVM.GetCredentials(cred.Id).PasswordHash
+						.Equals(UserCredentialsVM.ComputeHashForPassword(model.OldPassword)))
 					{
-						ViewBag.AlertMessage += "Пароль успешно изменён";
-						ViewBag.AlertClass = ViewBag.AlertClass == "alert-danger" ? "alert-warning" : "alert-success";
+						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(cred)))
+						{
+							ViewBag.AlertMessage += " Пароль успешно изменён.";
+							ViewBag.AlertClass = ViewBag.AlertClass == "alert-danger" ? "alert-warning" : "alert-success";
+						}
+						else
+						{
+							ViewBag.AlertMessage += " Произошла ошибка при изменении пароля.";
+							ViewBag.AlertClass = ViewBag.AlertClass == "alert-success" ? "alert-warning" : "alert-danger";
+						}
 					}
 					else
 					{
-						ViewBag.AlertMessage += "Произошла ошибка при изменении пароля";
+						ViewBag.AlertMessage += " Настоящий пароль не прошел проверку, пароль не изменен. Проверьте данные и попробуйте еще раз";
 						ViewBag.AlertClass = ViewBag.AlertClass == "alert-success" ? "alert-warning" : "alert-danger";
 					}
 				}
-			}
+			} 
 			return View(model);
 		}
 
@@ -133,12 +145,5 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			return Json(throwError, JsonRequestBehavior.AllowGet);
 	    }
 
-	    public JsonResult CheckPassword(string password)
-	    {
-		    var throwError =
-			    UserVM.GetCheckCredentials(new UserCredentialsVM(Guid.Empty, ((UserCredentialsVM) TempData["cred"]).Login,
-				    UserCredentialsVM.ComputeHashForPassword(password)));
-			return Json(throwError, JsonRequestBehavior.AllowGet);
-	    }
     }
 }

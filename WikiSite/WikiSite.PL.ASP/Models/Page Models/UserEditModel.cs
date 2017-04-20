@@ -1,56 +1,46 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using Altairis.ValidationToolkit;
+п»їusing System.ComponentModel.DataAnnotations;
+using Foolproof;
 
 namespace WikiSite.PL.ASP.Models
 {
-	public class UserEditModel
+	//[MetadataType(typeof(UserEditModelMeta))] // needs partial according to MSDN
+	public partial class UserEditModel : SignupModel
 	{
 		#region VM
 
-		[Required]
-		[DataType(DataType.Text)]
-		[Display(Name = "Никнейм")]
-		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
-		public string Nickname { get; set; }
+		/* Nickname */
 
-		[DataType(DataType.MultilineText)]
-		[MaxLength(1500)]
-		[Display(Name = "О себе")]
-		public string About { get; set; }
+		/* About */
 
-		[EnumDataType(typeof(RoleVM.RolesEnum))]
-		[Display(Name = "Роль")]
-		public RoleVM.RolesEnum Role { get; set; }
+		/* Role */
 
 
-		[Display(Name = "Изменить пароль")]
+		[Display(Name = "РР·РјРµРЅРёС‚СЊ РїР°СЂРѕР»СЊ")]
 		public bool ChangePassword { get; set; }
 
-		[RequiredWhen("ChangePassword", true)]
+		[RequiredIf("ChangePassword", true)]
 		[DataType(DataType.Password)]
+		[Display(Name = "РўРµРєСѓС‰РёР№ РїР°СЂРѕР»СЊ")]
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
-		[Display(Name = "Старый пароль")]
 		public string OldPassword { get; set; }
 
-		[RequiredWhen("ChangePassword", true)]
+		[RequiredIf("ChangePassword", true)] // new
 		[DataType(DataType.Password)]
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
-		[Display(Name = "Новый пароль")]
-		public string Password { get; set; }
+		[Display(Name = "РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ")] // new 
+		public override string Password { get; set; }
 
-		[RequiredWhen("ChangePassword", true)]
+		[RequiredIf("ChangePassword", true)] // new
 		[DataType(DataType.Password)]
 		[System.ComponentModel.DataAnnotations.Compare("Password")]
-		[Display(Name = "Новый пароль еще раз")]
-		public string ConfirmPassword { get; set; }
+		[Display(Name = "РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ РµС‰Рµ СЂР°Р·")] // new 
+		public override string ConfirmPassword { get; set; }
 
 		#endregion
 
-		public UserEditModel()
+		public UserEditModel() : base()
 		{
-			// please, model binder, here's your parameterless constructor
+			
 		}
 
 		public UserEditModel(UserVM user)
@@ -60,6 +50,13 @@ namespace WikiSite.PL.ASP.Models
 			Role = RoleVM.GetRoleEnum(user.RoleId);
 		}
 
+		/// <summary>
+		/// Returns new and updated VM.
+		/// Needs the original because id part gets lost from form,
+		/// because it's never sent there
+		/// </summary>
+		/// <param name="user">current VM</param>
+		/// <returns>New and updated VM.</returns>		
 		public UserVM GetUserVM(UserVM user)
 		{
 			return new UserVM(user.Id, user.CredentialsId, Nickname, RoleVM.GetRole(Role).Id)
@@ -68,9 +65,49 @@ namespace WikiSite.PL.ASP.Models
 			};
 		}
 
+		/// <summary>
+		/// Returns new and updated VM.
+		/// Needs the original because some values get lost from form,
+		/// because they're never sent there
+		/// </summary>
+		/// <param name="credentials">current VM</param>
+		/// <returns>New and updated VM.</returns>
 		public UserCredentialsVM GetCredentialsVM(UserCredentialsVM credentials)
 		{
 			return new UserCredentialsVM(credentials.Id, credentials.Login, UserCredentialsVM.ComputeHashForPassword(Password));
 		}
+
+
+		#region Metadata
+
+		//static UserEditModel()
+		//{
+		//	TypeDescriptor.AddProviderTransparent(
+		//		new AssociatedMetadataTypeTypeDescriptionProvider(typeof(UserEditModel), typeof(UserEditModelMeta)),
+		//		typeof(UserEditModel)); // w/o this meta won't work
+		//}
+
+		///* About changing dataattribute attributes
+		// * https://msdn.microsoft.com/en-us/library/ff664465%28v=pandp.50%29.aspx
+		// */
+
+		//public class UserEditModelMeta
+		//{
+		//	[RequiredWhen("ChangePassword", true)] // new
+		//	[DataType(DataType.Password)]
+		//	[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
+		//	[Display(Name = "РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ")] // new 
+		//	public object Password { get; set; }
+
+		//	[RequiredWhen("ChangePassword", true)] // new
+		//	[DataType(DataType.Password)]
+		//	[System.ComponentModel.DataAnnotations.Compare("Password")]
+		//	[Display(Name = "РќРѕРІС‹Р№ РїР°СЂРѕР»СЊ РµС‰Рµ СЂР°Р·")] // new 
+		//	public object ConfirmPassword { get; set; }
+		//}
+
+		#endregion
 	}
+
+	
 }

@@ -1,25 +1,29 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace WikiSite.PL.ASP.Models
 {
-	public class SignupModel
+	public class SignupModel : UserVM
 	{
 		#region VM
 
-		[Required][DataType(DataType.Text)]
-		[Display(Name = "Никнейм")]
-		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
-		public string Nickname { get; set; }
+		private RoleVM.RolesEnum _role;
 
-		[DataType(DataType.MultilineText)][MaxLength(1500)]
-		[Display(Name = "О себе")]
-		public string About { get; set; }
+		/* Nickname */
+
+		/* About */
 
 		[EnumDataType(typeof(RoleVM.RolesEnum))]
 		[Display(Name = "Роль")]
-		public RoleVM.RolesEnum Role { get; set; }
+		public RoleVM.RolesEnum Role
+		{
+			get { return _role; }
+			set
+			{
+				_role = value;
+				RoleId = RoleVM.GetRole(value).Id;
+			}
+		}
 
 
 		[Required][DataType(DataType.Text)]
@@ -31,29 +35,20 @@ namespace WikiSite.PL.ASP.Models
 		[Required][DataType(DataType.Password)]
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
 		[Display(Name = "Пароль")]
-		public string Password { get; set; }
+		public virtual string Password { get; set; }
 
 		[Required][DataType(DataType.Password)]
 		[System.ComponentModel.DataAnnotations.Compare("Password")]
 		[Display(Name = "Пароль еще раз")]
-		public string ConfirmPassword { get; set; }
+		public virtual string ConfirmPassword { get; set; }
 
 		#endregion
 
-		private Guid _credentialsId = Guid.NewGuid();
-		private Guid _userId = Guid.NewGuid();
-
-		public UserVM GetUserVM()
-		{
-			return new UserVM(_userId, _credentialsId, Nickname, RoleVM.GetRole(Role).Id)
-			{
-				About = About
-			};
-		}
+		/* User's and credentials ID are generated in a base constructor */
 
 		public UserCredentialsVM GetCredentialsVM()
 		{
-			return new UserCredentialsVM(_credentialsId, Login, UserCredentialsVM.ComputeHashForPassword(Password));
+			return new UserCredentialsVM(CredentialsId, Login, UserCredentialsVM.ComputeHashForPassword(Password));
 		}
 	}
 }

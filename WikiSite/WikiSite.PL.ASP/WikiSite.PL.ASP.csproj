@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Altairis.ValidationToolkit, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Altairis.ValidationToolkit.1.2.0.0\lib\net45\Altairis.ValidationToolkit.dll</HintPath>
+    <Reference Include="FoolproofValidation, Version=0.9.5851.39121, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FoolproofValidation.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -121,6 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.js" />
+    <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.min.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofJQueryValidation.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofJQueryValidation.min.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofValidation.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofValidation.min.js" />
     <Content Include="Content\custom\admin-styles-override.css" />
     <Content Include="Content\custom\bootstrap-overrides.css" />
     <Content Include="Content\bootstrap-theme.css" />

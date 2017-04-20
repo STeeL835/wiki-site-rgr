@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
@@ -25,7 +26,9 @@ namespace WikiSite.PL.ASP.Models
 				_id = value;
 			}
 		}
+
 		public int ShortId { get; private set; }
+
 		public Guid CredentialsId
 		{
 			get { return _credentialsId; }
@@ -35,6 +38,11 @@ namespace WikiSite.PL.ASP.Models
 				_credentialsId = value;
 			}
 		}
+
+		[Required]
+		[DataType(DataType.Text)]
+		[Display(Name = "Никнейм")]
+		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
 		public string Nickname
 		{
 			get { return _nickname; }
@@ -44,7 +52,12 @@ namespace WikiSite.PL.ASP.Models
 				_nickname = value;
 			}
 		}
+
+		[DataType(DataType.MultilineText)]
+		[MaxLength(1500)]
+		[Display(Name = "О себе")]
 		public string About { get; set; }
+
 		public Guid RoleId
 		{
 			get { return _roleId; }
@@ -55,6 +68,15 @@ namespace WikiSite.PL.ASP.Models
 			}
 		}
 
+
+		/// <summary>
+		/// ONLY for model binder
+		/// </summary>
+		public UserVM()
+		{
+			CredentialsId = Guid.NewGuid();
+			Id = Guid.NewGuid();
+		}
 		public UserVM(Guid credentialsId, string nickname, Guid roleId)
 		{
 			Id = Guid.Empty;
@@ -69,6 +91,7 @@ namespace WikiSite.PL.ASP.Models
 			Nickname = nickname;
 			RoleId = roleId;
 		}
+
 
 		public static implicit operator UserDTO(UserVM vm)
 			=> new UserDTO { Id = vm.Id, RoleId = vm.RoleId, CredentialsId = vm.CredentialsId, Nickname = vm._nickname, About = vm.About, ShortId = vm.ShortId};
@@ -109,6 +132,12 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.GetUsers().Select(dto => (UserVM) dto);
 		}
 
+		/// <summary>
+		/// Adds user to a database
+		/// </summary>
+		/// <param name="user">User to add</param>
+		/// <param name="credentials">Credentials of user to add</param>
+		/// <returns>Whether addition was successful</returns>
 		public static bool AddUser(UserVM user, UserCredentialsVM credentials)
 		{
 			return _bll.AddUser(user, credentials);
