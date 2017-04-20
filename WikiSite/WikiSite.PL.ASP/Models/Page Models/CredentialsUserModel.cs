@@ -2,6 +2,7 @@
 
 namespace WikiSite.PL.ASP.Models
 {
+	// Not inherited because User can be null
 	public class CredentialsUserModel
 	{
 		[Required][DataType(DataType.Text)]

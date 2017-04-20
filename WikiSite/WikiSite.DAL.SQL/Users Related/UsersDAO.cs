@@ -62,7 +62,7 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("UPDATE [Users] " +
-											"SET Nickname = @nickname, Role_Id = @role_id, About = @about" +
+											"SET Nickname = @nickname, Role_Id = @role_id, About = @about " +
 											"WHERE Id = @id", connection);
 				sqlCom.Parameters.AddWithValue("@id", user.Id);
 				sqlCom.Parameters.AddWithValue("@nickname", user.Nickname);

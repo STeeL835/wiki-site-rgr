@@ -127,6 +127,9 @@ namespace WikiSite.BLL.Default
 		/// Checks if a user with these credentials exist in a database
 		/// and returns it.
 		/// </summary>
+		/// <remarks>
+		/// There guid is not necessary, empty guid can be passed.
+		/// </remarks>
 		/// <param name="credentials">Credentials to check for in a database</param>
 		/// <returns>DTO of a user, null if there's no such a user</returns>
 		public UserDTO GetUser(UserCredentialsDTO credentials)
@@ -137,6 +140,18 @@ namespace WikiSite.BLL.Default
 			if (credentials.PasswordHash == null || credentials.PasswordHash.Length == 0) throw new ArgumentException("Credentials DTO doesn't contain password hash or it's empty");
 
 			return _credentialsDAL.CheckCredentials(credentials);
+		}
+
+		/// <summary>
+		/// Gets login and password hash
+		/// </summary>
+		/// <param name="credentialsId">user's credentials id</param>
+		/// <returns>Credentials DTO</returns>
+		public UserCredentialsDTO GetCredentials(Guid credentialsId)
+		{
+			if (credentialsId == Guid.Empty) throw new ArgumentNullException(nameof(credentialsId), "Id is empty");
+
+			return _credentialsDAL.GetCredentials(credentialsId);
 		}
 
 		/// <summary>

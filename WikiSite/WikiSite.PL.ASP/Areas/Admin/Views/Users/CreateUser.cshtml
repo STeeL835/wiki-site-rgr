@@ -11,11 +11,6 @@
 	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 }
 
-@if (ViewBag.AlertMessage != null) // Displays alert if it exist
-{
-	<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
-}
-
 <h1 class="page-header">
 	<a href="@Url.Action("Index")" title="Назад к списку" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
 	@ViewBag.Title
@@ -27,8 +22,7 @@
     
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-		@Html.Partial("EditUserPart", Model)
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.Nickname, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { @class = "form-control" } })
@@ -66,7 +60,7 @@
 			    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
 			    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
 		    </div>
-	    </div>*@
+	    </div>
 		
 		<div class="form-group">
 			@Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })

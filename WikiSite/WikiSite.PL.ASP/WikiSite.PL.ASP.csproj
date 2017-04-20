@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FoolproofValidation, Version=0.9.5851.39121, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FoolproofValidation.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -117,6 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.js" />
+    <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.min.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofJQueryValidation.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofJQueryValidation.min.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofValidation.js" />
+    <Content Include="Scripts\foolproof\MvcFoolproofValidation.min.js" />
     <Content Include="Content\custom\admin-styles-override.css" />
     <Content Include="Content\custom\bootstrap-overrides.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -142,6 +152,7 @@
     <Content Include="Areas\Admin\Views\Users\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\Users\CheckCredentials.cshtml" />
     <Content Include="Areas\Admin\Views\Users\UserDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\EditUser.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -162,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Classes\ControllerExtentions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +183,7 @@
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\SignupModel.cs" />
+    <Compile Include="Models\Page Models\UserEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -184,7 +197,6 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\EditUserPart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

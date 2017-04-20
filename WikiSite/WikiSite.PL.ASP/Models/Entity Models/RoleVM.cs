@@ -1,4 +1,5 @@
-using System;
+п»їusing System;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
@@ -46,15 +47,27 @@ namespace WikiSite.PL.ASP.Models
 			}
 		}
 
+		public static RolesEnum GetRoleEnum(Guid id)
+		{
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["UserRoleId"]))
+				return RolesEnum.User;
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["ModeratorRoleId"]))
+				return RolesEnum.Moderator;
+			if (id == Guid.Parse(ConfigurationManager.AppSettings["AdminRoleId"]))
+				return RolesEnum.Admin;
+			
+				throw new ArgumentOutOfRangeException(nameof(id), id, null);
+		}
+
 		#endregion
 
 		public enum RolesEnum
 		{
-			//[Display(Name = "Обычный пользователь")]  // Parser doesn't use unicode, but latin char pages
+			[Display(Name = "РћР±С‹С‡РЅС‹Р№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ")]
 			User,
-			//[Display(Name = "Модератор")]
+			[Display(Name = "РњРѕРґРµСЂР°С‚РѕСЂ")]
 			Moderator,
-			//[Display(Name = "Администратор")]
+			[Display(Name = "РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ")]
 			Admin,
 		}
 	}
