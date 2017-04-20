@@ -81,6 +81,10 @@
 		<!-- Content of a page -->
 		<section class="content animated">
 			<div class="container-fluid">
+				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
+				{
+					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
+				}
 				@RenderBody()
 			</div>
 		</section>

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
 namespace WikiSite.PL.ASP.Areas.Admin.Controllers
@@ -10,8 +10,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         public ActionResult Index()
         {
 			// Receiving alert from deleting user
-	        ViewBag.AlertMessage = TempData["AlertMessage"];
-	        ViewBag.AlertClass = TempData["AlertClass"];
+			this.CatchAlert();
 
 			return View(UserVM.GetAllUsers());
         }
@@ -28,14 +27,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		    {
 			    if (UserVM.AddUser(model, model.GetCredentialsVM()))
 			    {
-				    ViewBag.AlertMessage = $"Пользователь {model.Nickname} успешно добавлен"; // is is vulnerable for XSS?
-				    ViewBag.AlertClass = "alert-success";
+					this.Alert($"Пользователь {model.Nickname} успешно добавлен.", AlertType.Success);
 			    }
 			    else
 			    {
-					ViewBag.AlertMessage = $"Произошла ошибка при добавлении пользователя {model.Nickname}." +
-					                       $"Пользователь не был добавлен"; // is is vulnerable for XSS?
-					ViewBag.AlertClass = "alert-danger";
+				    this.Alert($"Произошла ошибка при добавлении пользователя {model.Nickname}. Пользователь не был добавлен.",
+					    AlertType.Danger);
 				}
 		    }
 		    return View(model);
@@ -63,14 +60,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
-					ViewBag.AlertMessage = "Информация успешно изменена.";
-					ViewBag.AlertClass = "alert-success";
+					this.Alert("Информация успешно изменена.", AlertType.Success);
 				}
 				else
 				{
-					ViewBag.AlertMessage = "Произошла ошибка при изменении информации о пользователе." +
-										   "Проверьте правильность данных.";
-					ViewBag.AlertClass = "alert-danger";
+					this.Alert("Произошла ошибка при изменении информации о пользователе. Проверьте правильность данных.",
+						AlertType.Danger);
 				}
 
 				if (model.ChangePassword)
@@ -80,22 +75,23 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 					{
 						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(cred)))
 						{
-							ViewBag.AlertMessage += " Пароль успешно изменён.";
-							ViewBag.AlertClass = ViewBag.AlertClass == "alert-danger" ? "alert-warning" : "alert-success";
+							this.AppendAlert("Пароль успешно изменён.", AlertType.Success);
 						}
 						else
 						{
-							ViewBag.AlertMessage += " Произошла ошибка при изменении пароля.";
-							ViewBag.AlertClass = ViewBag.AlertClass == "alert-success" ? "alert-warning" : "alert-danger";
+							this.AppendAlert("Произошла ошибка при изменении пароля.", AlertType.Danger);
 						}
 					}
 					else
 					{
-						ViewBag.AlertMessage += " Настоящий пароль не прошел проверку, пароль не изменен. Проверьте данные и попробуйте еще раз";
-						ViewBag.AlertClass = ViewBag.AlertClass == "alert-success" ? "alert-warning" : "alert-danger";
+						this.AppendAlert("Текущий пароль неверен, пароль не изменен. Проверьте данные и попробуйте еще раз", AlertType.Danger);
 					}
 				}
-			} 
+			}
+			else
+			{
+				this.Alert("Проверьте введенные данные", AlertType.Warning);
+			}
 			return View(model);
 		}
 
@@ -124,15 +120,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		    var user = UserVM.GetUser(id);
 			if (UserVM.RemoveUser(user.Id))
 			{
-				// TempData - short-life data transfering between requests 
-				TempData["AlertMessage"] = $"Пользователь {user.Nickname}({user.ShortId}) успешно удален"; // is is vulnerable for XSS?
-				TempData["AlertClass"] = "alert-success";
+				this.AlertNextAction($"Пользователь {user.Nickname}({user.ShortId}) успешно удален", AlertType.Success);
 			}
 			else
 			{
-				TempData["AlertMessage"] = $"Произошла ошибка при удалении пользователя {user.Nickname}({user.ShortId})." +
-									   $"Проверьте выполнение вручную"; // is is vulnerable for XSS?
-				TempData["AlertClass"] = "alert-danger";
+				this.AlertNextAction($"Произошла ошибка при удалении пользователя {user.Nickname}({user.ShortId}). Проверьте выполнение вручную.",
+					AlertType.Danger);
 			}
 			return RedirectToAction("Index");
 		}

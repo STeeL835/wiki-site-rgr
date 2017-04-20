@@ -12,12 +12,6 @@
 	<script src="~/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js"></script>
 }
 
-
-@if (ViewBag.AlertMessage != null) // Displays alert if it exist (user created for ex.)
-{
-	<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
-}
-
 <h1 class="page-header">
 	<a href="@Url.Action("Index")" title="Назад к списку" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
 	@ViewBag.Title
