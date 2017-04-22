@@ -58,6 +58,7 @@ namespace WikiSite.PL.ASP.Models
 		[Display(Name = "О себе")]
 		public string About { get; set; }
 
+		[Required][Display(Name = "Роль")]
 		public Guid RoleId
 		{
 			get { return _roleId; }

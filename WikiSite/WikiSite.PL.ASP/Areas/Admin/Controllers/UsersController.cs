@@ -18,7 +18,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 	    public ActionResult CreateUser()
 	    {
-		    return View();
+		    return View(new SignupModel());
 	    }
 		[HttpPost][ValidateAntiForgeryToken]
 	    public ActionResult CreateUser(SignupModel model)
@@ -35,6 +35,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 					    AlertType.Danger);
 				}
 		    }
+		    else
+		    {
+				this.Alert($"Не вся модель заполнена верно. Пользователь не был добавлен.",
+						AlertType.Danger);
+			}
 		    return View(model);
 	    }
 

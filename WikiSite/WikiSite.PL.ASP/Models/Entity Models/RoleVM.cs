@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using System.Linq;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
@@ -32,43 +34,11 @@ namespace WikiSite.PL.ASP.Models
 			return (RoleVM) _bll.GetRole(id);
 		}
 
-		public static RoleVM GetRole(RolesEnum value)
+		public static RoleVM[] GetRoles()
 		{
-			switch (value)
-			{
-				case RolesEnum.User:
-					return GetRole(Guid.Parse(ConfigurationManager.AppSettings["UserRoleId"]));
-				case RolesEnum.Moderator:
-					return GetRole(Guid.Parse(ConfigurationManager.AppSettings["ModeratorRoleId"]));
-				case RolesEnum.Admin:
-					return GetRole(Guid.Parse(ConfigurationManager.AppSettings["AdminRoleId"]));
-				default:
-					throw new ArgumentOutOfRangeException(nameof(value), value, null);
-			}
-		}
-
-		public static RolesEnum GetRoleEnum(Guid id)
-		{
-			if (id == Guid.Parse(ConfigurationManager.AppSettings["UserRoleId"]))
-				return RolesEnum.User;
-			if (id == Guid.Parse(ConfigurationManager.AppSettings["ModeratorRoleId"]))
-				return RolesEnum.Moderator;
-			if (id == Guid.Parse(ConfigurationManager.AppSettings["AdminRoleId"]))
-				return RolesEnum.Admin;
-			
-				throw new ArgumentOutOfRangeException(nameof(id), id, null);
+			return _bll.GetRoles().Select(dto => (RoleVM) dto).ToArray();
 		}
 
 		#endregion
-
-		public enum RolesEnum
-		{
-			[Display(Name = "Обычный пользователь")]
-			User,
-			[Display(Name = "Модератор")]
-			Moderator,
-			[Display(Name = "Администратор")]
-			Admin,
-		}
 	}
 }

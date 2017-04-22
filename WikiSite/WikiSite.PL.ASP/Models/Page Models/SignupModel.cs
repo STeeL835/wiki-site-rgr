@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace WikiSite.PL.ASP.Models
@@ -7,23 +8,11 @@ namespace WikiSite.PL.ASP.Models
 	{
 		#region VM
 
-		private RoleVM.RolesEnum _role;
-
 		/* Nickname */
 
 		/* About */
-
-		[EnumDataType(typeof(RoleVM.RolesEnum))]
-		[Display(Name = "Роль")]
-		public RoleVM.RolesEnum Role
-		{
-			get { return _role; }
-			set
-			{
-				_role = value;
-				RoleId = RoleVM.GetRole(value).Id;
-			}
-		}
+	
+		public SelectList Roles { get; set; }
 
 
 		[Required][DataType(DataType.Text)]
@@ -45,6 +34,11 @@ namespace WikiSite.PL.ASP.Models
 		#endregion
 
 		/* User's and credentials ID are generated in a base constructor */
+
+		public SignupModel() : base()
+		{
+			Roles = new SelectList(RoleVM.GetRoles(),"Id","Name");
+		}
 
 		public UserCredentialsVM GetCredentialsVM()
 		{

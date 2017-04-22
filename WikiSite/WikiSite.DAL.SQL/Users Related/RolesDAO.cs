@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using WikiSite.DAL.Abstract;
@@ -40,6 +41,29 @@ namespace WikiSite.DAL.SQL
 				}
 			}
 			throw new EntryNotFoundException($"Role with id {id} was not found");
+		}
+
+		/// <summary>
+		/// Returns all the roles that exist in db
+		/// </summary>
+		/// <returns>Roles sequence</returns>
+		public IEnumerable<RoleDTO> GetRoles()
+		{
+			using (var connection = new SqlConnection(ConnectionString))
+			{
+				var sqlCom = new SqlCommand("SELECT * FROM [Roles]", connection);
+
+				connection.Open();
+				var reader = sqlCom.ExecuteReader();
+				while (reader.Read())
+				{
+					yield return new RoleDTO
+					{
+						Id = (Guid)reader["Id"],
+						Name = (string)reader["Name"]
+					};
+				}
+			}
 		}
 	}
 }

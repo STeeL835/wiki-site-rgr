@@ -19,6 +19,7 @@ namespace WikiSite.DAL.SQL
 		/// Gets login and password hash
 		/// </summary>
 		/// <param name="id">credentials id</param>
+		/// <exception cref="EntryNotFoundException">Credentials do not exist</exception>
 		/// <returns>Credentials DTO</returns>
 		public UserCredentialsDTO GetCredentials(Guid id)
 		{

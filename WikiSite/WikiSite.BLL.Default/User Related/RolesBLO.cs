@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using WikiSite.BLL.Abstract;
 using WikiSite.DAL.Abstract;
 using WikiSite.Entities;
@@ -24,6 +26,15 @@ namespace WikiSite.BLL.Default
 		{
 			if (id == Guid.Empty) throw new ArgumentNullException(nameof(id), "Id can't be empty");
 			return _rolesDal.GetRole(id);
+		}
+
+		/// <summary>
+		/// Returns all the roles that exist in db
+		/// </summary>
+		/// <returns>Roles sequence</returns>
+		public IEnumerable<RoleDTO> GetRoles()
+		{
+			return _rolesDal.GetRoles().ToArray();
 		}
 	}
 }

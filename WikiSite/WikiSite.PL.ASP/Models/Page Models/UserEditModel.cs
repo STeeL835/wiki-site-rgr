@@ -4,7 +4,7 @@ using Foolproof;
 namespace WikiSite.PL.ASP.Models
 {
 	//[MetadataType(typeof(UserEditModelMeta))] // needs partial according to MSDN
-	public partial class UserEditModel : SignupModel
+	public class UserEditModel : SignupModel
 	{
 		#region VM
 
@@ -47,7 +47,7 @@ namespace WikiSite.PL.ASP.Models
 		{
 			About = user.About;
 			Nickname = user.Nickname;
-			Role = RoleVM.GetRoleEnum(user.RoleId);
+			RoleId = user.RoleId;
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace WikiSite.PL.ASP.Models
 		/// <returns>New and updated VM.</returns>		
 		public UserVM GetUserVM(UserVM user)
 		{
-			return new UserVM(user.Id, user.CredentialsId, Nickname, RoleVM.GetRole(Role).Id)
+			return new UserVM(user.Id, user.CredentialsId, Nickname, RoleId)
 			{
 				About = About
 			};
