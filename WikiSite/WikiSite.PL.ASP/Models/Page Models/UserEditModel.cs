@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Foolproof;
 
 namespace WikiSite.PL.ASP.Models
@@ -70,11 +71,12 @@ namespace WikiSite.PL.ASP.Models
 		/// Needs the original because some values get lost from form,
 		/// because they're never sent there
 		/// </summary>
-		/// <param name="credentials">current VM</param>
+		/// <param name="credId">current credentials id</param>
+		/// <param name="login">current login</param>
 		/// <returns>New and updated VM.</returns>
-		public UserCredentialsVM GetCredentialsVM(UserCredentialsVM credentials)
+		public UserCredentialsVM GetCredentialsVM(Guid credId, string login)
 		{
-			return new UserCredentialsVM(credentials.Id, credentials.Login, UserCredentialsVM.ComputeHashForPassword(Password));
+			return new UserCredentialsVM(credId, login, Password);
 		}
 
 

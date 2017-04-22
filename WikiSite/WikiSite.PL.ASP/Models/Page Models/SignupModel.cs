@@ -42,7 +42,7 @@ namespace WikiSite.PL.ASP.Models
 
 		public UserCredentialsVM GetCredentialsVM()
 		{
-			return new UserCredentialsVM(CredentialsId, Login, UserCredentialsVM.ComputeHashForPassword(Password));
+			return new UserCredentialsVM(CredentialsId, Login, Password);
 		}
 	}
 }

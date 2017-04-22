@@ -10,19 +10,19 @@ namespace WikiSite.DAL.Abstract
 		/// </summary>
 		/// <param name="id">credentials id</param>
 		/// <returns>Credentials DTO</returns>
-		UserCredentialsDTO GetCredentials(Guid id);
+		UserCredentialsOutDTO GetCredentials(Guid id);
 		/// <summary>
 		/// Searches credentials info in db, and if found, returns user
 		/// </summary>
 		/// <param name="credentials">Credentials to search for</param>
 		/// <returns>null if credentials aren't valid, UserDTO otherwise</returns>
-		UserDTO CheckCredentials(UserCredentialsDTO credentials);
+		UserDTO CheckCredentials(UserCredentialsOutDTO credentials);
 		/// <summary>
 		/// Creates credentials in db
 		/// </summary>
 		/// <param name="credentials">Sign in info</param>
 		/// <returns>Whether creation is successful</returns>
-		bool AddCredentials(UserCredentialsDTO credentials);
+		bool AddCredentials(UserCredentialsOutDTO credentials);
 		/// <summary>
 		/// Removes user credentials from DB. 
 		/// </summary>
@@ -38,7 +38,7 @@ namespace WikiSite.DAL.Abstract
 		/// </summary>
 		/// <param name="credentials">credentials id</param>
 		/// <returns>Whether there is credentials with this id, and it was updated</returns>
-		bool UpdateCredentials(UserCredentialsDTO credentials);
+		bool UpdateCredentials(UserCredentialsOutDTO credentials);
 		/// <summary>
 		/// Checks for login in db. Returns whether login is exist or not
 		/// </summary>

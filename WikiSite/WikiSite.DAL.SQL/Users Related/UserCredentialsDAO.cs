@@ -21,7 +21,7 @@ namespace WikiSite.DAL.SQL
 		/// <param name="id">credentials id</param>
 		/// <exception cref="EntryNotFoundException">Credentials do not exist</exception>
 		/// <returns>Credentials DTO</returns>
-		public UserCredentialsDTO GetCredentials(Guid id)
+		public UserCredentialsOutDTO GetCredentials(Guid id)
 		{
 			using (var connection = new SqlConnection(ConnectionString))
 			{
@@ -33,7 +33,7 @@ namespace WikiSite.DAL.SQL
 				var reader = sqlCom.ExecuteReader();
 				while (reader.Read())
 				{
-					return new UserCredentialsDTO
+					return new UserCredentialsOutDTO
 					{
 						Id = (Guid)reader["Id"],
 						Login = (string)reader["Login"],
@@ -49,7 +49,7 @@ namespace WikiSite.DAL.SQL
 		/// </summary>
 		/// <param name="credentials">Credentials to search for</param>
 		/// <returns>null if credentials aren't valid, UserDTO otherwise</returns>
-		public UserDTO CheckCredentials(UserCredentialsDTO credentials)
+		public UserDTO CheckCredentials(UserCredentialsOutDTO credentials)
 		{
 			using (var connection = new SqlConnection(ConnectionString))
 			{
@@ -79,7 +79,7 @@ namespace WikiSite.DAL.SQL
 		/// </summary>
 		/// <param name="credentials">Sign in info</param>
 		/// <returns>Whether creation is successful</returns>
-		public bool AddCredentials(UserCredentialsDTO credentials)
+		public bool AddCredentials(UserCredentialsOutDTO credentials)
 		{
 			if (credentials == null) throw new ArgumentNullException();
 
@@ -128,7 +128,7 @@ namespace WikiSite.DAL.SQL
 		/// </summary>
 		/// <param name="credentials">credentials id</param>
 		/// <returns>Whether there is credentials with this id, and it was updated</returns>
-		public bool UpdateCredentials(UserCredentialsDTO credentials)
+		public bool UpdateCredentials(UserCredentialsOutDTO credentials)
 		{
 			if (credentials == null) throw new ArgumentNullException();
 

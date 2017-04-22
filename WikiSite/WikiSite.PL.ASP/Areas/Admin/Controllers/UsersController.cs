@@ -47,11 +47,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    public ActionResult EditUser(int id)
 	    {
 		    var user = UserVM.GetUser(id);
-		    var cred = UserCredentialsVM.GetCredentials(user.CredentialsId);
+		    var login = UserCredentialsVM.GetLogin(user.Id);
 		    var model = new UserEditModel(user);
 
 		    TempData["user"] = user;
-		    TempData["cred"] = cred;
+		    TempData["login"] = login;
 
 			return View(model);
 		}
@@ -61,7 +61,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				var user = (UserVM) TempData.Peek("user");
-				var cred = (UserCredentialsVM) TempData.Peek("cred");
+				var login = (string) TempData.Peek("login");
 
 				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
@@ -75,10 +75,9 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (model.ChangePassword)
 				{
-					if (UserCredentialsVM.GetCredentials(cred.Id).PasswordHash
-						.Equals(UserCredentialsVM.ComputeHashForPassword(model.OldPassword)))
+					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, model.Password)))
 					{
-						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(cred)))
+						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(user.CredentialsId, login)))
 						{
 							this.AppendAlert("Пароль успешно изменён.", AlertType.Success);
 						}
