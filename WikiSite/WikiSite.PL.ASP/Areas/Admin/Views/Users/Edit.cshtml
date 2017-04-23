@@ -75,19 +75,19 @@
 
 		    <!-- New Password -->
 		    <div class="form-group">
-			    @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = "control-label col-md-2"})
+			    @Html.LabelFor(model => model.NewPassword, htmlAttributes: new {@class = "control-label col-md-2"})
 			    <div class="col-md-9">
-				    @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control"}})
-				    @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+				    @Html.EditorFor(model => model.NewPassword, new {htmlAttributes = new {@class = "form-control"}})
+				    @Html.ValidationMessageFor(model => model.NewPassword, "", new {@class = "text-danger"})
 			    </div>
 		    </div>
 
 		    <!-- New password again -->
 		    <div class="form-group">
-			    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new {@class = "control-label col-md-2"})
+			    @Html.LabelFor(model => model.ConfirmNewPassword, htmlAttributes: new {@class = "control-label col-md-2"})
 			    <div class="col-md-9">
-				    @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "form-control"}})
-				    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+				    @Html.EditorFor(model => model.ConfirmNewPassword, new {htmlAttributes = new {@class = "form-control"}})
+				    @Html.ValidationMessageFor(model => model.ConfirmNewPassword, "", new {@class = "text-danger"})
 			    </div>
 		    </div>
 	    </div>
@@ -99,7 +99,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

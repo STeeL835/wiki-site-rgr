@@ -16,12 +16,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         }
 
 
-	    public ActionResult CreateUser()
+	    public ActionResult Create()
 	    {
 		    return View(new SignupModel());
 	    }
 		[HttpPost][ValidateAntiForgeryToken]
-	    public ActionResult CreateUser(SignupModel model)
+	    public ActionResult Create(SignupModel model)
 	    {
 		    if (ModelState.IsValid)
 		    {
@@ -44,7 +44,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    }
 
 
-	    public ActionResult EditUser(int id)
+	    public ActionResult Edit(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 		    var login = UserCredentialsVM.GetLogin(user.Id);
@@ -56,7 +56,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			return View(model);
 		}
 		[HttpPost][ValidateAntiForgeryToken]
-		public ActionResult EditUser(UserEditModel model)
+		public ActionResult Edit(UserEditModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -75,7 +75,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (model.ChangePassword)
 				{
-					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, model.Password)))
+					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, model.NewPassword)))
 					{
 						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(user.CredentialsId, login)))
 						{
@@ -112,14 +112,14 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    }
 
 
-	    public ActionResult UserDetails(int id)
+	    public ActionResult Details(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 		    return View(user);
 	    }
 
 
-	    public ActionResult DeleteUser(int id)
+	    public ActionResult Delete(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 			if (UserVM.RemoveUser(user.Id))

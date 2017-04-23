@@ -1,104 +1,16 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - My ASP.NET Application</title>
+﻿@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-	<!-- Bootstrap -->
-	<link href="~/Content/bootswatch/lumen/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="~/Content/custom/bootstrap-overrides.css">
-
-	<!-- Other styles -->
-	<!--	<link rel="stylesheet" href="css/styles.css">-->
+@section style {
 	<link rel="stylesheet" href="~/Content/custom/admin-styles-override.css">
 	@RenderSection("style", false)
+}
+@section js { @RenderSection("js", false) }
+@section headjs { @RenderSection("headjs", false) }
 
-	<!-- Scripts -->
-	<script src="~/Scripts/modernizr-2.6.2.js"></script>
-	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
-	@RenderSection("headjs", false)
-
-
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-</head>
-<body>
-	<div class="wrapper">
-
-		<!-- Admin panel -->
-		<section class="topbar topbar-default">
-
-			<button class="sidebar-control btn btn-sm btn-inverse">
-				<span class="sr-only">Open sidebar</span>
-				<i class="fa fa-bars"></i>
-			</button>
-
-			<button id="login-control" class="btn btn-sm btn-success pull-right ">
-				<span class="sr-only">Войти</span>
-				<i class="fa fa-user"></i>
-			</button>
-
-		</section>
-
-		<!-- Log in panel -->
-		<form class="login-form animated" action="">
-			<div class="form-group stretch">
-				<label for="login-login">Логин</label>
-				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
-			</div>
-				
-			<div class="form-group stretch has-error">
-				<label for="login-pass">Пароль</label>
-				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
-			</div>
-				
-			<div class="form-group">
-				<input type="submit" class="btn btn-success pull-right" value="Войти">
-				<a href="#!" class="btn btn-link pull-right">Регистрация</a>
-			</div>
-		</form>
-
-		<!-- Sidebar menu -->
-		<section class="sidebar animated sidebar-default">
-			<i class="sidebar-image" alt=""></i>
-			<ul>
-				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home", new { Area = "Admin"}, null)</li>
-				<li><input class="form-control" type="search" placeholder="Искать везде..."></li>
-				<li class="divider"></li>
-				<li>@Html.ActionLink("На главную администратора", "Index", "Home", new { Area = "Admin" }, null)</li>
-				<li>@Html.ActionLink("На сайт", "Index", "Home",new { Area = "" }, null)</li>
-				<li class="divider"></li>
-				<li>@Html.ActionLink("Управление пользователями", "Index", "Users", new { Area = "Admin" }, null)</li>
-				<li><a href="#!">Управление статьями</a></li>
-				<li><a href="#!">Управление комментариями</a></li>
-			</ul>
-		</section>
-
-		<!-- Content of a page -->
-		<section class="content animated">
-			<div class="container-fluid">
-				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
-				{
-					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
-				}
-				@RenderBody()
-			</div>
-		</section>
-
-	</div>
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="~/Scripts/jquery-3.1.1.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="~/Scripts/bootstrap.min.js"></script>
-	<script src="~/Scripts/main.js"></script>
-	@RenderSection("js", false)
-
-
-</body>
-</html>
+@if (ViewBag.AlertMessage != null) // Displays alert if it exist
+{
+	<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
+}
+@RenderBody()
