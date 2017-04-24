@@ -121,6 +121,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\logo-full-inverse.png" />
+    <Content Include="Content\Images\logo-full.png" />
+    <Content Include="Content\Images\logo-inverse.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\sidebar.jpg" />
     <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.js" />
     <Content Include="Scripts\foolproof\mvcfoolproof.unobtrusive.min.js" />
     <Content Include="Scripts\foolproof\MvcFoolproofJQueryValidation.js" />
@@ -149,10 +154,10 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\CreateUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Users\CheckCredentials.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\UserDetails.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\EditUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -165,7 +170,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\main.js" />
+    <Content Include="Scripts\custom\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -175,14 +180,16 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Classes\ControllerExtentions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
+    <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
-    <Compile Include="Models\Page Models\SignupModel.cs" />
+    <Compile Include="Models\Page Models\RegisterVM.cs" />
     <Compile Include="Models\Page Models\UserEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -197,6 +204,9 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

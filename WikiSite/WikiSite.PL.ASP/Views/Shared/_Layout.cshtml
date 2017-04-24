@@ -36,36 +36,57 @@
 				<span class="sr-only">Open sidebar</span>
 				<i class="fa fa-bars"></i>
 			</a>
-
-			<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right ">
-				<span class="sr-only">Войти</span>
-				<i class="fa fa-user"></i>
-			</a>
-
+			
+			@if (Request.IsAuthenticated)
+			{
+				<ul class="pull-right list-inline list-unstyled">
+					<li>@User.Identity.Name</li>
+					<li>
+						@Html.ActionLink("Выйти", "Logout", "Auth", null, new { @class = "btn btn-inverse btn-sm" })
+					</li>
+				</ul>
+				@User.Identity.Name
+			}
+			else
+			{
+				<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right">
+					<span class="sr-only">Войти</span>
+					<i class="fa fa-user"></i>
+				</a>
+			}
 		</section>
-
+		
 		<!-- Log in panel -->
-		<form class="row login-form animated" action="">
-			<div class="col-xs-12 col-sm-5 form-group">
-				<label for="login-login">Логин</label>
-				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
-			</div>
+		@if (!Request.IsAuthenticated)
+		{
+			<form class="login-form animated" method="post" action="Auth/Login">
+				@Html.AntiForgeryToken()
+				<div class="form-group stretch">
+					<label for="login-login">Логин</label>
+					<input class="form-control" id="login-login" name="Login" placeholder="Логин" type="text">
+				</div>
 
-			<div class="col-xs-12 col-sm-5 form-group has-error">
-				<label for="login-pass">Пароль</label>
-				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
-			</div>
+				<div class="form-group stretch">
+					<label for="login-pass">Пароль</label>
+					<input class="form-control" id="login-pass" name="Password" placeholder="Пароль" type="password">
+				</div>
 
-			<div class="col-xs-12 col-sm-2 form-group">
-				<input type="submit" class="btn btn-success pull-right" value="Войти">
-			</div>
-		</form>
+				<div class="form-group">
+					<label for="DontRememberMe" class="btn btn-checkbox btn-trans">
+						@Html.CheckBox("DontRememberMe")
+						<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
+					</label>
+					@Html.ActionLink("Регистрация", "Register", "Auth", null, new {@class = "btn btn-link"})
+					<input type="submit" class="btn btn-success" value="Войти">
+				</div>
+			</form>
+		}
 
 		<!-- Sidebar menu -->
 		<section class="sidebar animated sidebar-default">
 			<i class="sidebar-image" alt=""></i>
 			<ul>
-				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home", new { area = "" })</li>
+				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home")</li>
 				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
 				<li class="divider"></li>
 				<li><a href="#!">На главную страницу</a></li>

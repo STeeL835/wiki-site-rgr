@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
@@ -23,6 +24,9 @@ namespace WikiSite.PL.ASP.Models
 				_id = value;
 			}
 		}
+
+		[Required][Display(Name = "Логин")]
+		[DataType(DataType.Text)]
 		public string Login
 		{
 			get { return _login; }
@@ -32,6 +36,8 @@ namespace WikiSite.PL.ASP.Models
 				_login = value;
 			}
 		}
+		[Required][Display(Name = "Пароль")]
+		[DataType(DataType.Password)]
 		public string Password
 		{
 			get { return _password; }
@@ -41,6 +47,14 @@ namespace WikiSite.PL.ASP.Models
 					throw new ArgumentException("value didn't match the conditions");
 				_password = value;
 			}
+		}
+
+		/// <summary>
+		/// Only for model binder
+		/// </summary>
+		public UserCredentialsVM()
+		{
+			_id = Guid.NewGuid();
 		}
 
 		public UserCredentialsVM(string login, string password) : this(Guid.NewGuid(), login, password)

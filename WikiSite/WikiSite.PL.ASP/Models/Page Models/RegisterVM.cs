@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace WikiSite.PL.ASP.Models
 {
-	public class SignupModel : UserVM
+	public class RegisterVM : UserVM
 	{
 		#region VM
 
@@ -35,7 +35,7 @@ namespace WikiSite.PL.ASP.Models
 
 		/* User's and credentials ID are generated in a base constructor */
 
-		public SignupModel() : base()
+		public RegisterVM() : base()
 		{
 			Roles = new SelectList(RoleVM.GetRoles(),"Id","Name");
 		}

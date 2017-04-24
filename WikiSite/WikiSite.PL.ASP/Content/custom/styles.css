@@ -78,6 +78,7 @@ body {
 
 .topbar-default {
 	background-color: #222;
+	color: gainsboro;
 }
 
 .content {
@@ -111,6 +112,7 @@ body {
 }
 
 .article-title-desc {
+	text-align: center;
 	padding-top: 10px;
 	padding-left: 10%;
 	padding-right: 10%;
@@ -132,6 +134,13 @@ body {
 	flex-grow: 1;
 }
 
+.login .panel {
+	max-width: 400px;
+	margin: 0 auto;
+}
+.login .panel .panel-body {
+	padding: 10px 20px;
+}
 
 /* Tablets */
 
@@ -158,7 +167,7 @@ body {
 	}
 	
 	.login-form input[type=submit],
-	.login-form a.btn {
+	.login-form .btn {
 		position: relative; /* move button to baseline of inputs */
 		bottom: -2em;       /* not margin-top - press effect based on it */
 	}
@@ -246,7 +255,7 @@ body {
 /* Confirm Popovers */
 *[data-toggle='confirm-popover']+.popover>.popover-content {
 	padding: 3px 5px;
-
+}
 
 
 
@@ -260,3 +269,41 @@ body {
 .user .thumbnail{
 	margin-bottom: 0;
 }
+
+
+
+body.login {	
+	background-color: whitesmoke;
+}
+
+
+img.logo {
+	display: block;
+	margin: 20px auto;
+	width: 250px;
+}
+
+
+label.btn.btn-checkbox {
+	height:38px;
+	width: 38px;
+	padding-top: 3px;
+	padding-left: 10px;
+	color: #bbb;
+}
+label.btn.btn-checkbox * {
+	font-size: 20px;
+}
+label.btn.btn-checkbox:hover {
+	height: 37px;
+}
+label.btn.btn-checkbox:active {
+	height: 36px;
+}
+label.btn.btn-checkbox input[type=checkbox] {
+	display: none;
+}
+label.btn.btn-checkbox input[type=checkbox]:checked + 
+input[type=hidden] + span { /* this is how checkbox works */
+	color: #333;
+} 

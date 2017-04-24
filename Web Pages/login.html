@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>My Name Jeff</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap-overrides.css">
+	<!-- Other styles -->
+	<link rel="stylesheet" href="css/styles.css">
+	
+	<!-- Scripts -->	
+	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body class="login">
+
+	<div class="container">
+		
+		<img class="logo" src="content/images/logo-full.png"/>
+		
+		
+		<!-- Log in panel -->
+		<div class="panel panel-inverse">
+			<header class="panel-heading">
+				Вход
+			</header>
+			<form class="panel-body clearfix" action="">
+			<div class="alert alert-danger">Не удалось войти. Проверьте данные и попробуйте еще раз.</div>
+			
+				<div class="col-xs-12 form-group">
+					<label for="login-login">Логин</label>
+					<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
+				</div>
+					
+				<div class="col-xs-12 form-group">
+					<label for="login-pass">Пароль</label>
+					<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
+				</div>
+					
+				<div class="col-xs-12 form-group">
+					<input type="submit" class="btn btn-success pull-right" value="Войти">
+					<a href="#!" class="btn btn-link pull-right">Регистрация</a>
+					<label class="btn btn-checkbox btn-trans pull-right">
+						<input type="checkbox">
+						<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
+					</label>
+			</div>
+			</form>
+		</div>
+		
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

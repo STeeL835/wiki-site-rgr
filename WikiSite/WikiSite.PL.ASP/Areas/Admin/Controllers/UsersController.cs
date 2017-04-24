@@ -18,10 +18,10 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 	    public ActionResult Create()
 	    {
-		    return View(new SignupModel());
+		    return View(new RegisterVM());
 	    }
 		[HttpPost][ValidateAntiForgeryToken]
-	    public ActionResult Create(SignupModel model)
+	    public ActionResult Create(RegisterVM model)
 	    {
 		    if (ModelState.IsValid)
 		    {

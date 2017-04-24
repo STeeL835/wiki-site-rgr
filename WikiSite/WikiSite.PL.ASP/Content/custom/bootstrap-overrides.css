@@ -7,6 +7,7 @@
  * Info:    #75caeb #5fc1e8
  * Warning: #ff851b #ff7701
  * Danger:  #ff4136 #ff291c
+ * Inverse: #444    #333
  * */
 
 /* Dark button */
@@ -23,6 +24,14 @@
 	color: whitesmoke;
 	background-color: #333;
 	border-color: #222;
+}
+
+/* Transparent button */
+.btn-trans:hover {
+	background-color: rgba(68, 68, 68, 0.1);
+}
+.btn-trans:active {
+	background-color: rgba(68, 68, 68, 0.15);
 }
 
 /* Form labels */
@@ -68,4 +77,16 @@ form label {
 /* Popovers */
 .popover {
 	font-family: 'Exo 2';
+}
+
+/* Panel */
+.panel-heading{
+	font-weight: 600;
+	font-size: 15px;
+}
+.panel-inverse .panel-heading {
+	background-color: #333;
+	margin-left: -1px;
+	margin-right: -1px;
+	color: #eee;
 }
