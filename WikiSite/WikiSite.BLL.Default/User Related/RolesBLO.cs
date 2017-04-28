@@ -13,7 +13,7 @@ namespace WikiSite.BLL.Default
 
 		public RolesBLO(IRolesDAL rolesDal)
 		{
-			if (rolesDal == null) throw new ArgumentNullException(nameof(rolesDal), "DAL instance is null");
+			if (rolesDal == null) throw new ArgumentNullException(nameof(rolesDal), "Roles DAL instance is null");
 			_rolesDal = rolesDal;
 		}
 
@@ -26,6 +26,17 @@ namespace WikiSite.BLL.Default
 		{
 			if (id == Guid.Empty) throw new ArgumentNullException(nameof(id), "Id can't be empty");
 			return _rolesDal.GetRole(id);
+		}
+
+		/// <summary>
+		/// Returns a role by it's name
+		/// </summary>
+		/// <param name="name">name of a role</param>
+		/// <returns>Role DTO</returns>
+		public RoleDTO GetRole(string name)
+		{
+			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name), "Name can't be empty");
+			return _rolesDal.GetRole(name);
 		}
 
 		/// <summary>

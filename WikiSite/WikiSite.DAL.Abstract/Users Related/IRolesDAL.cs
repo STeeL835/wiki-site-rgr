@@ -14,6 +14,13 @@ namespace WikiSite.DAL.Abstract
 		RoleDTO GetRole(Guid id);
 
 		/// <summary>
+		/// Returns a role by it's name
+		/// </summary>
+		/// <param name="name">name of a role</param>
+		/// <returns>Role DTO</returns>
+		RoleDTO GetRole(string name);
+
+		/// <summary>
 		/// Returns all the roles that exist in db
 		/// </summary>
 		/// <returns>Roles sequence</returns>

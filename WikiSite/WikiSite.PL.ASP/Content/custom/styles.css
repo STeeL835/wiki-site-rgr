@@ -155,10 +155,10 @@ body {
 		display: flex;
 	}
 	.login-form > * {
-		margin-left: 15px;
+		margin-right: 15px;
 	}
-	.login-form > *:first-child {
-		margin-left: 0;
+	.login-form > *:last-child {
+		margin-right: 0;
 	}
 	
 	.login-form .form-group > a.btn {

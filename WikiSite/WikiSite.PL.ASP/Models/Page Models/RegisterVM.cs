@@ -17,7 +17,7 @@ namespace WikiSite.PL.ASP.Models
 
 		[Required][DataType(DataType.Text)]
 		[RegularExpression("^[0-9a-zA-Z\\-]{4,50}$")]
-		[Remote("IsLoginExist", "Users", ErrorMessage = "Такой логин уже существует")]
+		[Remote("IsLoginExist", "Auth", ErrorMessage = "Такой логин уже существует")]
 		[Display(Name = "Логин")]
 		public string Login { get; set; }
 
@@ -38,6 +38,7 @@ namespace WikiSite.PL.ASP.Models
 		public RegisterVM() : base()
 		{
 			Roles = new SelectList(RoleVM.GetRoles(),"Id","Name");
+			RoleId = RoleVM.GetRole("User").Id;
 		}
 
 		public UserCredentialsVM GetCredentialsVM()

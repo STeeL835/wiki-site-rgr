@@ -44,6 +44,33 @@ namespace WikiSite.DAL.SQL
 		}
 
 		/// <summary>
+		/// Returns a role by it's name
+		/// </summary>
+		/// <param name="name">name of a role</param>
+		/// <returns>Role DTO</returns>
+		public RoleDTO GetRole(string name)
+		{
+			using (var connection = new SqlConnection(ConnectionString))
+			{
+				var sqlCom = new SqlCommand("SELECT * FROM [Roles] " +
+											"WHERE Name = @name", connection);
+				sqlCom.Parameters.AddWithValue("@name", name);
+
+				connection.Open();
+				var reader = sqlCom.ExecuteReader();
+				while (reader.Read())
+				{
+					return new RoleDTO
+					{
+						Id = (Guid)reader["Id"],
+						Name = (string)reader["Name"]
+					};
+				}
+			}
+			throw new EntryNotFoundException($"Role named {name} was not found");
+		}
+
+		/// <summary>
 		/// Returns all the roles that exist in db
 		/// </summary>
 		/// <returns>Roles sequence</returns>

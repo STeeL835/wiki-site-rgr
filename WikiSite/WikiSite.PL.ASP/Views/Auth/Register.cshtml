@@ -1,9 +1,17 @@
 ﻿@model WikiSite.PL.ASP.Models.RegisterVM
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Регистрация";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
+
+@section js {
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js"></script>
+}
+
+<a href="@Url.Action("Login", "Auth")" class="btn btn-link btn-block"><i class="fa fa-angle-left"></i> Войти</a>
 
 @using (Html.BeginForm())
 {

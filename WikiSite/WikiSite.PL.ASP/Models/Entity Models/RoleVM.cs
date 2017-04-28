@@ -34,6 +34,11 @@ namespace WikiSite.PL.ASP.Models
 			return (RoleVM) _bll.GetRole(id);
 		}
 
+		public static RoleVM GetRole(string name)
+		{
+			return (RoleVM) _bll.GetRole(name);
+		}
+
 		public static RoleVM[] GetRoles()
 		{
 			return _bll.GetRoles().Select(dto => (RoleVM) dto).ToArray();

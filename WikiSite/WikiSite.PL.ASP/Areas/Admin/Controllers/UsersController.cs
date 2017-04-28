@@ -4,6 +4,7 @@ using WikiSite.PL.ASP.Models;
 
 namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         // GET: Admin/Users
@@ -107,7 +108,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		[HttpPost][ValidateAntiForgeryToken]
 	    public ActionResult CheckCredentials(CredentialsUserModel model)
 	    {
-		    model.User = UserVM.GetCheckCredentials(model.GetCredentials());
+		    model.User = UserVM.GetUser(model.GetCredentials());
 			return View(model);
 	    }
 
@@ -133,14 +134,5 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			}
 			return RedirectToAction("Index");
 		}
-
-
-	    public JsonResult IsLoginExist(string login)
-	    {
-		    var throwError = !UserCredentialsVM.IsLoginExist(login);
-
-			return Json(throwError, JsonRequestBehavior.AllowGet);
-	    }
-
     }
 }

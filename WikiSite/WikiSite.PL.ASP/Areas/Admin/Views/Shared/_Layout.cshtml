@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WikiSite.PL.ASP.Models
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -38,10 +39,14 @@
 				<i class="fa fa-bars"></i>
 			</button>
 
-			<button id="login-control" class="btn btn-sm btn-success pull-right ">
-				<span class="sr-only">Войти</span>
-				<i class="fa fa-user"></i>
-			</button>
+			<ul class="pull-right list-inline list-unstyled">
+				<li><a href="#!" class="btn btn-success btn-xs">Личный кабинет</a></li>
+				<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
+				<li><img src="http://placehold.it/30" alt="Profile image" /></li>
+				<li>
+					@Html.ActionLink("Выйти", "Logout", "Auth", null, new { @class = "btn btn-inverse btn-sm" })
+				</li>
+			</ul>
 
 		</section>
 

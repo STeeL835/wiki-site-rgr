@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WikiSite.PL.ASP.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -40,12 +41,21 @@
 			@if (Request.IsAuthenticated)
 			{
 				<ul class="pull-right list-inline list-unstyled">
-					<li>@User.Identity.Name</li>
+					@if (User.IsInRole("Admin"))
+					{
+						<li>@Html.ActionLink("Админка", "Index", "Home", new { area="Admin" }, new { @class = "btn btn-warning btn-xs" })</li>
+					}
+					<li><a href="#!" class="btn btn-success btn-xs">Кабинет</a></li>
+					<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
+					<li><img src="http://placehold.it/30" alt="Profile image"/></li>
 					<li>
-						@Html.ActionLink("Выйти", "Logout", "Auth", null, new { @class = "btn btn-inverse btn-sm" })
+						<a href="@Url.Action("Logout", "Auth")" class="btn btn-inverse btn-sm">
+							<i class="fa fa-sign-out" aria-hidden="true"></i>
+							<span class="sr-only">Выйти</span>
+						</a>
+
 					</li>
 				</ul>
-				@User.Identity.Name
 			}
 			else
 			{
@@ -63,20 +73,22 @@
 				@Html.AntiForgeryToken()
 				<div class="form-group stretch">
 					<label for="login-login">Логин</label>
-					<input class="form-control" id="login-login" name="Login" placeholder="Логин" type="text">
+					@Html.TextBox("Login", "", new { @class = "form-control", id = "login-login", placeholder = "Логин"})
 				</div>
 
 				<div class="form-group stretch">
 					<label for="login-pass">Пароль</label>
-					<input class="form-control" id="login-pass" name="Password" placeholder="Пароль" type="password">
+					@Html.Password("Password", "", new { @class = "form-control", id = "login-pass", placeholder = "Пароль" })
 				</div>
 
-				<div class="form-group">
+				<div class="form-group pull-right">
 					<label for="DontRememberMe" class="btn btn-checkbox btn-trans">
 						@Html.CheckBox("DontRememberMe")
 						<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
 					</label>
-					@Html.ActionLink("Регистрация", "Register", "Auth", null, new {@class = "btn btn-link"})
+					@Html.ActionLink("Регистрация", "Register", "Auth", null, new {@class = "btn btn-link"}) @{
+																												/* TODO: Throw a return url */
+					                                                                                          }
 					<input type="submit" class="btn btn-success" value="Войти">
 				</div>
 			</form>

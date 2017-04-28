@@ -19,7 +19,7 @@ namespace WikiSite.BLL.Default
 		public UsersBLO(IUsersDAL usersDAL, IUserCredentialsDAL credentialsDAL)
 		{
 			if (usersDAL == null) throw new ArgumentNullException(nameof(usersDAL), "Users DAL instance is null");
-			if (credentialsDAL == null) throw new ArgumentNullException(nameof(usersDAL), "Credentials DAL instance is null");
+			if (credentialsDAL == null) throw new ArgumentNullException(nameof(credentialsDAL), "Credentials DAL instance is null");
 			
 			_usersDAL = usersDAL;
 			_credentialsDAL = credentialsDAL;
@@ -42,8 +42,20 @@ namespace WikiSite.BLL.Default
 			if (user.CredentialsId != credentials.Id)
 				throw new ArgumentException("user's credentials id and actual credentials id doesn't match");
 
-			return !IsLoginExist(credentials.Login) && 
-			       _credentialsDAL.AddCredentials(Out(credentials)) && _usersDAL.AddUser(user);
+			var success = !IsLoginExist(credentials.Login);
+			if (success) // if login doesn't exist
+			{
+				var credSuccess = _credentialsDAL.AddCredentials(Out(credentials));
+				var userSuccess = _usersDAL.AddUser(user);
+				if (credSuccess && !userSuccess)
+				{
+					_credentialsDAL.RemoveCredentials(credentials.Id); //clean up if user wasn't added
+					throw new OperationCanceledException("User was not added");
+				}
+				success &= credSuccess &= userSuccess;
+			}
+
+			return success;
 		}
 
 		/// <summary>

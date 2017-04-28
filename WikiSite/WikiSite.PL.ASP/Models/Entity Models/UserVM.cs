@@ -172,7 +172,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </remarks>
 		/// <param name="credentials"></param>
 		/// <returns></returns>
-		public static UserVM GetCheckCredentials(UserCredentialsVM credentials)
+		public static UserVM GetUser(UserCredentialsVM credentials)
 		{
 			var user = _bll.GetUser(credentials);
 			return user == null ? null : (UserVM)user;

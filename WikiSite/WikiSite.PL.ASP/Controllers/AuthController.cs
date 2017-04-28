@@ -7,20 +7,24 @@ namespace WikiSite.PL.ASP.Controllers
 {
     public class AuthController : Controller
     {
-        // GET: Login
-        public ActionResult Login()
+		// GET: Login
+		[AllowAnonymousOnly]
+		public ActionResult Login()
         {
             return View();
         }
+
 		[HttpPost][ValidateAntiForgeryToken]
-	    public ActionResult Login(AuthVM model)
+		[AllowAnonymousOnly]
+		public ActionResult Login(AuthVM model)
 	    {
 		    if (ModelState.IsValid)
 		    {
-			    if (UserCredentialsVM.AreCredentialsExist(model))
+			    var user = UserVM.GetUser(model);
+			    if (user != null)
 			    {
-				    FormsAuthentication.SetAuthCookie(model.Login, !model.DontRememberMe);
-				    return RedirectBack();
+					// also gives him auth-cookies
+				    FormsAuthentication.RedirectFromLoginPage(user.Id.ToString(), !model.DontRememberMe);
 			    }
 			    this.Alert("Не удалось войти, проверьте данные и попробуйте еще раз.", AlertType.Danger);
 			}
@@ -29,18 +33,20 @@ namespace WikiSite.PL.ASP.Controllers
 	    }
 
 
-	    public ActionResult Register()
+		[AllowAnonymousOnly]
+		public ActionResult Register()
 	    {
 		    return View();
 	    }
 		[HttpPost][ValidateAntiForgeryToken]
-	    public ActionResult Register(RegisterVM model)
+		[AllowAnonymousOnly]
+		public ActionResult Register(RegisterVM model)
 		{
 			if (ModelState.IsValid)
 			{
 				if (UserVM.AddUser(model, model.GetCredentialsVM()))
 				{
-					return RedirectBack();
+					FormsAuthentication.RedirectFromLoginPage(model.Id.ToString(), true);
 				}
 				this.Alert("Произошла ошибка при регистрации.", AlertType.Danger);
 			}
@@ -51,7 +57,7 @@ namespace WikiSite.PL.ASP.Controllers
 			return View(model);
 		}
 
-
+		[Authorize]
 	    public ActionResult Logout()
 	    {
 		    FormsAuthentication.SignOut();
@@ -59,7 +65,16 @@ namespace WikiSite.PL.ASP.Controllers
 	    }
 
 
-	    public ActionResult RedirectBack()
+		[AllowAnonymous]
+		public JsonResult IsLoginExist(string login)
+		{
+			var throwError = !UserCredentialsVM.IsLoginExist(login);
+
+			return Json(throwError, JsonRequestBehavior.AllowGet);
+		}
+
+
+		private ActionResult RedirectBack()
 	    {
 			if (Request.Params["ReturnUrl"] != null)
 				return Redirect(Request.Params["ReturnUrl"]);

@@ -19,10 +19,10 @@
 	<tr>
 		<th>Короткий id</th>
 		<th>Никнейм</th>
-		<th>Роль</th>
-		<th>Количество созданных статей</th>
-		<th>Количество редактированных статей</th>
-		<th>Действия</th>
+		<th class="visible-sm">Роль</th>
+		<th class="visible-sm">Количество созданных статей</th>
+		<th class="visible-sm">Количество редактированных статей</th>
+		<th class="visible-sm">Действия</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -31,10 +31,10 @@
 	<tr>
 		<td>@user.ShortId</td>
 		<td><a href="@Url.Action("Details", "Users", new { id = user.ShortId })" class="btn btn-link btn-xs">@user.Nickname</a></td>
-		<td>@RoleVM.GetRole(user.RoleId).Name</td>
-		<td>#</td>
-		<td>#</td>
-		<td class="table-action">
+		<td class="visible-sm">@RoleVM.GetRole(user.RoleId).Name</td>
+		<td class="visible-sm">#</td>
+		<td class="visible-sm">#</td>
+		<td class="table-action visible-sm">
 			<a href="@Url.Action("Edit", "Users", new { id = user.ShortId })" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 			<span>
 				<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
