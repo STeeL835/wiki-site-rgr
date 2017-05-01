@@ -16,7 +16,7 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="user">User DTO</param>
 		/// <param name="credentials">Credentials DTO</param>
 		/// <returns>Whether operation of creation was successful</returns>
-		bool AddUser(UserDTO user, UserCredentialsDTO credentials);
+		bool AddUser(UserDTO user, UserCredentialsInDTO credentials);
 		/// <summary>
 		/// Updates user info in a database
 		/// </summary>
@@ -31,7 +31,7 @@ namespace WikiSite.BLL.Abstract
 		/// </summary>
 		/// <param name="updatedCredentials">Credentials DTO with the same ID and new data</param>
 		/// <returns>Whether the operation was successful</returns>
-		bool UpdateUserCredentials(UserCredentialsDTO updatedCredentials);
+		bool UpdateUserCredentials(UserCredentialsInDTO updatedCredentials);
 		/// <summary>
 		/// Removes user from a database.
 		/// </summary>
@@ -67,13 +67,7 @@ namespace WikiSite.BLL.Abstract
 		/// </summary>
 		/// <param name="credentials">Credentials to check for in a database</param>
 		/// <returns>DTO of a user, null if there's no such a user</returns>
-		UserDTO GetUser(UserCredentialsDTO credentials);
-		/// <summary>
-		/// Gets login and password hash
-		/// </summary>
-		/// <param name="credentialsId">user's credentials id</param>
-		/// <returns>Credentials DTO</returns>
-		UserCredentialsDTO GetCredentials(Guid credentialsId);
+		UserDTO GetUser(UserCredentialsInDTO credentials);
 		
 		/// <summary>
 		/// Searches for the user in database by it's nickname
@@ -87,5 +81,20 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="login">login string</param>
 		/// <returns>Whether login is exist or not</returns>
 		bool IsLoginExist(string login);
+		/// <summary>
+		/// Returns login for a certain user
+		/// </summary>
+		/// <param name="userId">id of a user</param>
+		/// <returns>login string</returns>
+		string GetLogin(Guid userId);
+		/// <summary>
+		/// Checks passwords (passed in and real one) if they match
+		/// </summary>
+		/// <remarks>
+		/// Id is not checked.
+		/// </remarks>
+		/// <param name="credentials">login-pass pair</param>
+		/// <returns>Whether the password is match the original</returns>
+		bool IsPasswordMatch(UserCredentialsInDTO credentials);
 	}
 }

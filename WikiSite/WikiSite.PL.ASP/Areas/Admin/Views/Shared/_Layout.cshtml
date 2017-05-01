@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WikiSite.PL.ASP.Models
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -33,32 +34,37 @@
 		<!-- Admin panel -->
 		<section class="topbar topbar-default">
 
-			<a href="#!" class="sidebar-control btn btn-sm btn-inverse">
+			<button class="sidebar-control btn btn-sm btn-inverse">
 				<span class="sr-only">Open sidebar</span>
 				<i class="fa fa-bars"></i>
-			</a>
+			</button>
 
-			<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right ">
-				<span class="sr-only">Войти</span>
-				<i class="fa fa-user"></i>
-			</a>
+			<ul class="pull-right list-inline list-unstyled">
+				<li><a href="#!" class="btn btn-success btn-xs">Личный кабинет</a></li>
+				<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
+				<li><img src="http://placehold.it/30" alt="Profile image" /></li>
+				<li>
+					@Html.ActionLink("Выйти", "Logout", "Auth", null, new { @class = "btn btn-inverse btn-sm" })
+				</li>
+			</ul>
 
 		</section>
 
 		<!-- Log in panel -->
-		<form class="row login-form animated" action="">
-			<div class="col-xs-12 col-sm-5 form-group">
+		<form class="login-form animated" action="">
+			<div class="form-group stretch">
 				<label for="login-login">Логин</label>
 				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
 			</div>
-
-			<div class="col-xs-12 col-sm-5 form-group has-error">
+				
+			<div class="form-group stretch has-error">
 				<label for="login-pass">Пароль</label>
 				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
 			</div>
-
-			<div class="col-xs-12 col-sm-2 form-group">
+				
+			<div class="form-group">
 				<input type="submit" class="btn btn-success pull-right" value="Войти">
+				<a href="#!" class="btn btn-link pull-right">Регистрация</a>
 			</div>
 		</form>
 
@@ -95,7 +101,7 @@
 	<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="~/Scripts/bootstrap.min.js"></script>
-	<script src="~/Scripts/main.js"></script>
+	<script src="~/Scripts/custom/main.js"></script>
 	@RenderSection("js", false)
 
 

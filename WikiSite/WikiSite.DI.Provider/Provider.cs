@@ -12,9 +12,13 @@ namespace WikiSite.DI.Provider
 		public static IUsersDAL UsersDAO { get; private set; }
 		public static IUserCredentialsDAL CredentialsDAO { get; private set; }
 		public static IRolesDAL RolesDAO { get; private set; }
+        public static IArticlesDAL ArticlesDAO { get; private set; } 
+        public static IArticleVersionsDAL ArticleVersionsDAO { get; private set; }
+        public static IArticleContentsDAL ArticleContentsDAO { get; private set; }
 
 		public static IUsersBLL UsersBLO { get; private set; }
 		public static IRolesBLL RolesBLO { get; private set; }
+        public static IArticlesBLL ArticlesBLO { get; private set; }
 
 		static Provider()
 		{
@@ -50,9 +54,12 @@ namespace WikiSite.DI.Provider
 					UsersDAO = new WikiSite.DAL.SQL.UsersDAO();
 					CredentialsDAO = new WikiSite.DAL.SQL.UserCredentialsDAO();
 					RolesDAO = new WikiSite.DAL.SQL.RolesDAO();
+                    ArticlesDAO = new WikiSite.DAL.SQL.ArticlesDAO();
+                    ArticleVersionsDAO = new WikiSite.DAL.SQL.ArticleVersionsDAO();
+                    ArticleContentsDAO = new WikiSite.DAL.SQL.ArticleContentsDAO();
 					break;
 				default:
-					throw new ApplicationException($"Incorrect configuration file. Inconsistent [DAL] key value: {configValue}");
+					throw new ApplicationException($"Incorrect configuration file. Inconsistent [DAL] key value: {configValue}.");
 			}
 		}
 
@@ -61,11 +68,12 @@ namespace WikiSite.DI.Provider
 			switch (configValue.ToUpperInvariant())
 			{
 				case "DEFAULT":
-					UsersBLO = new UsersBLO(UsersDAO, CredentialsDAO);
-					RolesBLO = new RolesBLO(RolesDAO);
+					UsersBLO = new WikiSite.BLL.Default.UsersBLO(UsersDAO, CredentialsDAO);
+					RolesBLO = new WikiSite.BLL.Default.RolesBLO(RolesDAO);
+                    ArticlesBLO = new WikiSite.BLL.Default.ArticleBLO(ArticlesDAO, ArticleVersionsDAO, ArticleContentsDAO);
 					break;
 				default:
-					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}");
+					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}.");
 			}
 		}
 	}

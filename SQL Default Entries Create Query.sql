@@ -1,12 +1,12 @@
-USE [University-WikiSite]
+USE [Wiki-site DB]
 
 /* Creating Roles */
 INSERT INTO [Roles] (Id, Name)
-	VALUES ('d905f4f9-4ff6-4164-b12d-9c5ce0b5b561','Пользователь');
+	VALUES ('d905f4f9-4ff6-4164-b12d-9c5ce0b5b561','User');
 INSERT INTO [Roles] (Id, Name)
-	VALUES ('4fc3a8a4-10f4-43c5-b4c8-c374768e8269','Модератор');
+	VALUES ('4fc3a8a4-10f4-43c5-b4c8-c374768e8269','Moderator');
 INSERT INTO [Roles] (Id, Name)
-	VALUES ('b7b4c011-96ac-4be8-9466-e72bb8cf41e7','Администратор');
+	VALUES ('b7b4c011-96ac-4be8-9466-e72bb8cf41e7','Admin');
 
 /* Default user (if user gets deleted, article's editor becomes default user) */
 INSERT INTO [Credentials] (Id, [Login], Password_Hash)

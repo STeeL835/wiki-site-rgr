@@ -5,6 +5,8 @@ namespace WikiSite.PL.ASP.Classes
 {
 	public static class ControllerExtentions
 	{
+		#region Alerts
+
 		/// <summary>
 		/// Adds an alert to a page using ViewBag
 		/// </summary>
@@ -87,7 +89,6 @@ namespace WikiSite.PL.ASP.Classes
 			controller.ViewBag.AlertClass = null;
 		}
 
-
 		/// <summary>
 		/// Return a CSS class for an <see cref="AlertType"/>
 		/// </summary>
@@ -119,10 +120,13 @@ namespace WikiSite.PL.ASP.Classes
 		public static AlertType MixAlertTypes(AlertType type1, AlertType type2)
 		{
 			return (type1 == AlertType.Danger && type2 == AlertType.Warning ||
-					type1 == AlertType.Warning && type2 == AlertType.Danger) ?
-						AlertType.Danger :
-						(type1 > type2) ? type1 : type2;
+			        type1 == AlertType.Warning && type2 == AlertType.Danger) ?
+				AlertType.Danger :
+				(type1 > type2) ? type1 : type2;
 		}
+
+		#endregion
+
 	}
 
 	public enum AlertType

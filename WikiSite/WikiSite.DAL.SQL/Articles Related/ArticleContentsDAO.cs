@@ -6,27 +6,28 @@ using WikiSite.Entities;
 
 namespace WikiSite.DAL.SQL
 {
-    public class ArticleContentDAO : IArticleContentDAL
+    public class ArticleContentsDAO : IArticleContentsDAL
     {
-        private static readonly string _connectionString;
+        private static readonly string ConnectionString;
 
-        static ArticleContentDAO()
+        static ArticleContentsDAO()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["WikiSiteDB"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["WikiSiteDB"].ConnectionString;
         }
 
         /// <summary>
-		/// Adds article's content to a database.
-		/// </summary>
-		/// <param name="content">Article's content DTO</param>
+        /// Adds article's content to a database.
+        /// </summary>
+        /// <param name="content">Article's content DTO</param>
         public bool AddContent(ArticleContentDTO content)
         {
             if (content == null) throw new ArgumentNullException();
 
             int addedRows;
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("INSERT INTO [ArticleContent] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
+                var sqlCom = new SqlCommand(
+                    "INSERT INTO [ArticleContent] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
                 sqlCom.Parameters.AddWithValue("@id", content.Id);
                 sqlCom.Parameters.AddWithValue("@definition", content.Definition);
                 sqlCom.Parameters.AddWithValue("ent_id", content.Text);
@@ -45,10 +46,9 @@ namespace WikiSite.DAL.SQL
         /// <returns>DTO of a article's content</returns>
         public ArticleContentDTO GetContent(Guid contentId)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [ArticleContent] " +
-                                            "WHERE Id = @id", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleContent] WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", contentId);
 
                 connection.Open();
@@ -57,9 +57,9 @@ namespace WikiSite.DAL.SQL
                 {
                     return new ArticleContentDTO
                     {
-                        Id = (Guid)reader["Id"],
-                        Definition = (string)reader["Defenition"],
-                        Text = (string)reader["Text"]
+                        Id = (Guid) reader["Id"],
+                        Definition = (string) reader["Defenition"],
+                        Text = (string) reader["Text"]
                     };
                 }
             }
@@ -73,7 +73,7 @@ namespace WikiSite.DAL.SQL
         public bool RemoveContent(Guid contentId)
         {
             int affectedRows;
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 var sqlCom = new SqlCommand("DELETE FROM [ArticleContent] WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", contentId);
@@ -83,7 +83,6 @@ namespace WikiSite.DAL.SQL
             }
 
             return affectedRows == 1;
-
         }
     }
 }

@@ -1,53 +1,82 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Foolproof;
 
 namespace WikiSite.PL.ASP.Models
 {
-	//[MetadataType(typeof(UserEditModelMeta))] // needs partial according to MSDN
-	public partial class UserEditModel : SignupModel
+	public class UserEditModel
 	{
+		private string _nickname;
+		private Guid _roleId;
+
 		#region VM
 
-		/* Nickname */
+		[Required]
+		[DataType(DataType.Text)]
+		[Display(Name = "Никнейм")]
+		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
+		public string Nickname
+		{
+			get { return _nickname; }
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Nickname mustn't be empty");
+				_nickname = value;
+			}
+		}
 
-		/* About */
+		[DataType(DataType.MultilineText)]
+		[MaxLength(1500)]
+		[Display(Name = "О себе")]
+		public string About { get; set; }
 
-		/* Role */
+		public SelectList Roles { get; set; }
 
+		[Required][Display(Name = "Роль")]
+		public Guid RoleId
+		{
+			get { return _roleId; }
+			set
+			{
+				if (value == Guid.Empty) throw new ArgumentException("Empty id for role");
+				_roleId = value;
+			}
+		}
 
 		[Display(Name = "Изменить пароль")]
 		public bool ChangePassword { get; set; }
 
-		[RequiredIf("ChangePassword", true)]
+		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")]
 		[DataType(DataType.Password)]
 		[Display(Name = "Текущий пароль")]
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
 		public string OldPassword { get; set; }
 
-		[RequiredIf("ChangePassword", true)] // new
-		[DataType(DataType.Password)]
+		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")] // new
+		[DataType(DataType.Password)] 
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
 		[Display(Name = "Новый пароль")] // new 
-		public override string Password { get; set; }
+		public string NewPassword { get; set; } // attributes are inherited even on overrided elements
 
-		[RequiredIf("ChangePassword", true)] // new
+		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")] // new
 		[DataType(DataType.Password)]
-		[System.ComponentModel.DataAnnotations.Compare("Password")]
+		[System.ComponentModel.DataAnnotations.Compare("NewPassword")]
 		[Display(Name = "Новый пароль еще раз")] // new 
-		public override string ConfirmPassword { get; set; }
+		public string ConfirmNewPassword { get; set; }
 
 		#endregion
 
-		public UserEditModel() : base()
+		public UserEditModel()
 		{
-			
+			Roles = new SelectList(RoleVM.GetRoles(),"Id","Name");
 		}
 
-		public UserEditModel(UserVM user)
+		public UserEditModel(UserVM user) : this()
 		{
 			About = user.About;
 			Nickname = user.Nickname;
-			Role = RoleVM.GetRoleEnum(user.RoleId);
+			RoleId = user.RoleId;
 		}
 
 		/// <summary>
@@ -59,7 +88,7 @@ namespace WikiSite.PL.ASP.Models
 		/// <returns>New and updated VM.</returns>		
 		public UserVM GetUserVM(UserVM user)
 		{
-			return new UserVM(user.Id, user.CredentialsId, Nickname, RoleVM.GetRole(Role).Id)
+			return new UserVM(user.Id, user.CredentialsId, Nickname, RoleId)
 			{
 				About = About
 			};
@@ -70,44 +99,13 @@ namespace WikiSite.PL.ASP.Models
 		/// Needs the original because some values get lost from form,
 		/// because they're never sent there
 		/// </summary>
-		/// <param name="credentials">current VM</param>
+		/// <param name="credId">current credentials id</param>
+		/// <param name="login">current login</param>
 		/// <returns>New and updated VM.</returns>
-		public UserCredentialsVM GetCredentialsVM(UserCredentialsVM credentials)
+		public UserCredentialsVM GetCredentialsVM(Guid credId, string login)
 		{
-			return new UserCredentialsVM(credentials.Id, credentials.Login, UserCredentialsVM.ComputeHashForPassword(Password));
+			return new UserCredentialsVM(credId, login, NewPassword);
 		}
 
-
-		#region Metadata
-
-		//static UserEditModel()
-		//{
-		//	TypeDescriptor.AddProviderTransparent(
-		//		new AssociatedMetadataTypeTypeDescriptionProvider(typeof(UserEditModel), typeof(UserEditModelMeta)),
-		//		typeof(UserEditModel)); // w/o this meta won't work
-		//}
-
-		///* About changing dataattribute attributes
-		// * https://msdn.microsoft.com/en-us/library/ff664465%28v=pandp.50%29.aspx
-		// */
-
-		//public class UserEditModelMeta
-		//{
-		//	[RequiredWhen("ChangePassword", true)] // new
-		//	[DataType(DataType.Password)]
-		//	[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
-		//	[Display(Name = "Новый пароль")] // new 
-		//	public object Password { get; set; }
-
-		//	[RequiredWhen("ChangePassword", true)] // new
-		//	[DataType(DataType.Password)]
-		//	[System.ComponentModel.DataAnnotations.Compare("Password")]
-		//	[Display(Name = "Новый пароль еще раз")] // new 
-		//	public object ConfirmPassword { get; set; }
-		//}
-
-		#endregion
 	}
-
-	
 }

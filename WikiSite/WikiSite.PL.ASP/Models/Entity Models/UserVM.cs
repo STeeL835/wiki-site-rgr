@@ -58,6 +58,7 @@ namespace WikiSite.PL.ASP.Models
 		[Display(Name = "О себе")]
 		public string About { get; set; }
 
+		[Required][Display(Name = "Роль")]
 		public Guid RoleId
 		{
 			get { return _roleId; }
@@ -171,7 +172,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </remarks>
 		/// <param name="credentials"></param>
 		/// <returns></returns>
-		public static UserVM GetCheckCredentials(UserCredentialsVM credentials)
+		public static UserVM GetUser(UserCredentialsVM credentials)
 		{
 			var user = _bll.GetUser(credentials);
 			return user == null ? null : (UserVM)user;

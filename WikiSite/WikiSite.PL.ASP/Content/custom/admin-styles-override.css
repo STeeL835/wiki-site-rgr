@@ -9,6 +9,10 @@
 	font-size: 30px !important;
 }
 
+.sidebar {
+	background-color: crimson;
+}
+
 @media (min-width:992px) {
 	.content {
 		margin-left: 250px;
@@ -24,7 +28,6 @@
 
 	.sidebar{
 		width:250px;
-		background-color: crimson
 	}
 
 	.page-back-button {

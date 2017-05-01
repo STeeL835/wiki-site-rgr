@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
@@ -13,7 +12,8 @@ namespace WikiSite.PL.ASP.Models
 
 		private Guid _id;
 		private string _login;
-		private byte[] _passwordHash;
+		//private byte[] _passwordHash;
+		private string _password;
 
 		public Guid Id
 		{
@@ -24,6 +24,9 @@ namespace WikiSite.PL.ASP.Models
 				_id = value;
 			}
 		}
+
+		[Required][Display(Name = "Логин")]
+		[DataType(DataType.Text)]
 		public string Login
 		{
 			get { return _login; }
@@ -33,35 +36,39 @@ namespace WikiSite.PL.ASP.Models
 				_login = value;
 			}
 		}
-		public byte[] PasswordHash
+		[Required][Display(Name = "Пароль")]
+		[DataType(DataType.Password)]
+		public string Password
 		{
-			get { return _passwordHash; }
+			get { return _password; }
 			set
 			{
-				if (value == null || value.Length == 0) throw new ArgumentException("Hash mustn't be empty");
-				_passwordHash = value;
+				if (string.IsNullOrWhiteSpace(value) || value.Length < 8)
+					throw new ArgumentException("value didn't match the conditions");
+				_password = value;
 			}
 		}
 
-		public UserCredentialsVM(string login, string password)
+		/// <summary>
+		/// Only for model binder
+		/// </summary>
+		public UserCredentialsVM()
 		{
-			Id = Guid.NewGuid();
-			Login = login;
-			PasswordHash = ComputeHashForPassword(password);
+			_id = Guid.NewGuid();
 		}
 
-		public UserCredentialsVM(Guid id, string login, byte[] passwordHash)
+		public UserCredentialsVM(string login, string password) : this(Guid.NewGuid(), login, password)
+		{ }
+
+		public UserCredentialsVM(Guid id, string login, string password)
 		{
 			Id = id;
 			Login = login;
-			PasswordHash = passwordHash;
+			Password = password;
 		}
 
-		public static implicit operator UserCredentialsDTO(UserCredentialsVM vm)
-			=> new UserCredentialsDTO { Id = vm.Id, Login = vm.Login, PasswordHash = vm._passwordHash};
-
-		public static explicit operator UserCredentialsVM(UserCredentialsDTO dto) =>
-			new UserCredentialsVM(dto.Id, dto.Login, dto.PasswordHash);
+		public static implicit operator UserCredentialsInDTO(UserCredentialsVM vm)
+			=> new UserCredentialsInDTO { Id = vm.Id, Login = vm.Login, Password = vm._password};
 
 		#endregion
 
@@ -94,14 +101,14 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.IsLoginExist(login);
 		}
 
-		/// <summary>
-		/// Returns login and password hash
-		/// </summary>
-		/// <param name="credentialsId">user's credentials id</param>
-		/// <returns>Credentials DTO</returns>
-		public static UserCredentialsVM GetCredentials(Guid id)
+		public static string GetLogin(Guid userId)
 		{
-			return (UserCredentialsVM) _bll.GetCredentials(id);
+			return _bll.GetLogin(userId);
+		}
+
+		public static bool IsPasswordMatch(UserCredentialsVM vm)
+		{
+			return _bll.IsPasswordMatch(vm);
 		}
 
 		/// <summary>
@@ -114,15 +121,6 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.UpdateUserCredentials(credentials);
 		}
 
-		/// <summary>
-		/// Converts a string password into hash
-		/// </summary>
-		/// <param name="password">password string</param>
-		/// <returns>bytes array that contains (is) hash</returns>
-		public static byte[] ComputeHashForPassword(string password)
-		{
-			return SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(password));
-		}
 
 		#endregion
 	}

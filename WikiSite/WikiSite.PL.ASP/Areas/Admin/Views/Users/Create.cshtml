@@ -1,4 +1,4 @@
-﻿@model WikiSite.PL.ASP.Models.SignupModel
+﻿@model WikiSite.PL.ASP.Models.RegisterVM
 
 @{
     ViewBag.Title = "Создать пользователя";
@@ -63,9 +63,9 @@
 	    </div>
 		
 		<div class="form-group">
-			@Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
+			@Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-9">
-				@Html.EnumDropDownListFor(model => model.Role, htmlAttributes: new { @class = "form-control" })
+				@Html.DropDownListFor(model => model.RoleId, Model.Roles, htmlAttributes: new { @class = "form-control" })
 			</div>
 		</div>
 

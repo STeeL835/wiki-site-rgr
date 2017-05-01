@@ -4,6 +4,7 @@ using WikiSite.PL.ASP.Models;
 
 namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         // GET: Admin/Users
@@ -16,12 +17,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         }
 
 
-	    public ActionResult CreateUser()
+	    public ActionResult Create()
 	    {
-		    return View();
+		    return View(new RegisterVM());
 	    }
 		[HttpPost][ValidateAntiForgeryToken]
-	    public ActionResult CreateUser(SignupModel model)
+	    public ActionResult Create(RegisterVM model)
 	    {
 		    if (ModelState.IsValid)
 		    {
@@ -35,28 +36,33 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 					    AlertType.Danger);
 				}
 		    }
+		    else
+		    {
+				this.Alert($"Не вся модель заполнена верно. Пользователь не был добавлен.",
+						AlertType.Danger);
+			}
 		    return View(model);
 	    }
 
 
-	    public ActionResult EditUser(int id)
+	    public ActionResult Edit(int id)
 	    {
 		    var user = UserVM.GetUser(id);
-		    var cred = UserCredentialsVM.GetCredentials(user.CredentialsId);
+		    var login = UserCredentialsVM.GetLogin(user.Id);
 		    var model = new UserEditModel(user);
 
 		    TempData["user"] = user;
-		    TempData["cred"] = cred;
+		    TempData["login"] = login;
 
 			return View(model);
 		}
 		[HttpPost][ValidateAntiForgeryToken]
-		public ActionResult EditUser(UserEditModel model)
+		public ActionResult Edit(UserEditModel model)
 		{
 			if (ModelState.IsValid)
 			{
 				var user = (UserVM) TempData.Peek("user");
-				var cred = (UserCredentialsVM) TempData.Peek("cred");
+				var login = (string) TempData.Peek("login");
 
 				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
@@ -70,10 +76,9 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (model.ChangePassword)
 				{
-					if (UserCredentialsVM.GetCredentials(cred.Id).PasswordHash
-						.Equals(UserCredentialsVM.ComputeHashForPassword(model.OldPassword)))
+					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, model.NewPassword)))
 					{
-						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(cred)))
+						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(user.CredentialsId, login)))
 						{
 							this.AppendAlert("Пароль успешно изменён.", AlertType.Success);
 						}
@@ -103,19 +108,19 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		[HttpPost][ValidateAntiForgeryToken]
 	    public ActionResult CheckCredentials(CredentialsUserModel model)
 	    {
-		    model.User = UserVM.GetCheckCredentials(model.GetCredentials());
+		    model.User = UserVM.GetUser(model.GetCredentials());
 			return View(model);
 	    }
 
 
-	    public ActionResult UserDetails(int id)
+	    public ActionResult Details(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 		    return View(user);
 	    }
 
 
-	    public ActionResult DeleteUser(int id)
+	    public ActionResult Delete(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 			if (UserVM.RemoveUser(user.Id))
@@ -129,14 +134,5 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			}
 			return RedirectToAction("Index");
 		}
-
-
-	    public JsonResult IsLoginExist(string login)
-	    {
-		    var throwError = !UserCredentialsVM.IsLoginExist(login);
-
-			return Json(throwError, JsonRequestBehavior.AllowGet);
-	    }
-
     }
 }

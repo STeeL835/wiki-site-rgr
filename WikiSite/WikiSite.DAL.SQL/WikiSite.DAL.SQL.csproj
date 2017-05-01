@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Articles Related\ArticleContentDAO.cs" />
+    <Compile Include="Articles Related\ArticleContentsDAO.cs" />
     <Compile Include="Articles Related\ArticleDAO.cs" />
     <Compile Include="Articles Related\ArticleVersionsDAO.cs" />
     <Compile Include="Users Related\RolesDAO.cs" />

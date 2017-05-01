@@ -1,34 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace WikiSite.PL.ASP.Models
 {
-	public class SignupModel : UserVM
+	public class RegisterVM : UserVM
 	{
 		#region VM
-
-		private RoleVM.RolesEnum _role;
 
 		/* Nickname */
 
 		/* About */
-
-		[EnumDataType(typeof(RoleVM.RolesEnum))]
-		[Display(Name = "Роль")]
-		public RoleVM.RolesEnum Role
-		{
-			get { return _role; }
-			set
-			{
-				_role = value;
-				RoleId = RoleVM.GetRole(value).Id;
-			}
-		}
+	
+		public SelectList Roles { get; set; }
 
 
 		[Required][DataType(DataType.Text)]
 		[RegularExpression("^[0-9a-zA-Z\\-]{4,50}$")]
-		[Remote("IsLoginExist", "Users", ErrorMessage = "Такой логин уже существует")]
+		[Remote("IsLoginExist", "Auth", ErrorMessage = "Такой логин уже существует")]
 		[Display(Name = "Логин")]
 		public string Login { get; set; }
 
@@ -46,9 +35,15 @@ namespace WikiSite.PL.ASP.Models
 
 		/* User's and credentials ID are generated in a base constructor */
 
+		public RegisterVM() : base()
+		{
+			Roles = new SelectList(RoleVM.GetRoles(),"Id","Name");
+			RoleId = RoleVM.GetRole("User").Id;
+		}
+
 		public UserCredentialsVM GetCredentialsVM()
 		{
-			return new UserCredentialsVM(CredentialsId, Login, UserCredentialsVM.ComputeHashForPassword(Password));
+			return new UserCredentialsVM(CredentialsId, Login, Password);
 		}
 	}
 }

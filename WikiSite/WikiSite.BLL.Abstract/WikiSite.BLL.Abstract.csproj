@@ -40,11 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Article Related\IArticlesBLL.cs" />
     <Compile Include="User Related\IRolesBLL.cs" />
     <Compile Include="User Related\IUsersBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
+      <Project>{2f51132c-74ac-4e82-8b41-e1e477495db7}</Project>
+      <Name>WikiSite.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WikiSite.DAL.SQL\WikiSite.DAL.SQL.csproj">
+      <Project>{5570bf78-7db6-4e02-8542-4a86db841ab9}</Project>
+      <Name>WikiSite.DAL.SQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
       <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
       <Name>WikiSite.Entities</Name>

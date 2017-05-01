@@ -11,8 +11,8 @@ namespace WikiSite.PL.ASP.Areas.Admin
             context.MapRoute(
                 name: "Admin_default",
                 url: "Admin/{controller}/{action}/{id}",
-                defaults: new { action = "Index", id = UrlParameter.Optional }
-				//namespaces: new []{ "WikiSite.PL.ASP.Areas.Admin" }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+				namespaces: new []{ "WikiSite.PL.ASP.Areas.Admin.Controllers" }
             );
         }
     }
