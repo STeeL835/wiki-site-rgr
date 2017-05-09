@@ -15,7 +15,9 @@ namespace WikiSite.PL.ASP.Models
 		[Required]
 		[DataType(DataType.Text)]
 		[Display(Name = "Никнейм")]
-		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
+		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$",
+			ErrorMessage = "Никнейм может состоять только из латинских и русских букв, цифр, пробела и знака подчеркивания, " +
+						   "а также не может быть короче 3 и длиннее 50 символов")]
 		public string Nickname
 		{
 			get { return _nickname; }
@@ -27,7 +29,7 @@ namespace WikiSite.PL.ASP.Models
 		}
 
 		[DataType(DataType.MultilineText)]
-		[MaxLength(1500)]
+		[MaxLength(1500, ErrorMessage = "Максимальное количество символов - 1500")]
 		[Display(Name = "О себе")]
 		public string About { get; set; }
 
@@ -50,18 +52,19 @@ namespace WikiSite.PL.ASP.Models
 		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")]
 		[DataType(DataType.Password)]
 		[Display(Name = "Текущий пароль")]
-		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
 		public string OldPassword { get; set; }
 
 		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")] // new
-		[DataType(DataType.Password)] 
-		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
+		[DataType(DataType.Password)]
+		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$",
+			ErrorMessage = "Пароль может содержать латинские буквы, цифры, символы !@#%$^&*+-, " +
+						   "а также не может быть короче 8 и длиннее 50 символов")]
 		[Display(Name = "Новый пароль")] // new 
 		public string NewPassword { get; set; } // attributes are inherited even on overrided elements
 
 		[RequiredIf("ChangePassword", true, ErrorMessage = "Это поле необходимо, если вы хотите изменить пароль")] // new
 		[DataType(DataType.Password)]
-		[System.ComponentModel.DataAnnotations.Compare("NewPassword")]
+		[System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
 		[Display(Name = "Новый пароль еще раз")] // new 
 		public string ConfirmNewPassword { get; set; }
 

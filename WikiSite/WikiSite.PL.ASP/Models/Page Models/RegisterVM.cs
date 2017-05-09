@@ -16,18 +16,22 @@ namespace WikiSite.PL.ASP.Models
 
 
 		[Required][DataType(DataType.Text)]
-		[RegularExpression("^[0-9a-zA-Z\\-]{4,50}$")]
+		[RegularExpression("^[0-9a-zA-Z\\-]{4,50}$", 
+			ErrorMessage = "Логин может состоять только из латинских букв, цифр и знака тире, " +
+			               "а также не может быть короче 4 и длиннее 50 символов")]
 		[Remote("IsLoginExist", "Auth", ErrorMessage = "Такой логин уже существует")]
 		[Display(Name = "Логин")]
 		public string Login { get; set; }
 
 		[Required][DataType(DataType.Password)]
-		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$")]
+		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$", 
+			ErrorMessage = "Пароль может содержать латинские буквы, цифры, символы !@#%$^&*+-, " +
+			               "а также не может быть короче 8 и длиннее 50 символов")]
 		[Display(Name = "Пароль")]
 		public virtual string Password { get; set; }
 
 		[Required][DataType(DataType.Password)]
-		[System.ComponentModel.DataAnnotations.Compare("Password")]
+		[System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Пароли не совпадают")]
 		[Display(Name = "Пароль еще раз")]
 		public virtual string ConfirmPassword { get; set; }
 

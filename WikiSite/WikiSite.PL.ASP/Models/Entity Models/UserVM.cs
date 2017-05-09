@@ -42,7 +42,9 @@ namespace WikiSite.PL.ASP.Models
 		[Required]
 		[DataType(DataType.Text)]
 		[Display(Name = "Никнейм")]
-		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$")]
+		[RegularExpression("^[0-9a-zA-ZА-Яа-яёЁ_ ]{3,50}$", 
+			ErrorMessage = "Никнейм может состоять только из латинских и русских букв, цифр, пробела и знака подчеркивания, " +
+			               "а также не может быть короче 3 и длиннее 50 символов")]
 		public string Nickname
 		{
 			get { return _nickname; }
@@ -54,7 +56,7 @@ namespace WikiSite.PL.ASP.Models
 		}
 
 		[DataType(DataType.MultilineText)]
-		[MaxLength(1500)]
+		[MaxLength(1500, ErrorMessage = "Максимальное количество символов - 1500")]
 		[Display(Name = "О себе")]
 		public string About { get; set; }
 
