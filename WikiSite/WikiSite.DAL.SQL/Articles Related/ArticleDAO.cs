@@ -18,7 +18,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Adds article to a database.
+        /// Adds article to database.
         /// </summary>
         /// <remarks>
         /// This method doesn't count SmallID field since it managed by an SQL Database.
@@ -31,11 +31,9 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "INSERT INTO [Article] (Id, Short_Url, Author_Id, Heading, Date_Of_Creation) VALUES(@id, @short_url @author_id, @heading, @date_of_creation)",
-                    connection);
+                var sqlCom = new SqlCommand("INSERT INTO [Articles] (Id, Short_Url, Author_Id, Heading, Date_Of_Creation) VALUES(@id, @Short_Url @author_id, @heading, @date_of_creation)", connection);
                 sqlCom.Parameters.AddWithValue("@id", article.Id);
-                sqlCom.Parameters.AddWithValue("@short_urll", article.ShortUrl);
+                sqlCom.Parameters.AddWithValue("@Short_Url", article.ShortUrl);
                 sqlCom.Parameters.AddWithValue("@author_id", article.AuthorId);
                 sqlCom.Parameters.AddWithValue("@heading", article.Heading);
                 sqlCom.Parameters.AddWithValue("@date_of_creation", article.CreationDate);
@@ -55,7 +53,8 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [Users]", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [Articles]", connection);
+
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
                 while (reader.Read())
@@ -64,7 +63,7 @@ namespace WikiSite.DAL.SQL
                     {
                         Id = (Guid) reader["Id"],
                         ShortUrl = (string) reader["Short_Url"],
-                        AuthorId = (Guid) reader["Author_Id "],
+                        AuthorId = (Guid) reader["Author_Id"],
                         Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
                     };
@@ -73,16 +72,44 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets a certain article from a database.
+        /// Gets all articles form database, which created by author.
+        /// </summary>
+        /// <param name="authorId">GUID of author to get</param>
+        /// <returns>Articles' DTOs</returns>
+        public IEnumerable<ArticleDTO> GetAllArticles(Guid authorId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var sqlCom = new SqlCommand("SELECT * FROM [Articles] WHERE Author_Id = @author_id", connection);
+                sqlCom.Parameters.AddWithValue("@author_id", authorId);
+
+                connection.Open();
+                var reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new ArticleDTO
+                    {
+                        Id = (Guid)reader["Id"],
+                        ShortUrl = (string)reader["Short_Url"],
+                        AuthorId = (Guid)reader["Author_Id"],
+                        Heading = (string)reader["Heading"],
+                        CreationDate = (DateTime)reader["Date_Of_Creation"]
+                    };
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a certain article from database.
         /// </summary>
         /// <param name="shortUrl">Short URL of article to get</param>
-        /// <returns>DTO of a article</returns>
+        /// <returns>Article DTO</returns>
         public ArticleDTO GetArticle(string shortUrl)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [Articles] WHERE Short_Url = @short_url", connection);
-                sqlCom.Parameters.AddWithValue("@short_url", shortUrl);
+                var sqlCom = new SqlCommand("SELECT * FROM [Articles] WHERE Short_Url = @Short_Url", connection);
+                sqlCom.Parameters.AddWithValue("@Short_Url", shortUrl);
 
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
@@ -91,7 +118,7 @@ namespace WikiSite.DAL.SQL
                     return new ArticleDTO
                     {
                         Id = (Guid) reader["Id"],
-                        ShortUrl = (string) reader["Short_"],
+                        ShortUrl = (string) reader["Short_Url"],
                         AuthorId = (Guid) reader["Author_Id"],
                         Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
@@ -102,10 +129,10 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets a certain article from a database.
+        /// Gets a certain article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
-        /// <returns>DTO of a article</returns>
+        /// <returns>Article DTO</returns>
         public ArticleDTO GetArticle(Guid articleId)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -120,7 +147,7 @@ namespace WikiSite.DAL.SQL
                     return new ArticleDTO
                     {
                         Id = (Guid) reader["Id"],
-                        ShortUrl = (string) reader["Short_"],
+                        ShortUrl = (string) reader["Short_Url"],
                         AuthorId = (Guid) reader["Author_Id"],
                         Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
@@ -131,7 +158,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Removes article from a database.
+        /// Removes article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to delete</param>
         public bool RemoveArticle(Guid articleId)

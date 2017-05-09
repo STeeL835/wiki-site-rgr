@@ -9,6 +9,7 @@ namespace WikiSite.PL.ASP
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutoMapperConfig.Configurate();
         }
     }
 }

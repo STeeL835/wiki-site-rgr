@@ -17,7 +17,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Adds article's version to a database.
+        /// Adds article's version to database.
         /// </summary>
         /// <param name="version">Version DTO</param>
         public bool AddVersion(ArticleVersionDTO version)
@@ -27,9 +27,7 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "INSERT INTO [ArticleVersions] (Id, Article_Id, Content_Id, Data_Of_Edition, Editor_Id, Is_Approved) VALUES(@id, @article_id, @content_id, @data_of_edition, @editor_id, @is_approved)",
-                    connection);
+                var sqlCom = new SqlCommand("INSERT INTO [ArticleVersions] (Id, Article_Id, Content_Id, Data_Of_Edition, Editor_Id, Is_Approved) VALUES(@id, @article_id, @content_id, @data_of_edition, @editor_id, @is_approved)", connection);
                 sqlCom.Parameters.AddWithValue("@id", version.Id);
                 sqlCom.Parameters.AddWithValue("@article_id", version.ArticleId);
                 sqlCom.Parameters.AddWithValue("@content_id", version.ContentId);
@@ -45,7 +43,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Removes article's version to a database.
+        /// Removes article's version to database.
         /// </summary>
         /// <param name="versionId">GUID of version to delete</param>
         public bool RemoveVersion(Guid versionId)
@@ -69,8 +67,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT * FROM [ArticleVersions] WHERE [ArticleVersions].[Article_Id] = @article_id", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE Article_Id = @article_id", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
@@ -90,6 +87,34 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
+        /// Gets all version, which created by author, from database.
+        /// </summary>
+        /// <param name="authorId">GUID of author to get</param>
+        /// <returns>Article's versions DTOs</returns>
+        public IEnumerable<ArticleVersionDTO> GetAllVersionsByAuthor(Guid authorId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE Editor_Id = @editor_id", connection);
+                sqlCom.Parameters.AddWithValue("@editor_id", authorId);
+                connection.Open();
+                var reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new ArticleVersionDTO
+                    {
+                        Id = (Guid)reader["Id"],
+                        ArticleId = (Guid)reader["Article_Id"],
+                        ContentId = (Guid)reader["Content_Id"],
+                        LastEditDate = (DateTime)reader["Date_Of_Edition"],
+                        EditionAuthorId = (Guid)reader["Editor_Id"],
+                        IsApproved = (bool)reader["Is_Approved"]
+                    };
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets a certain article's version by id from database.
         /// </summary>
         /// <param name="versionId">GUID of version to get</param>
@@ -98,9 +123,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT * FROM [ArticleVersions] WHERE Id = @id",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", versionId);
 
                 connection.Open();
@@ -132,9 +155,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT * FROM [ArticleVersions] WHERE (Article_Id = @article_id AND Date_Of_Edition = @date_of_edition)",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE (Article_Id = @article_id AND Date_Of_Edition = @date_of_edition)", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 sqlCom.Parameters.AddWithValue("@date_of_edition", date);
 
@@ -167,9 +188,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Number = @number",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Number = @number", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 sqlCom.Parameters.AddWithValue("@number", number);
 
@@ -193,7 +212,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets last approved article's version from a database.
+        /// Gets last approved article's version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>DTO of last approved article's version</returns>
@@ -201,9 +220,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT top 1 * FROM [ArticleVersions] WHERE (Article_Id = @article_id AND Is_Approved = @is_approved) ORDER BY Date_Of_Edition DESC",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT top 1 * FROM [ArticleVersions] WHERE (Article_Id = @article_id AND Is_Approved = @is_approved) ORDER BY Date_Of_Edition DESC", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 sqlCom.Parameters.AddWithValue("@is_approved", true);
 
@@ -227,7 +244,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets last article's version from a database.
+        /// Gets last article's version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>DTO of last article's version</returns>
@@ -235,9 +252,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "SELECT top 1 * FROM [ArticleVersions] WHERE (Article_Id = @article_id) ORDER BY Date_Of_Edition DESC",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT top 1 * FROM [ArticleVersions] WHERE (Article_Id = @article_id) ORDER BY Date_Of_Edition DESC", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
 
                 connection.Open();
@@ -268,8 +283,7 @@ namespace WikiSite.DAL.SQL
             int affectedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("UPDATE [ArticleVersions] SET Is_Approved = @is_approved WHERE Id = @id",
-                    connection);
+                var sqlCom = new SqlCommand("UPDATE [ArticleVersions] SET Is_Approved = @is_approved WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", versionId);
                 sqlCom.Parameters.AddWithValue("@is_approved", true);
                 connection.Open();

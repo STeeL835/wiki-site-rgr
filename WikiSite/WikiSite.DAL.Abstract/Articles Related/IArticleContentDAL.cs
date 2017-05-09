@@ -6,19 +6,19 @@ namespace WikiSite.DAL.Abstract
     public interface IArticleContentsDAL
     {
         /// <summary>
-        /// Adds article's content to a database.
+        /// Adds article's content to database.
         /// </summary>
         /// <param name="content">Article's content DTO</param>
         bool AddContent(ArticleContentDTO content);
 
         /// <summary>
-        /// Removes article's content from a database.
+        /// Removes article's content from database.
         /// </summary>
         /// <param name="contentId">GUID of article's content to delete</param>
         bool RemoveContent(Guid contentId);
 
         /// <summary>
-        /// Gets article's content from a database.
+        /// Gets article's content from database.
         /// </summary>
         /// <param name="contentId">GUID of article's content to get</param>
         /// <returns>DTO of a article's content</returns>
