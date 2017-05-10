@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6F99A9F2-2735-4D26-9B2E-32D0A0CD41CF}</ProjectGuid>
+    <ProjectGuid>{D62B9999-50DB-410C-8835-584A8E757AFE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WikiSite.BLL.Default</RootNamespace>
-    <AssemblyName>WikiSite.BLL.Default</AssemblyName>
+    <RootNamespace>WikiSite.Caretakers</RootNamespace>
+    <AssemblyName>WikiSite.Caretakers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,26 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Article Related\ArticlesBLO.cs" />
+    <Compile Include="ErrorGuard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User Related\RolesBLO.cs" />
-    <Compile Include="User Related\UsersBLO.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">
-      <Project>{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}</Project>
-      <Name>WikiSite.BLL.Abstract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WikiSite.Caretakers\WikiSite.Caretakers\WikiSite.Caretakers.csproj">
-      <Project>{d62b9999-50db-410c-8835-584a8e757afe}</Project>
-      <Name>WikiSite.Caretakers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
-      <Project>{2F51132C-74AC-4E82-8B41-E1E477495DB7}</Project>
-      <Name>WikiSite.DAL.Abstract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WikiSite.Entities\WikiSite.Entities.csproj">
-      <Project>{DF40A42E-4722-4B15-96B2-41E3449277B4}</Project>
+    <ProjectReference Include="..\..\WikiSite.Entities\WikiSite.Entities.csproj">
+      <Project>{df40a42e-4722-4b15-96b2-41e3449277b4}</Project>
       <Name>WikiSite.Entities</Name>
     </ProjectReference>
   </ItemGroup>

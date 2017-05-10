@@ -5,6 +5,7 @@ using System.Web;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
+using WikiSite.Caretakers;
 using AutoMapper;
 
 namespace WikiSite.PL.ASP.Models
@@ -21,7 +22,6 @@ namespace WikiSite.PL.ASP.Models
         private Guid _editionAuthorId;
         private string _definition;
         private string _text;
-        private DateTime _defaultSqlDateTime = new DateTime(1753, 1, 1);
 
         /// <summary>
         /// ONLY for model binder
@@ -57,8 +57,7 @@ namespace WikiSite.PL.ASP.Models
             IsApproved = isApproved;
         }
 
-        public ArticleVM(Guid id, string heading, Guid authorId, DateTime creationDate, Guid editionAuthorId,
-            DateTime lastEditDate, string definition, string text, bool isApproved = false)
+        public ArticleVM(Guid id, string heading, Guid authorId, DateTime creationDate, Guid editionAuthorId, DateTime lastEditDate, string definition, string text, bool isApproved = false)
         {
             Id = id;
             Heading = heading;
@@ -76,7 +75,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _id; }
             set
             {
-                if (value == Guid.Empty) throw new ArgumentException("Empty id.");
+                ErrorGuard.Check(value);
                 _id = value;
             }
         }
@@ -88,7 +87,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _authorId; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _authorId = value;
             }
         }
@@ -98,7 +97,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _heading; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _heading = value;
                 ShortUrl = HttpUtility.UrlEncode(value);
             }
@@ -109,7 +108,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _creationDate; }
             set
             {
-                CheckThrowDate(value); 
+                ErrorGuard.Check(value); 
                 _creationDate = value;
             }
         }
@@ -117,7 +116,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _lastEditDate; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _lastEditDate = value;
             }
         }
@@ -125,7 +124,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _editionAuthorId; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _editionAuthorId = value;
             }
         }
@@ -136,7 +135,7 @@ namespace WikiSite.PL.ASP.Models
             get { return _definition; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _definition = value;
             }
         }
@@ -145,34 +144,9 @@ namespace WikiSite.PL.ASP.Models
             get { return _text; }
             set
             {
-                CheckThrowDate(value);
+                ErrorGuard.Check(value);
                 _text = value;
             }
-        }
-
-        private void CheckThrowDate(Guid id, string message = "Id is empty.")
-        {
-            if (id == Guid.Empty) throw new ArgumentNullException(nameof(id), message);
-        }
-
-        private void CheckThrowDate(string line, string message = "Text doesn't make sense.")
-        {
-            if (string.IsNullOrWhiteSpace(line)) throw new ArgumentNullException(nameof(line), message);
-        }
-
-        private void CheckThrowDate(DateTime date, string message = "default(SqlDateTime)")
-        {
-            if (message == "default(SqlDateTime)")
-            {
-                message =
-                    $"Date is less than or equal to default value for SQL Server ({_defaultSqlDateTime.ToShortDateString()}).";
-            }
-            if (DateTime.Compare(date, _defaultSqlDateTime) <= 0) throw new ArgumentNullException(nameof(date), message);
-        }
-
-        private void CheckThrowDate(int number, string message = "Number is default value.")
-        {
-            if (number == default(int)) throw new ArgumentNullException(nameof(number), message);
         }
 
         #endregion
