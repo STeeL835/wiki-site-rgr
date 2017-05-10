@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8CE58EBB-1531-447D-96DF-64F0A5E47D53}</ProjectGuid>
+    <ProjectGuid>{2378A4ED-F04A-44AC-8BDC-7A36A7E07152}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WikiSite.Caretakers</RootNamespace>

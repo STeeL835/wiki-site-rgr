@@ -51,8 +51,8 @@
       <Project>{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}</Project>
       <Name>WikiSite.BLL.Abstract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WikiSite.Caretakers\WikiSite.Caretakers\WikiSite.Caretakers.csproj">
-      <Project>{d62b9999-50db-410c-8835-584a8e757afe}</Project>
+    <ProjectReference Include="..\WikiSite.Caretakers\WikiSite.Caretakers.csproj">
+      <Project>{2378a4ed-f04a-44ac-8bdc-7a36a7e07152}</Project>
       <Name>WikiSite.Caretakers</Name>
     </ProjectReference>
     <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
