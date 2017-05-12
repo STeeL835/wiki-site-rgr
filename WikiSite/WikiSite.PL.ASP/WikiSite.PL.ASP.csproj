@@ -189,6 +189,7 @@
     <Compile Include="Classes\AllowAnonymousOnlyAttribute.cs" />
     <Compile Include="Classes\ControllerExtentions.cs" />
     <Compile Include="Classes\DefaultRoleProvider.cs" />
+    <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Global.asax.cs">

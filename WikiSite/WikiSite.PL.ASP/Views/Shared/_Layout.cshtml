@@ -72,8 +72,8 @@
 			<form class="login-form animated" method="post" action="Auth/Login">
 				@Html.AntiForgeryToken()
 				<div class="form-group stretch">
-					<label for="login-login">Логин</label>
-					@Html.TextBox("Login", "", new { @class = "form-control", id = "login-login", placeholder = "Логин"})
+					<label for="login-login">Логин или e-mail</label>
+					@Html.TextBox("LoginEmail", "", new { @class = "form-control", id = "login-login", placeholder = "Логин или e-mail"})
 				</div>
 
 				<div class="form-group stretch">
@@ -98,7 +98,11 @@
 		<section class="sidebar animated sidebar-default">
 			<i class="sidebar-image" alt=""></i>
 			<ul>
-				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home")</li>
+				<li class="logo">
+					<a href="@Url.Action("Index", "Home")" title="My Name Jeff">
+						<span class="sr-only">My Name Jeff</span>
+					</a>
+				</li>
 				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
 				<li class="divider"></li>
 				<li><a href="#!">На главную страницу</a></li>

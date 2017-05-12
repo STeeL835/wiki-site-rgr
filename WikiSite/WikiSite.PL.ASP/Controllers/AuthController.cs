@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using System.Web.Security;
+using log4net;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -7,6 +9,9 @@ namespace WikiSite.PL.ASP.Controllers
 {
     public class AuthController : Controller
     {
+	    private static EmailAddressAttribute _emailChecker = new EmailAddressAttribute();
+	    public static ILog Log = LogManager.GetLogger(typeof(AuthController));
+
 		// GET: Login
 		[AllowAnonymousOnly]
 		public ActionResult Login()
@@ -69,6 +74,22 @@ namespace WikiSite.PL.ASP.Controllers
 		public JsonResult IsLoginExist(string login)
 		{
 			var throwError = !UserCredentialsVM.IsLoginExist(login);
+
+			return Json(throwError, JsonRequestBehavior.AllowGet);
+		}
+		[AllowAnonymous]
+		public JsonResult IsEmailExist(string email)
+		{
+			var throwError = !UserCredentialsVM.IsEmailExist(email);
+
+			return Json(throwError, JsonRequestBehavior.AllowGet);
+		}
+		[AllowAnonymous]
+		public JsonResult CheckLogin(string login)
+		{
+			var throwError = false;
+			if (login.Contains("@"))
+				throwError = !_emailChecker.IsValid(login);
 
 			return Json(throwError, JsonRequestBehavior.AllowGet);
 		}

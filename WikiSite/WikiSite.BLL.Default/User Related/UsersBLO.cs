@@ -13,8 +13,8 @@ namespace WikiSite.BLL.Default
 	{
 		private SHA512 HashFunction { get; } = SHA512.Create();
 
-		private IUsersDAL _usersDAL;
-		private IUserCredentialsDAL _credentialsDAL;
+		private readonly IUsersDAL _usersDAL;
+		private readonly IUserCredentialsDAL _credentialsDAL;
 
 		public UsersBLO(IUsersDAL usersDAL, IUserCredentialsDAL credentialsDAL)
 		{
@@ -34,7 +34,7 @@ namespace WikiSite.BLL.Default
 		/// </remarks>
 		/// <param name="user">User DTO</param>
 		/// <param name="credentials">Credentials DTO</param>
-		public bool AddUser(UserDTO user, UserCredentialsInDTO credentials)
+		public bool AddUser(UserDTO user, UserCredentialsDTO credentials)
 		{
 			CheckThrowDTO(user);
 			CheckThrowDTO(credentials);
@@ -45,7 +45,7 @@ namespace WikiSite.BLL.Default
 			var success = !IsLoginExist(credentials.Login);
 			if (success) // if login doesn't exist
 			{
-				var credSuccess = _credentialsDAL.AddCredentials(Out(credentials));
+				var credSuccess = _credentialsDAL.AddCredentials(InDB(credentials));
 				var userSuccess = _usersDAL.AddUser(user);
 				if (credSuccess && !userSuccess)
 				{
@@ -78,10 +78,10 @@ namespace WikiSite.BLL.Default
 		/// </summary>
 		/// <param name="updatedCredentials">Credentials DTO with the same ID and new data</param>
 		/// <returns>Whether the operation was successful</returns>
-		public bool UpdateUserCredentials(UserCredentialsInDTO updatedCredentials)
+		public bool UpdateUserCredentials(UserCredentialsDTO updatedCredentials)
 		{
 			CheckThrowDTO(updatedCredentials);
-			return _credentialsDAL.UpdateCredentials(Out(updatedCredentials));
+			return _credentialsDAL.UpdateCredentials(InDB(updatedCredentials));
 		}
 
 		/// <summary>
@@ -149,16 +149,11 @@ namespace WikiSite.BLL.Default
 		/// </remarks>
 		/// <param name="credentials">Credentials to check for in a database</param>
 		/// <returns>DTO of a user, null if there's no such a user</returns>
-		public UserDTO GetUser(UserCredentialsInDTO credentials)
+		public UserDTO GetUser(UserCredentialsDTO credentials)
 		{
-			if (credentials == null) throw new ArgumentNullException(nameof(credentials), "Credentials DTO is null");
+			CheckThrowDTOAuth(credentials);
 
-			if (string.IsNullOrWhiteSpace(credentials.Login))
-				throw new ArgumentException("Credentials DTO doesn't contain login or it's empty");
-			if (string.IsNullOrWhiteSpace(credentials.Password) || credentials.Password.Length < 8)
-				throw new ArgumentException("Credentials DTO doesn't contain password or it's empty");
-
-			return _credentialsDAL.CheckCredentials(Out(credentials));
+			return _credentialsDAL.CheckCredentials(InDB(credentials));
 		}
 
 		/// <summary>
@@ -185,6 +180,16 @@ namespace WikiSite.BLL.Default
 		}
 
 		/// <summary>
+		/// Returns email for a certain user
+		/// </summary>
+		/// <param name="userId">id of a user</param>
+		/// <returns>email string</returns>
+		public string GetEmail(Guid userId)
+		{
+			return _credentialsDAL.GetCredentials(GetUser(userId).CredentialsId).Email;
+		}
+
+		/// <summary>
 		/// Checks passwords (passed in and real one) if they match
 		/// </summary>
 		/// <remarks>
@@ -192,7 +197,7 @@ namespace WikiSite.BLL.Default
 		/// </remarks>
 		/// <param name="credentials">login-pass pair</param>
 		/// <returns>Whether the password is match the original</returns>
-		public bool IsPasswordMatch(UserCredentialsInDTO credentials)
+		public bool IsPasswordMatch(UserCredentialsDTO credentials)
 		{
 			return GetUser(credentials) != null;
 		}
@@ -209,6 +214,19 @@ namespace WikiSite.BLL.Default
 			return _credentialsDAL.IsLoginExist(login.ToLowerInvariant());
 		}
 
+		/// <summary>
+		/// Checks for email in db. Returns whether email does exist or not
+		/// </summary>
+		/// <param name="email">email string</param>
+		/// <returns>Whether email does exist or not</returns>
+		public bool IsEmailExist(string email)
+		{
+			if (string.IsNullOrWhiteSpace(email)) throw new ArgumentException("Email string is null or empty");
+
+			return _credentialsDAL.IsEmailExist(email.ToLowerInvariant());
+		}
+
+
 		private void CheckThrowDTO(UserDTO dto)
 		{
 			if (dto == null) throw new ArgumentNullException(nameof(dto), "User DTO is null");
@@ -217,23 +235,39 @@ namespace WikiSite.BLL.Default
 			if (dto.Id == Guid.Empty) throw new ArgumentNullException(nameof(dto), "User DTO doesn't contain ID");
 			if (string.IsNullOrWhiteSpace(dto.Nickname)) throw new ArgumentNullException(nameof(dto), "User DTO doesn't contain a nickname");
 		}
-		private void CheckThrowDTO(UserCredentialsInDTO dto)
-		{
-			if (dto == null) throw new ArgumentNullException(nameof(dto), "Credentials DTO is null");
-			
-			if (dto.Id == Guid.Empty) throw new ArgumentNullException(nameof(dto), "Credentials DTO doesn't contain ID");
-			if (string.IsNullOrWhiteSpace(dto.Login)) throw new ArgumentException("Credentials DTO doesn't contain login or it's empty");
-			if (string.IsNullOrWhiteSpace(dto.Password) || dto.Password.Length < 8) throw new ArgumentException("Credentials DTO doesn't contain password or it's empty");
-		}
-		/// <summary>
-		/// Decapitalizes login
-		/// </summary>
-		/// <param name="dto">Credentials DTO</param>
-		private void LowerifyLogin(UserCredentialsInDTO dto)
+		private void CheckThrowDTO(UserCredentialsDTO dto)
 		{
 			if (dto == null) throw new ArgumentNullException(nameof(dto), "Credentials DTO is null");
 
-			dto.Login = dto.Login.ToLowerInvariant();
+			if (dto.Id == Guid.Empty) throw new ArgumentNullException(nameof(dto), "Credentials DTO doesn't contain ID");
+			if (string.IsNullOrWhiteSpace(dto.Login)) throw new ArgumentException("Credentials DTO doesn't contain login or it's empty");
+			if (string.IsNullOrWhiteSpace(dto.Email)) throw new ArgumentException("Credentials DTO doesn't contain email or it's empty");
+			if (string.IsNullOrWhiteSpace(dto.Password) || dto.Password.Length < 8) throw new ArgumentException("Credentials DTO doesn't contain password or it's empty");
+		}
+		/// <summary>
+		/// Checks if dto is valid for authentification. If not, throws exceptions
+		/// </summary>
+		/// <remarks>
+		/// It doesn't check id, but if email and login are BOTH missing, throws
+		/// </remarks>
+		/// <param name="dto">DTO from PL layer</param>
+		private void CheckThrowDTOAuth(UserCredentialsDTO dto)
+		{
+			if (dto == null) throw new ArgumentNullException(nameof(dto), "Credentials DTO is null");
+ 
+			if (string.IsNullOrWhiteSpace(dto.Login) && string.IsNullOrWhiteSpace(dto.Email)) throw new ArgumentException("Credentials DTO doesn't contain login or email");
+			if (string.IsNullOrWhiteSpace(dto.Password) || dto.Password.Length < 8) throw new ArgumentException("Credentials DTO doesn't contain password or it's empty");
+		}
+		/// <summary>
+		/// Makes login and email lowercase
+		/// </summary>
+		/// <param name="dto">Credentials DTO</param>
+		private void Lowerify(UserCredentialsDTO dto)
+		{
+			if (dto == null) throw new ArgumentNullException(nameof(dto), "Credentials DTO is null");
+
+			dto.Login = dto.Login?.ToLowerInvariant();
+			dto.Email = dto.Email?.ToLowerInvariant();
 		}
 		/// <summary>
 		/// Hashes the password with SHA2-512 algorythm
@@ -247,15 +281,21 @@ namespace WikiSite.BLL.Default
 			return HashFunction.ComputeHash(Encoding.UTF8.GetBytes(password));
 		}
 		/// <summary>
-		/// Casts IN dto to OUT dto (password->hash)
+		/// Casts dto from PL to db dto (password->hash)
 		/// </summary>
 		/// <param name="dtoFromPL"></param>
 		/// <returns></returns>
-		private UserCredentialsOutDTO Out(UserCredentialsInDTO dtoFromPL)
+		private UserCredentialsDBDTO InDB(UserCredentialsDTO dtoFromPL)
 		{
 			if (dtoFromPL == null) throw new ArgumentNullException(nameof(dtoFromPL), "Credentials DTO is null");
-			LowerifyLogin(dtoFromPL);
-			return new UserCredentialsOutDTO {Id = dtoFromPL.Id, Login = dtoFromPL.Login, PasswordHash = GetHash(dtoFromPL.Password)};
+			Lowerify(dtoFromPL);
+			return new UserCredentialsDBDTO //TODO: map this with Mapper
+				{
+					Id = dtoFromPL.Id,
+					Login = dtoFromPL.Login,
+					Email = dtoFromPL.Email,
+					PasswordHash = GetHash(dtoFromPL.Password)
+				};
 		}
 	}
 }

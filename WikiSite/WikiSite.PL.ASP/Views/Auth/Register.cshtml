@@ -26,6 +26,13 @@
 			@Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
 	</div>
 
+	<!-- Email -->
+	<div class="form-group">
+		@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+			@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+	</div>
+
 	<!-- Password -->
 	<div class="form-group">
 		@Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })

@@ -16,7 +16,7 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="user">User DTO</param>
 		/// <param name="credentials">Credentials DTO</param>
 		/// <returns>Whether operation of creation was successful</returns>
-		bool AddUser(UserDTO user, UserCredentialsInDTO credentials);
+		bool AddUser(UserDTO user, UserCredentialsDTO credentials);
 		/// <summary>
 		/// Updates user info in a database
 		/// </summary>
@@ -31,7 +31,7 @@ namespace WikiSite.BLL.Abstract
 		/// </summary>
 		/// <param name="updatedCredentials">Credentials DTO with the same ID and new data</param>
 		/// <returns>Whether the operation was successful</returns>
-		bool UpdateUserCredentials(UserCredentialsInDTO updatedCredentials);
+		bool UpdateUserCredentials(UserCredentialsDTO updatedCredentials);
 		/// <summary>
 		/// Removes user from a database.
 		/// </summary>
@@ -67,7 +67,7 @@ namespace WikiSite.BLL.Abstract
 		/// </summary>
 		/// <param name="credentials">Credentials to check for in a database</param>
 		/// <returns>DTO of a user, null if there's no such a user</returns>
-		UserDTO GetUser(UserCredentialsInDTO credentials);
+		UserDTO GetUser(UserCredentialsDTO credentials);
 		
 		/// <summary>
 		/// Searches for the user in database by it's nickname
@@ -82,11 +82,23 @@ namespace WikiSite.BLL.Abstract
 		/// <returns>Whether login is exist or not</returns>
 		bool IsLoginExist(string login);
 		/// <summary>
+		/// Checks for email in db. Returns whether email does exist or not
+		/// </summary>
+		/// <param name="email">email string</param>
+		/// <returns>Whether email does exist or not</returns>
+		bool IsEmailExist(string email);
+		/// <summary>
 		/// Returns login for a certain user
 		/// </summary>
 		/// <param name="userId">id of a user</param>
 		/// <returns>login string</returns>
 		string GetLogin(Guid userId);
+		/// <summary>
+		/// Returns email for a certain user
+		/// </summary>
+		/// <param name="userId">id of a user</param>
+		/// <returns>email string</returns>
+		string GetEmail(Guid userId);
 		/// <summary>
 		/// Checks passwords (passed in and real one) if they match
 		/// </summary>
@@ -95,6 +107,6 @@ namespace WikiSite.BLL.Abstract
 		/// </remarks>
 		/// <param name="credentials">login-pass pair</param>
 		/// <returns>Whether the password is match the original</returns>
-		bool IsPasswordMatch(UserCredentialsInDTO credentials);
+		bool IsPasswordMatch(UserCredentialsDTO credentials);
 	}
 }

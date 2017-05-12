@@ -19,9 +19,14 @@ namespace WikiSite.PL.ASP.Models
 		[RegularExpression("^[0-9a-zA-Z\\-]{4,50}$", 
 			ErrorMessage = "Логин может состоять только из латинских букв, цифр и знака тире, " +
 			               "а также не может быть короче 4 и длиннее 50 символов")]
-		[Remote("IsLoginExist", "Auth", ErrorMessage = "Такой логин уже существует")]
+		[Remote("IsLoginExist", "Auth", AreaReference.UseRoot, ErrorMessage = "Такой логин уже занят")]
 		[Display(Name = "Логин")]
 		public string Login { get; set; }
+
+		[Required][Display(Name = "E-mail")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "Проверьте правильность введенного email")]
+		[Remote("IsEmailExist", "Auth", AreaReference.UseRoot, ErrorMessage = "Такой e-mail уже привязан")]
+		public string Email { get; set; }
 
 		[Required][DataType(DataType.Password)]
 		[RegularExpression("^[0-9a-zA-Z!@#%$^&*+-]{8,50}$", 
@@ -47,7 +52,7 @@ namespace WikiSite.PL.ASP.Models
 
 		public UserCredentialsVM GetCredentialsVM()
 		{
-			return new UserCredentialsVM(CredentialsId, Login, Password);
+			return new UserCredentialsVM(CredentialsId, Login, Email, Password);
 		}
 	}
 }

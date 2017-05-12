@@ -1,0 +1,36 @@
+2017-05-02 01:37:51,728 ERROR: Admin/Users/Index - Getting users and roles 
+[(null)]
+----------
+System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: source
+   в System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   в System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector)
+   в WikiSite.PL.ASP.Areas.Admin.Controllers.UsersController.Index()
+
+
+2017-05-02 01:39:40,311 ERROR: Admin/Users/Index - Getting users and roles 
+[(null)]
+----------
+System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: source
+   в System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector, IEqualityComparer`1 comparer)
+   в System.Linq.Enumerable.ToDictionary[TSource,TKey,TElement](IEnumerable`1 source, Func`2 keySelector, Func`2 elementSelector)
+   в WikiSite.PL.ASP.Areas.Admin.Controllers.UsersController.Index()
+
+
+2017-05-02 10:51:06,872 ERROR: Admin/Users/Delete/8 - Deleting a user 
+[(null)]
+----------
+System.Exception: Expected Exception ---> System.NotImplementedException: InnerException
+   --- Конец трассировки внутреннего стека исключений ---
+   в WikiSite.PL.ASP.Areas.Admin.Controllers.UsersController.Delete(Int32 id) в D:\Development\Git\Repos\Wiki-site\WikiSite\WikiSite.PL.ASP\Areas\Admin\Controllers\UsersController.cs:строка 214
+
+
+2017-05-04 23:45:50,998 ERROR: Admin/Users/Delete/5 - Deleting a user 
+[(null)]
+----------
+System.Exception: Expected Exception ---> System.NotImplementedException: InnerException
+   --- Конец трассировки внутреннего стека исключений ---
+   в WikiSite.PL.ASP.Areas.Admin.Controllers.UsersController.Delete(Int32 id) в D:\Development\Git\Repos\Wiki-site\WikiSite\WikiSite.PL.ASP\Areas\Admin\Controllers\UsersController.cs:строка 204
+
+

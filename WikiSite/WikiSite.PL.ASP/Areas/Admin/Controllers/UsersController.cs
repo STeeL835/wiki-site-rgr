@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -13,7 +15,10 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			// Receiving alert from deleting user
 			this.CatchAlert();
 
-			return View(UserVM.GetAllUsers());
+	        var users = UserVM.GetAllUsers();
+			ViewBag.Roles = users.ToDictionary(user => user.Id, user => RoleVM.GetRole(user.RoleId));
+
+			return View(users);
         }
 
 
@@ -49,10 +54,13 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    {
 		    var user = UserVM.GetUser(id);
 		    var login = UserCredentialsVM.GetLogin(user.Id);
+		    var email = UserCredentialsVM.GetEmail(user.Id);
 		    var model = new UserEditModel(user);
 
+		    //Saving data between requests (guids aren't in form)
 		    TempData["user"] = user;
 		    TempData["login"] = login;
+		    TempData["email"] = email;
 
 			return View(model);
 		}
@@ -63,6 +71,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			{
 				var user = (UserVM) TempData.Peek("user");
 				var login = (string) TempData.Peek("login");
+				var email = (string) TempData.Peek("email");
 
 				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
@@ -76,9 +85,9 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 
 				if (model.ChangePassword)
 				{
-					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, model.NewPassword)))
+					if (UserCredentialsVM.IsPasswordMatch(new UserCredentialsVM(login, email, model.NewPassword)))
 					{
-						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(user.CredentialsId, login)))
+						if (UserCredentialsVM.UpdateCredentials(model.GetCredentialsVM(user.CredentialsId, login, email)))
 						{
 							this.AppendAlert("Пароль успешно изменён.", AlertType.Success);
 						}

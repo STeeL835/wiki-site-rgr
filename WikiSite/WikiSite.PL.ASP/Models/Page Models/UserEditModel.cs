@@ -105,9 +105,9 @@ namespace WikiSite.PL.ASP.Models
 		/// <param name="credId">current credentials id</param>
 		/// <param name="login">current login</param>
 		/// <returns>New and updated VM.</returns>
-		public UserCredentialsVM GetCredentialsVM(Guid credId, string login)
+		public UserCredentialsVM GetCredentialsVM(Guid credId, string login, string email)
 		{
-			return new UserCredentialsVM(credId, login, NewPassword);
+			return new UserCredentialsVM(credId, login, email, NewPassword);
 		}
 
 	}

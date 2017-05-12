@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Foolproof;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
@@ -12,7 +13,7 @@ namespace WikiSite.PL.ASP.Models
 
 		private Guid _id;
 		private string _login;
-		//private byte[] _passwordHash;
+		private string _email;
 		private string _password;
 
 		public Guid Id
@@ -25,7 +26,7 @@ namespace WikiSite.PL.ASP.Models
 			}
 		}
 
-		[Required][Display(Name = "Логин")]
+		[RequiredIfEmpty("Email")][Display(Name = "Логин")]
 		[DataType(DataType.Text)]
 		public string Login
 		{
@@ -34,6 +35,18 @@ namespace WikiSite.PL.ASP.Models
 			{
 				if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Login mustn't be empty");
 				_login = value;
+			}
+		}
+
+		[RequiredIfEmpty("Login")][Display(Name = "E-mail")]
+		[DataType(DataType.EmailAddress)]
+		public string Email
+		{
+			get { return _email; }
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Email mustn't be empty");
+				_email = value;
 			}
 		}
 		[Required][Display(Name = "Пароль")]
@@ -57,18 +70,19 @@ namespace WikiSite.PL.ASP.Models
 			_id = Guid.NewGuid();
 		}
 
-		public UserCredentialsVM(string login, string password) : this(Guid.NewGuid(), login, password)
+		public UserCredentialsVM(string login, string email, string password) : this(Guid.NewGuid(), login, email, password)
 		{ }
 
-		public UserCredentialsVM(Guid id, string login, string password)
+		public UserCredentialsVM(Guid id, string login, string email, string password)
 		{
 			Id = id;
 			Login = login;
+			Email = email;
 			Password = password;
 		}
 
-		public static implicit operator UserCredentialsInDTO(UserCredentialsVM vm)
-			=> new UserCredentialsInDTO { Id = vm.Id, Login = vm.Login, Password = vm._password};
+		public static implicit operator UserCredentialsDTO(UserCredentialsVM vm)
+			=> new UserCredentialsDTO { Id = vm.Id, Login = vm.Login, Email = vm.Email, Password = vm._password};
 
 		#endregion
 
@@ -101,9 +115,24 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.IsLoginExist(login);
 		}
 
+		/// <summary>
+		/// Checks for email in db. Returns whether email is exist or not
+		/// </summary>
+		/// <param name="email">email string</param>
+		/// <returns>Whether email is email or not</returns>
+		public static bool IsEmailExist(string email)
+		{
+			return _bll.IsEmailExist(email);
+		}
+
 		public static string GetLogin(Guid userId)
 		{
 			return _bll.GetLogin(userId);
+		}
+
+		public static string GetEmail(Guid userId)
+		{
+			return _bll.GetEmail(userId);
 		}
 
 		public static bool IsPasswordMatch(UserCredentialsVM vm)

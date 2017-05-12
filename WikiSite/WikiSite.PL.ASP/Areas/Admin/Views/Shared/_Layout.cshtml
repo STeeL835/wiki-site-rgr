@@ -44,35 +44,21 @@
 				<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
 				<li><img src="http://placehold.it/30" alt="Profile image" /></li>
 				<li>
-					@Html.ActionLink("Выйти", "Logout", "Auth", null, new { @class = "btn btn-inverse btn-sm" })
+					@Html.ActionLink("Выйти", "Logout", "Auth", new { area = "" }, new { @class = "btn btn-inverse btn-sm" })
 				</li>
 			</ul>
 
 		</section>
 
-		<!-- Log in panel -->
-		<form class="login-form animated" action="">
-			<div class="form-group stretch">
-				<label for="login-login">Логин</label>
-				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
-			</div>
-				
-			<div class="form-group stretch has-error">
-				<label for="login-pass">Пароль</label>
-				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
-			</div>
-				
-			<div class="form-group">
-				<input type="submit" class="btn btn-success pull-right" value="Войти">
-				<a href="#!" class="btn btn-link pull-right">Регистрация</a>
-			</div>
-		</form>
-
 		<!-- Sidebar menu -->
 		<section class="sidebar animated sidebar-default">
 			<i class="sidebar-image" alt=""></i>
 			<ul>
-				<li class="logo">@Html.ActionLink("My name Jeff", "Index", "Home", new { Area = "Admin"}, null)</li>
+				<li class="logo">
+					<a href="@Url.Action("Index", "Home", new {Area = "Admin"})" title="My Name Jeff">
+						<span class="sr-only">My Name Jeff</span>
+					</a>
+				</li>
 				<li><input class="form-control" type="search" placeholder="Искать везде..."></li>
 				<li class="divider"></li>
 				<li>@Html.ActionLink("На главную администратора", "Index", "Home", new { Area = "Admin" }, null)</li>
@@ -87,10 +73,12 @@
 		<!-- Content of a page -->
 		<section class="content animated">
 			<div class="container-fluid">
+
 				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
 				{
 					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
 				}
+				
 				@RenderBody()
 			</div>
 		</section>

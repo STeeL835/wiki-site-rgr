@@ -9,9 +9,23 @@ INSERT INTO [Roles] (Id, Name)
 	VALUES ('b7b4c011-96ac-4be8-9466-e72bb8cf41e7','Admin');
 
 /* Default user (if user gets deleted, article's editor becomes default user) */
-INSERT INTO [Credentials] (Id, [Login], Password_Hash)
-	VALUES ('b5b3d84c-f57d-4b66-aaa5-d82f78a6077d', '404', HASHBYTES('SHA2_512', 'plkubgfcs'));
+INSERT INTO [Credentials] (Id, [Login], Email, Password_Hash)
+	VALUES ('b5b3d84c-f57d-4b66-aaa5-d82f78a6077d', '404', 'brendan@fraser.me', HASHBYTES('SHA2_512', 'plkubgfcs'));
 INSERT INTO [Users] (Id, Credentials_Id, Nickname, About, Role_Id)
 	VALUES ('61bbaea5-e7ea-432f-87a8-ccda7f3a842b', 'b5b3d84c-f57d-4b66-aaa5-d82f78a6077d', 
 	        'ѕризрачный странник', ' огда-то он был обычным пользователем, пока его не удалили', 
 			'd905f4f9-4ff6-4164-b12d-9c5ce0b5b561');
+
+/* Admin user (fill your data, select lines below and press F5 */
+DECLARE @userId uniqueidentifier,
+		@credId uniqueidentifier;
+
+SET     @userId = NEWID();
+SET     @credId = NEWID();
+
+INSERT INTO [Credentials] (Id, [Login], Email, Password_Hash)
+	VALUES (@credId, 'LOGIN', 'EMAIL', HASHBYTES('SHA2_512', 'PASSWORD'));
+INSERT INTO [Users] (Id, Credentials_Id, Nickname, About, Role_Id)
+	VALUES (@userId, @credId, 
+	        'NICKNAME', 'ABOUT', 
+			'b7b4c011-96ac-4be8-9466-e72bb8cf41e7');

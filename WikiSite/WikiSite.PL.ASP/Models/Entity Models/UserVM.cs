@@ -106,6 +106,15 @@ namespace WikiSite.PL.ASP.Models
 				ShortId = dto.ShortId
 			};
 
+
+		public bool IsValid()
+		{
+			return Id != Guid.Empty &&
+			       CredentialsId != Guid.Empty &&
+			       RoleId != Guid.Empty &&
+			       !string.IsNullOrWhiteSpace(Nickname);
+		}
+
 		#endregion
 
 		#region Static
@@ -123,7 +132,7 @@ namespace WikiSite.PL.ASP.Models
 		/// <returns></returns>
 		public static IEnumerable<UserVM> GetAllUsers(Guid role)
 		{
-			return _bll.GetUsers(role).Select(dto => (UserVM) dto);
+			return _bll.GetUsers(role).Select(dto => (UserVM) dto).ToArray();
 		}
 		
 		/// <summary>
@@ -132,7 +141,7 @@ namespace WikiSite.PL.ASP.Models
 		/// <returns></returns>
 		public static IEnumerable<UserVM> GetAllUsers()
 		{
-			return _bll.GetUsers().Select(dto => (UserVM) dto);
+			return _bll.GetUsers().Select(dto => (UserVM) dto).ToArray();
 		}
 
 		/// <summary>
