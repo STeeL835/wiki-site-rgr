@@ -10,49 +10,106 @@
 	@ViewBag.Title
 </h1>
 
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-	    <dd>
-		    @Html.DisplayFor(model => model.Id)
-	    </dd>
+<header class="row">
+	<div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
+		<img class="thumbnail" src="http://placehold.it/250" alt="">
+	</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ShortId)
-        </dd>
+	<div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
+		<div>
+			<kbd>@Model.Id</kbd>
+		</div>
+		<span class="label label-success">@ViewBag.Role.Name</span>
+		<h2>@Model.Nickname</h2>
+		<div class="stats">
+			<div>
+				<p class="stat-number">@ViewBag.ArticlesCount</p>
+				<p>Статей</p>
+			</div>
+			<div>
+				<p class="stat-number">@ViewBag.VersionsCount</p>
+				<p>Правок</p>
+			</div>
+			<div>
+				<p class="stat-number">@ViewBag.CommentsCount</p>
+				<p>Комментариев</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-10 col-md-push-1">
+		<blockquote class="user-about">
+			<p>
+				@if (Model.About == null)
+				{
+					<ins>Пользователь ничего о себе не написал.</ins>
+				}
+				else
+				{
+					@Model.About
+				}
+			</p>
+		</blockquote>
+	</div>
+</header>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CredentialsId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CredentialsId)
-        </dd>
+<div class="row">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#new-articles" data-toggle="tab">Созданные статьи</a></li>
+		<li class="active"><a href="#edited-articles" data-toggle="tab">Редактированные статьи</a></li>
+		<li><a href="#comments" data-toggle="tab">Комментарии</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade active in" id="new-articles">
+			<h1 class="page-header col-xs-12">Статьи</h1>
+			<table class="table table-hover table-responsive col-xs-12">
+				<thead>
+					<tr>
+						<th>Название статьи</th>
+						<th>Short url</th>
+						<th>Дата редактирования</th>
+						<th>Действия</th>
+					</tr>
+				</thead>
+				<tbody>
+				@for (int i = 0; i < 15; i++)
+				{
+					<tr>
+						<td><a href="" class="btn btn-link btn-xs">Я только что свой ПК</a></td>
+						<td>я-только-что-свой-пк</td>
+						<td>12.05.2k15 14:44</td>
+						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					</tr>
+				}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="edited-articles">
+			<h1 class="page-header col-xs-12">Редактированные</h1>
+			<table class="table table-hover table-responsive col-xs-12">
+				<thead>
+					<tr>
+						<th>Название статьи</th>
+						<th>Short url</th>
+						<th>Дата редактирования</th>
+						<th>Действия</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (int i = 0; i < 15; i++)
+					{
+						<tr>
+							<td><a href="" class="btn btn-link btn-xs">Я только что свой ПК</a></td>
+							<td>я-только-что-свой-пк</td>
+							<td>12.05.2k15 14:44</td>
+							<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="comments">
+			<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+		</div>
+	</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nickname)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nickname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.About)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.About)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RoleId)
-        </dd>
-
-    </dl>
 </div>

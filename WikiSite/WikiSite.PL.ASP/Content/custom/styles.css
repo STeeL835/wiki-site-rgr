@@ -107,7 +107,7 @@ body {
 	margin-bottom: 15px;
 }
 
-.article-thumbnail img {
+.head-thumbnail img {
 	margin: auto;
 }
 
@@ -193,7 +193,7 @@ body {
 		bottom: -2em;       /* not margin-top - press effect based on it */
 	}
 	
-	.article-thumbnail img {
+	.head-thumbnail img {
 		margin: 0 0 0 auto;
 	}
 	

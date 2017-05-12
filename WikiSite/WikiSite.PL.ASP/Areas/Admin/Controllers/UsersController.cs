@@ -125,10 +125,15 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    public ActionResult Details(int id)
 	    {
 		    var user = UserVM.GetUser(id);
-		    return View(user);
+		    ViewBag.Role = RoleVM.GetRole(user.RoleId);
+		    ViewBag.ArticlesCount = 13;
+		    ViewBag.VersionsCount = 37;
+		    ViewBag.CommentsCount = 228;
+
+			return View(user);
 	    }
 
-
+		[HandleAllErrors(Message = "Deleting User")]
 	    public ActionResult Delete(int id)
 	    {
 		    var user = UserVM.GetUser(id);
