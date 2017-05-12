@@ -1,0 +1,20 @@
+﻿@model WikiSite.PL.ASP.Models.ArticleVM
+
+@{
+    ViewBag.Title = $"{Model.Heading}";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-header">
+    <a href="@Url.Action("Details", "Articles", new { shortUrl = ViewBag.ShortUrl })" title="Назад к списку" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+    @ViewBag.Title
+</h1>
+
+<div>
+    @Model.Definition
+</div>
+
+<div>
+    @Model.Text
+</div>
+

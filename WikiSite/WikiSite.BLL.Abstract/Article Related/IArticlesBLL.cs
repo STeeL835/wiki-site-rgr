@@ -129,5 +129,12 @@ namespace WikiSite.BLL.Abstract
         /// <param name="number">Number of version of article to approve</param>
         /// <returns></returns>
         bool ApproveVersionOfArticle(Guid articleId, int number);
+
+        /// <summary>
+        /// Returns a number of versions for article.
+        /// </summary>
+        /// <param name="articleId">Artcle to count</param>
+        /// <returns>Number of versions</returns>
+        int VersionsCount(Guid articleId);
     }
 }

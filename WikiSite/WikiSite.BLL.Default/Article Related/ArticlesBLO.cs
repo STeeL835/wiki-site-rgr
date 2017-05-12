@@ -13,7 +13,6 @@ namespace WikiSite.BLL.Default
         private IArticlesDAL _articlesDAL;
         private IArticleVersionsDAL _articleVersionsDAL;
         private IArticleContentsDAL _articleContentsDAL;
-        private DateTime _defaultSqlDateTime = new DateTime(1753, 1, 1);
 
         public ArticleBLO(IArticlesDAL articlesDAL, IArticleVersionsDAL articleVersionsDAL,
             IArticleContentsDAL articleContentsDAL)
@@ -107,7 +106,6 @@ namespace WikiSite.BLL.Default
         public ArticleBDO GetLastVersionOftArticle(Guid articleId)
         {
             ErrorGuard.Check(articleId);
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
             return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(articleId));
         }
 
@@ -119,7 +117,6 @@ namespace WikiSite.BLL.Default
         public ArticleBDO GetLastApprovedVersionOfArticle(Guid articleId)
         {
             ErrorGuard.Check(articleId);
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
             return CreateArticleBDO(_articleVersionsDAL.GetLastApprovedVersion(articleId));
         }
 
@@ -131,8 +128,6 @@ namespace WikiSite.BLL.Default
         public ArticleBDO GetVersionOfArticle(Guid articleVersionId)
         {
             ErrorGuard.Check(articleVersionId);
-            if (articleVersionId == Guid.Empty)
-                throw new ArgumentNullException(nameof(articleVersionId), "Id is empty.");
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleVersionId));
         }
 
@@ -146,7 +141,6 @@ namespace WikiSite.BLL.Default
         {
             ErrorGuard.Check(articleId);
             ErrorGuard.Check(date);
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleId, date));
         }
 
@@ -163,7 +157,6 @@ namespace WikiSite.BLL.Default
         {
             ErrorGuard.Check(articleId);
             ErrorGuard.Check(number);
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleId, number));
         }
 
@@ -289,6 +282,16 @@ namespace WikiSite.BLL.Default
         public bool ApproveVersionOfArticle(Guid articleId, int number)
         {
             return _articleVersionsDAL.ApproveVersion(articleId, number);
+        }
+
+        /// <summary>
+        /// Returns a number of versions for article.
+        /// </summary>
+        /// <param name="articleId">Artcle to count</param>
+        /// <returns>Number of versions</returns>
+        public int VersionsCount(Guid articleId)
+        {
+            return GetAllVersionOfArticle(articleId).Count();
         }
 
         private ArticleBDO CreateArticleBDO(ArticleVersionDTO versionDTO)

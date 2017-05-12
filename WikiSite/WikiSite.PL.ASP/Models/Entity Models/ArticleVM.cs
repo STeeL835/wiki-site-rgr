@@ -335,6 +335,16 @@ namespace WikiSite.PL.ASP.Models
             return _bll.ApproveVersionOfArticle(articleId, number);
         }
 
+        /// <summary>
+        /// Returns a number of versions for article.
+        /// </summary>
+        /// <param name="articleId">Artcle to count</param>
+        /// <returns>Number of versions</returns>
+        public static int VersionsCount(Guid articleId)
+        {
+            return _bll.VersionsCount(articleId);
+        }
+
         #endregion
     }
 }

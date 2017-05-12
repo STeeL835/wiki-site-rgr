@@ -108,8 +108,8 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [Articles] WHERE Short_Url = @Short_Url", connection);
-                sqlCom.Parameters.AddWithValue("@Short_Url", shortUrl);
+                var sqlCom = new SqlCommand("SELECT * FROM [Articles] WHERE Short_Url = @short_url", connection);
+                sqlCom.Parameters.AddWithValue("@short_url", shortUrl);
 
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
