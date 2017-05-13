@@ -13,6 +13,7 @@
 	<!-- Other styles -->
 	<!--	<link rel="stylesheet" href="css/styles.css">-->
 	<link rel="stylesheet" href="~/Content/custom/admin-styles-override.css">
+    <link href="~/Content/custom/special-styles.css" rel="stylesheet" />
 	@RenderSection("style", false)
 
 	<!-- Scripts -->
@@ -65,7 +66,7 @@
 				<li>@Html.ActionLink("На сайт", "Index", "Home",new { Area = "" }, null)</li>
 				<li class="divider"></li>
 				<li>@Html.ActionLink("Управление пользователями", "Index", "Users", new { Area = "Admin" }, null)</li>
-				<li><a href="#!">Управление статьями</a></li>
+				<li>@Html.ActionLink("Управление статьями", "Index", "Articles", new { Area = "Admin" }, null)</li>
 				<li><a href="#!">Управление комментариями</a></li>
 			</ul>
 		</section>

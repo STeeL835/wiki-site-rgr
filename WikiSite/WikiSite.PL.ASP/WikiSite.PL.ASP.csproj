@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FoolproofValidation, Version=0.9.5851.39121, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FoolproofValidation.0.9.4518\lib\net45\FoolproofValidation.dll</HintPath>
       <Private>True</Private>
@@ -125,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\custom\special-styles.css" />
     <Content Include="Content\Images\logo-full-inverse.png" />
     <Content Include="Content\Images\logo-full.png" />
     <Content Include="Content\Images\logo-inverse.png" />
@@ -163,6 +168,12 @@
     <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Show.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\Update.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -182,8 +193,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\ArticlesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Classes\AllowAnonymousOnlyAttribute.cs" />
@@ -195,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity Models\ArticleVM.cs" />
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
@@ -233,6 +247,10 @@
     <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">
       <Project>{594B1C9C-82A7-49DD-8B7F-4B530FA81EF1}</Project>
       <Name>WikiSite.BLL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WikiSite.Caretakers\WikiSite.Caretakers.csproj">
+      <Project>{2378a4ed-f04a-44ac-8bdc-7a36a7e07152}</Project>
+      <Name>WikiSite.Caretakers</Name>
     </ProjectReference>
     <ProjectReference Include="..\WikiSite.DI.Provider\WikiSite.DI.Provider.csproj">
       <Project>{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}</Project>

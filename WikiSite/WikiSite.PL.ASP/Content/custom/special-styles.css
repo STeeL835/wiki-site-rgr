@@ -1,0 +1,11 @@
+﻿.table-max-width-100, .table-max-width-300 {
+    overflow: hidden;
+}
+
+.table-max-width-100 {
+    max-width: 100px;
+}
+
+.table-max-width-200 {
+    max-width: 200px;
+}

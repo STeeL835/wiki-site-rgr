@@ -7,13 +7,13 @@ namespace WikiSite.DAL.Abstract
     public interface IArticleVersionsDAL
     {
         /// <summary>
-        /// Adds article's version to a database.
+        /// Adds article's version to database.
         /// </summary>
         /// <param name="version">Version DTO</param>
         bool AddVersion(ArticleVersionDTO version);
 
         /// <summary>
-        /// Removes article's version to a database.
+        /// Removes article's version to database.
         /// </summary>
         /// <param name="versionId">GUID of version to delete</param>
         bool RemoveVersion(Guid versionId);
@@ -24,6 +24,13 @@ namespace WikiSite.DAL.Abstract
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>Article's versions DTOs</returns>
         IEnumerable<ArticleVersionDTO> GetAllVersions(Guid articleId);
+
+        /// <summary>
+        /// Gets all version, which created by author, from database.
+        /// </summary>
+        /// <param name="authorId">GUID of author to get</param>
+        /// <returns>Article's versions DTOs</returns>
+        IEnumerable<ArticleVersionDTO> GetAllVersionsByAuthor(Guid authorId);
 
         /// <summary>
         /// Gets a certain article's version by id from database.
@@ -49,14 +56,14 @@ namespace WikiSite.DAL.Abstract
         ArticleVersionDTO GetVersion(Guid articleId, int number);
 
         /// <summary>
-        /// Gets a certain last article's version from a database.
+        /// Gets a certain last article's version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>DTO of last article's version</returns>
         ArticleVersionDTO GetLastVersion(Guid articleId);
 
         /// <summary>
-        /// Gets last approved article's version from a database.
+        /// Gets last approved article's version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>DTO of last approved article's version</returns>

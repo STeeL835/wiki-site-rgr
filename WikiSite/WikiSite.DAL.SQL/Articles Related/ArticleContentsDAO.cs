@@ -16,7 +16,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Adds article's content to a database.
+        /// Adds article's content to database.
         /// </summary>
         /// <param name="content">Article's content DTO</param>
         public bool AddContent(ArticleContentDTO content)
@@ -26,8 +26,7 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand(
-                    "INSERT INTO [ArticleContent] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
+                var sqlCom = new SqlCommand("INSERT INTO [ArticleContents] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
                 sqlCom.Parameters.AddWithValue("@id", content.Id);
                 sqlCom.Parameters.AddWithValue("@definition", content.Definition);
                 sqlCom.Parameters.AddWithValue("ent_id", content.Text);
@@ -40,7 +39,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets article's content from a database.
+        /// Gets article's content from database.
         /// </summary>
         /// <param name="contentId">GUID of article's content to get</param>
         /// <returns>DTO of a article's content</returns>
@@ -48,7 +47,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [ArticleContent] WHERE Id = @id", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM [ArticleContents] WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", contentId);
 
                 connection.Open();
@@ -58,7 +57,7 @@ namespace WikiSite.DAL.SQL
                     return new ArticleContentDTO
                     {
                         Id = (Guid) reader["Id"],
-                        Definition = (string) reader["Defenition"],
+                        Definition = (string) reader["Definition"],
                         Text = (string) reader["Text"]
                     };
                 }
@@ -67,7 +66,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Removes article's content from a database.
+        /// Removes article's content from database.
         /// </summary>
         /// <param name="contentId">GUID of article's content to delete</param>
         public bool RemoveContent(Guid contentId)
@@ -75,7 +74,7 @@ namespace WikiSite.DAL.SQL
             int affectedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("DELETE FROM [ArticleContent] WHERE Id = @id", connection);
+                var sqlCom = new SqlCommand("DELETE FROM [ArticleContents] WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", contentId);
                 connection.Open();
 

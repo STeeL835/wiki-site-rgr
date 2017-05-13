@@ -4,6 +4,7 @@ using System.Linq;
 using WikiSite.BLL.Abstract;
 using WikiSite.DAL.Abstract;
 using WikiSite.Entities;
+using WikiSite.Caretakers;
 
 namespace WikiSite.BLL.Default
 {
@@ -12,7 +13,6 @@ namespace WikiSite.BLL.Default
         private IArticlesDAL _articlesDAL;
         private IArticleVersionsDAL _articleVersionsDAL;
         private IArticleContentsDAL _articleContentsDAL;
-        private DateTime _defaultSqlDaeDateTime = new DateTime(1753, 1, 1);
 
         public ArticleBLO(IArticlesDAL articlesDAL, IArticleVersionsDAL articleVersionsDAL,
             IArticleContentsDAL articleContentsDAL)
@@ -29,27 +29,29 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Adds Article to database.
+        /// Adds new article to database.
         /// </summary>
         /// <param name="article">Article BDO</param>
         /// <returns></returns>
         public bool AddArticle(ArticleBDO article)
         {
-            CheckThrowDTO(article);
+            ErrorGuard.Check(article);
             var articleDTO = CreateArticleDTO(article);
             var contentDTO = CreateArticleContentDTO(article);
             var versionDTO = CreateArticleVersionDTO(article, contentDTO);
+            versionDTO.IsApproved = true;
             return _articlesDAL.AddArticle(articleDTO) && _articleContentsDAL.AddContent(contentDTO) &&
                    _articleVersionsDAL.AddVersion(versionDTO);
         }
 
         /// <summary>
-        /// Removes Article from database.
+        /// Removes article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to delete</param>
         /// <returns></returns>
         public bool RemoveArticle(Guid articleId)
         {
+            ErrorGuard.Check(articleId);
             var versionDTOs = _articleVersionsDAL.GetAllVersions(articleId);
             var temp = true;
             foreach (var version in versionDTOs)
@@ -61,68 +63,89 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Adds new version of article to database.
+        /// Adds new NOT approved version of article to database.
         /// </summary>
         /// <param name="article">Article BDO</param>
         public bool UpdateArticle(ArticleBDO article)
         {
-            CheckThrowDTO(article);
+            ErrorGuard.Check(article);
             var contentDTO = CreateArticleContentDTO(article);
             var versionDTO = CreateArticleVersionDTO(article, contentDTO);
             return _articleContentsDAL.AddContent(contentDTO) && _articleVersionsDAL.AddVersion(versionDTO);
         }
 
         /// <summary>
-        /// Gets a certain last edit version of article from a database.
+        /// Gets article in last edit version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
-        /// <returns>BTO of last edit version of a article</returns>
+        /// <returns>BTO of article in last edit version</returns>
+        public ArticleBDO GetArticle(Guid articleId)
+        {
+            ErrorGuard.Check(articleId);
+            var article = _articlesDAL.GetArticle(articleId);
+            return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(article.Id));
+        }
+
+        /// <summary>
+        /// Gets article in last edit version from database.
+        /// </summary>
+        /// <param name="shortUrl">Short URL of article to get</param>
+        /// <returns>BTO of article in last edit version</returns>
+        public ArticleBDO GetArticle(string shortUrl)
+        {
+            ErrorGuard.Check(shortUrl);
+            var article = _articlesDAL.GetArticle(shortUrl);
+            return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(article.Id));
+        }
+
+        /// <summary>
+        /// Gets a certain last edit version of article from database.
+        /// </summary>
+        /// <param name="articleId">GUID of article to get</param>
+        /// <returns>BDO of last edit version of a article</returns>
         public ArticleBDO GetLastVersionOftArticle(Guid articleId)
         {
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
+            ErrorGuard.Check(articleId);
             return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(articleId));
         }
 
         /// <summary>
-        /// Gets a certain last approved version of article from a database.
+        /// Gets a certain last approved version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
-        /// <returns>BTO of last approved version of a article</returns>
+        /// <returns>BDO of last approved version of a article</returns>
         public ArticleBDO GetLastApprovedVersionOfArticle(Guid articleId)
         {
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
+            ErrorGuard.Check(articleId);
             return CreateArticleBDO(_articleVersionsDAL.GetLastApprovedVersion(articleId));
         }
 
         /// <summary>
-        /// Gets a certain version of article from a database.
+        /// Gets a certain version of article from database.
         /// </summary>
         /// <param name="articleVersionId">GUID of version of article to get</param>
         /// <returns>Article BDO</returns>
         public ArticleBDO GetVersionOfArticle(Guid articleVersionId)
         {
-            if (articleVersionId == Guid.Empty)
-                throw new ArgumentNullException(nameof(articleVersionId), "Id is empty.");
+            ErrorGuard.Check(articleVersionId);
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleVersionId));
         }
 
         /// <summary>
-        /// Gets a certain version of article from a database.
+        /// Gets a certain version of article from database.
         /// </summary>
         /// <param name="articleId">GIUD of article to get</param>
         /// <param name="date">DateTime of version of article to get</param>
         /// <returns>Article BDO</returns>
         public ArticleBDO GetVersionOfArticle(Guid articleId, DateTime date)
         {
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
-            if ((date == default(DateTime)) || (DateTime.Compare(date, _defaultSqlDaeDateTime) <= 0))
-                throw new ArgumentNullException(nameof(date),
-                    $"Date is less than or equal to default value ({_defaultSqlDaeDateTime.ToShortDateString()}).");
+            ErrorGuard.Check(articleId);
+            ErrorGuard.Check(date);
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleId, date));
         }
 
         /// <summary>
-        /// Gets a certain version of article from a database.
+        /// Gets a certain version of article from database.
         /// </summary>
         /// <remarks>
         /// Number is calculated by date.
@@ -132,8 +155,8 @@ namespace WikiSite.BLL.Default
         /// <returns>Article BDO</returns>
         public ArticleBDO GetVersionOfArticle(Guid articleId, int number)
         {
-            if (articleId == Guid.Empty) throw new ArgumentNullException(nameof(articleId), "Id is empty.");
-            if (number == default(int)) throw new ArgumentNullException(nameof(number), "Number is the default value.");
+            ErrorGuard.Check(articleId);
+            ErrorGuard.Check(number);
             return CreateArticleBDO(_articleVersionsDAL.GetVersion(articleId, number));
         }
 
@@ -151,7 +174,34 @@ namespace WikiSite.BLL.Default
                 versionDTOs.Add(_articleVersionsDAL.GetLastApprovedVersion(article.Id));
             }
             if (articleDTOs.Count != versionDTOs.Count)
-                throw new ApplicationException("Something has gone wrong with getting all articles from database.");
+                throw new ApplicationException("Something has gone wrong with getting articles from database.");
+            foreach (var version in versionDTOs)
+            {
+                articleBDOs.Add(CreateArticleBDO(version));
+            }
+            foreach (var article in articleBDOs)
+            {
+                yield return article;
+            }
+        }
+
+        /// <summary>
+        /// Gets all articles form database, which created by author.
+        /// </summary>
+        /// <param name="authorId">GUID of author to get</param>
+        /// <returns>Articles' BDOs</returns>
+        public IEnumerable<ArticleBDO> GetAllArticles(Guid authorId)
+        {
+            ErrorGuard.Check(authorId);
+            var articleDTOs = _articlesDAL.GetAllArticles(authorId).ToList();
+            var versionDTOs = new List<ArticleVersionDTO>();
+            var articleBDOs = new List<ArticleBDO>();
+            foreach (var article in articleDTOs)
+            {
+                versionDTOs.Add(_articleVersionsDAL.GetLastApprovedVersion(article.Id));
+            }
+            if (articleDTOs.Count != versionDTOs.Count)
+                throw new ApplicationException("Something has gone wrong with getting articles from database.");
             foreach (var version in versionDTOs)
             {
                 articleBDOs.Add(CreateArticleBDO(version));
@@ -169,6 +219,7 @@ namespace WikiSite.BLL.Default
         /// <returns>Articles' BDOs</returns>
         public IEnumerable<ArticleBDO> GetAllVersionOfArticle(Guid articleId)
         {
+            ErrorGuard.Check(articleId);
             var versionDTOs = _articleVersionsDAL.GetAllVersions(articleId);
             var articleBDOs = new List<ArticleBDO>();
             foreach (var version in versionDTOs)
@@ -182,7 +233,27 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Approves a certain version of article from a database.
+        /// Gets all version, which created by author, from database.
+        /// </summary>
+        /// <param name="authorId">GUID of author to get</param>
+        /// <returns>Articles' BDOs</returns>
+        public IEnumerable<ArticleBDO> GetAllVersionByAuthor(Guid authorId)
+        {
+            ErrorGuard.Check(authorId);
+            var versionDTOs = _articleVersionsDAL.GetAllVersionsByAuthor(authorId);
+            var articleBDOs = new List<ArticleBDO>();
+            foreach (var version in versionDTOs)
+            {
+                articleBDOs.Add(CreateArticleBDO(version));
+            }
+            foreach (var article in articleBDOs)
+            {
+                yield return article;
+            }
+        }
+
+        /// <summary>
+        /// Approves a certain version of article from database.
         /// </summary>
         /// <param name="versionId">>GUID of version to approve</param>
         /// <returns></returns>
@@ -213,30 +284,14 @@ namespace WikiSite.BLL.Default
             return _articleVersionsDAL.ApproveVersion(articleId, number);
         }
 
-        private void CheckThrowDTO(ArticleBDO bdo)
+        /// <summary>
+        /// Returns a number of versions for article.
+        /// </summary>
+        /// <param name="articleId">Artcle to count</param>
+        /// <returns>Number of versions</returns>
+        public int VersionsCount(Guid articleId)
         {
-            if (bdo == null) throw new ArgumentNullException(nameof(bdo), "Article BDO is null.");
-            if (bdo.Id == Guid.Empty) throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain ID.");
-            if (string.IsNullOrWhiteSpace(bdo.ShortUrl))
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain a short url.");
-            if (bdo.AuthorId == Guid.Empty)
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain author id.");
-            if (string.IsNullOrWhiteSpace(bdo.Heading))
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain a heading.");
-            if ((bdo.CreationDate == default(DateTime)) ||
-                (DateTime.Compare(bdo.CreationDate, _defaultSqlDaeDateTime) <= 0))
-                throw new ArgumentNullException(nameof(bdo),
-                    $"Creation date of Article BDO is less than or equal to default value ({_defaultSqlDaeDateTime.ToShortDateString()}).");
-            if ((bdo.LastEditDate == default(DateTime)) ||
-                (DateTime.Compare(bdo.LastEditDate, _defaultSqlDaeDateTime) <= 0))
-                throw new ArgumentNullException(nameof(bdo),
-                    $"Last edit date of Article BDO is less than or equal to default value ({_defaultSqlDaeDateTime.ToShortDateString()}).");
-            if (bdo.EditionAuthorId == Guid.Empty)
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain edition author id.");
-            if (string.IsNullOrWhiteSpace(bdo.Definition))
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain a definition.");
-            if (string.IsNullOrWhiteSpace(bdo.Text))
-                throw new ArgumentNullException(nameof(bdo), "Article BDO doesn't contain a text.");
+            return GetAllVersionOfArticle(articleId).Count();
         }
 
         private ArticleBDO CreateArticleBDO(ArticleVersionDTO versionDTO)

@@ -31,8 +31,8 @@
 		<td>@user.ShortId</td>
 		<td><a href="@Url.Action("Details", "Users", new { id = user.ShortId })" class="btn btn-link btn-xs">@user.Nickname</a></td>
 		<td class="hidden-xs">@ViewBag.Roles[user.Id].Name</td>
-		<td class="hidden-xs">#</td>
-		<td class="hidden-xs">#</td>
+		<td class="hidden-xs">@ArticleVM.GetAllArticles(user.Id).Count()</td>
+		<td class="hidden-xs">@ArticleVM.GetAllVersionByAuthor(user.Id).Count() </td>
 		<td class="table-action hidden-xs">
 			<a href="@Url.Action("Edit", "Users", new { id = user.ShortId })" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
 			<span>
