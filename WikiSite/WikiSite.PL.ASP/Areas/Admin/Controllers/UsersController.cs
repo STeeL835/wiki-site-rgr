@@ -15,10 +15,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			// Receiving alert from deleting user
 			this.CatchAlert();
 
-	        var users = UserVM.GetAllUsers();
+	        var users = UserVM.GetAllUsers().ToArray();
 			ViewBag.Roles = users.ToDictionary(user => user.Id, user => RoleVM.GetRole(user.RoleId));
-
-			return View(users);
+			ViewBag.ArticlesCounts = users.ToDictionary(user => user.Id, user => ArticleVM.GetAllArticles(user.Id).Count());
+            ViewBag.VersionsCounts = users.ToDictionary(user => user.Id, user => ArticleVM.GetAllVersionByAuthor(user.Id).Count());
+            return View(users);
         }
 
 
@@ -126,9 +127,9 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 	    {
 		    var user = UserVM.GetUser(id);
 		    ViewBag.Role = RoleVM.GetRole(user.RoleId);
-		    ViewBag.ArticlesCount = 13;
-		    ViewBag.VersionsCount = 37;
-		    ViewBag.CommentsCount = 228;
+		    ViewBag.Articles = ArticleVM.GetAllArticles(user.Id);
+		    ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(user.Id);
+		    ViewBag.CommentsCount = "228*";
 
 			return View(user);
 	    }

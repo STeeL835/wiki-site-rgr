@@ -1,4 +1,6 @@
-﻿@model WikiSite.PL.ASP.Models.UserVM
+﻿@using System.Globalization
+@using WikiSite.PL.ASP.Models
+@model WikiSite.PL.ASP.Models.UserVM
 
 @{
     ViewBag.Title = $"Информация о пользователе {Model.Nickname}";
@@ -6,7 +8,7 @@
 }
 
 <h1 class="page-header">
-	<a href="@Url.Action("Index")" title="Назад к списку" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+	<a href="@Url.Action("Index")" title="К списку пользователей" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
 	@ViewBag.Title
 </h1>
 
@@ -23,11 +25,11 @@
 		<h2>@Model.Nickname</h2>
 		<div class="stats">
 			<div>
-				<p class="stat-number">@ViewBag.ArticlesCount</p>
+				<p class="stat-number">@(((IEnumerable<ArticleVM>) (ViewBag.Articles)).Count())</p>
 				<p>Статей</p>
 			</div>
 			<div>
-				<p class="stat-number">@ViewBag.VersionsCount</p>
+				<p class="stat-number">@(((IEnumerable<ArticleVM>) (ViewBag.Versions)).Count())</p>
 				<p>Правок</p>
 			</div>
 			<div>
@@ -55,7 +57,7 @@
 <div class="row">
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#new-articles" data-toggle="tab">Созданные статьи</a></li>
-		<li class="active"><a href="#edited-articles" data-toggle="tab">Редактированные статьи</a></li>
+		<li><a href="#edited-articles" data-toggle="tab">Редактированные статьи</a></li>
 		<li><a href="#comments" data-toggle="tab">Комментарии</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
@@ -64,20 +66,42 @@
 			<table class="table table-hover table-responsive col-xs-12">
 				<thead>
 					<tr>
-						<th>Название статьи</th>
-						<th>Short url</th>
-						<th>Дата редактирования</th>
-						<th>Действия</th>
+					    <th>URL</th>
+					    <th>Название</th>
+					    <th class="hidden-xs">Дата создания</th>
+					    <th class="hidden-xs">Дата редактирования</th>
+					    <th class="hidden-xs">Исправил</th>
+					    <th class="hidden-xs">Количество версий</th>
+					    <th class="hidden-xs">Действия</th>
 					</tr>
 				</thead>
 				<tbody>
-				@for (int i = 0; i < 15; i++)
+				@foreach (var article in ViewBag.Articles)
 				{
 					<tr>
-						<td><a href="" class="btn btn-link btn-xs">Я только что свой ПК</a></td>
-						<td>я-только-что-свой-пк</td>
-						<td>12.05.2k15 14:44</td>
-						<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+					    <td class="table-max-width-100">@article.ShortUrl</td>
+					    <td class="table-max-width-200">
+					        <a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+					            @article.Heading
+					        </a>
+					    </td>
+					    <td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
+					    <td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
+					    <td class="table-max-width-100 hidden-xs">
+					        <a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
+					            @UserVM.GetUser(article.EditionAuthorId).Nickname
+					        </a>
+					    </td>
+					    <td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
+					    <td class="table-action hidden-xs">
+					        <a href="@Url.Action("Details", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
+					        <span>
+					            <a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+					            <output hidden>
+					                <a href="@Url.Action("Delete", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-danger btn-sm">Я уверен, удалить</a>
+					            </output>
+					        </span>
+					    </td>
 					</tr>
 				}
 				</tbody>
@@ -88,22 +112,44 @@
 			<table class="table table-hover table-responsive col-xs-12">
 				<thead>
 					<tr>
-						<th>Название статьи</th>
-						<th>Short url</th>
-						<th>Дата редактирования</th>
-						<th>Действия</th>
+					    <th>URL</th>
+					    <th>Название</th>
+					    <th class="hidden-xs">Дата создания</th>
+                        <th class="hidden-xs">Автор</th>
+					    <th class="hidden-xs">Дата редактирования</th>
+					    <th class="hidden-xs">Количество версий</th>
+					    <th class="hidden-xs">Действия</th>
 					</tr>
 				</thead>
 				<tbody>
-					@for (int i = 0; i < 15; i++)
-					{
-						<tr>
-							<td><a href="" class="btn btn-link btn-xs">Я только что свой ПК</a></td>
-							<td>я-только-что-свой-пк</td>
-							<td>12.05.2k15 14:44</td>
-							<td class="table-action"><a href="" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a><a href="" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
-						</tr>
-					}
+				@foreach (var article in ViewBag.Versions)
+				{
+				    <tr>
+				        <td class="table-max-width-100">@article.ShortUrl</td>
+				        <td class="table-max-width-200">
+				            <a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+				                @article.Heading
+				            </a>
+				        </td>
+				        <td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
+                        <td class="table-max-width-100 hidden-xs">
+                            <a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.AuthorId).ShortId})" class="btn btn-link btn-xs">
+                                @UserVM.GetUser(article.EditionAuthorId).Nickname
+                            </a>
+                        </td>
+				        <td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
+				        <td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
+				        <td class="table-action hidden-xs">
+				            <a href="@Url.Action("Details", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
+				            <span>
+				                <a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+				                <output hidden>
+				                    <a href="@Url.Action("Delete", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-danger btn-sm">Я уверен, удалить</a>
+				                </output>
+				            </span>
+				        </td>
+				    </tr>
+				}
 				</tbody>
 			</table>
 		</div>

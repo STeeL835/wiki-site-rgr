@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace WikiSite.PL.ASP.Controllers
 {
@@ -11,6 +12,7 @@ namespace WikiSite.PL.ASP.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //FormsAuthentication.SignOut();
             return View();
         }
     }
