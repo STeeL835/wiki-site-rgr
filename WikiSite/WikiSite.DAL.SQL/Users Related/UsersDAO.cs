@@ -184,7 +184,7 @@ namespace WikiSite.DAL.SQL
 	    /// Gets a certain user from a database
 	    /// </summary>
 	    /// <param name="userShortId">Incremental ID (number) of user to get</param>
-	    /// <returns>DTO of a user, null if there's no such a user</returns>
+	    /// <returns>DTO of a user</returns>
 	    public UserDTO GetUser(int userShortId)
 	    {
 			using (var connection = new SqlConnection(ConnectionString))
@@ -208,7 +208,7 @@ namespace WikiSite.DAL.SQL
 					};
 				}
 			}
-			return null;
+			throw new EntryNotFoundException($"User with id {userShortId} was not found");
 		}
 
 	    /// <summary>
@@ -218,10 +218,13 @@ namespace WikiSite.DAL.SQL
 	    /// <returns>Collection of users whose nickname matches the criteria</returns>
 	    public IEnumerable<UserDTO> SearchUsers(string searchInput)
 	    {
+		    if (searchInput == null) throw new ArgumentNullException(nameof(searchInput), "null passed in method");
+		    searchInput = searchInput.ToLowerInvariant();
+
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("SELECT * FROM [Users] " +
-											"WHERE Nickname LIKE '%@nickname%'", connection);
+											"WHERE LOWER(Nickname) LIKE '%'+@nickname+'%'", connection);
 				sqlCom.Parameters.AddWithValue("@nickname", searchInput);
 
 				connection.Open();

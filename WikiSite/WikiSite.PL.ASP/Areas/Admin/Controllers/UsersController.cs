@@ -16,9 +16,6 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			this.CatchAlert();
 
 	        var users = UserVM.GetAllUsers().ToArray();
-			ViewBag.Roles = users.ToDictionary(user => user.Id, user => RoleVM.GetRole(user.RoleId));
-			ViewBag.ArticlesCounts = users.ToDictionary(user => user.Id, user => ArticleVM.GetAllArticles(user.Id).Count());
-            ViewBag.VersionsCounts = users.ToDictionary(user => user.Id, user => ArticleVM.GetAllVersionByAuthor(user.Id).Count());
             return View(users);
         }
 
@@ -50,7 +47,10 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		    return View(model);
 	    }
 
-
+	    public ActionResult Edit(Guid guid)
+	    {
+		    return RedirectToAction("Edit", "Users", new {id = UserVM.GetUser(guid).ShortId});
+	    }
 	    public ActionResult Edit(int id)
 	    {
 		    var user = UserVM.GetUser(id);
@@ -122,8 +122,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			return View(model);
 	    }
 
-
-	    public ActionResult Details(int id)
+		public ActionResult Details(Guid guid)
+		{
+			return RedirectToAction("Details", "Users", new { id = UserVM.GetUser(guid).ShortId });
+		}
+		public ActionResult Details(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 		    ViewBag.Role = RoleVM.GetRole(user.RoleId);
@@ -134,8 +137,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			return View(user);
 	    }
 
-		[HandleAllErrors(Message = "Deleting User")]
-	    public ActionResult Delete(int id)
+		public ActionResult Delete(Guid guid)
+		{
+			return RedirectToAction("Delete", "Users", new { id = UserVM.GetUser(guid).ShortId });
+		}
+		public ActionResult Delete(int id)
 	    {
 		    var user = UserVM.GetUser(id);
 			if (UserVM.RemoveUser(user.Id))
@@ -149,5 +155,17 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
+		// Admin/Users/Search?query=query
+	    public ActionResult Search(string query)
+	    {
+		    ViewBag.SearchQuery = query;
+		    if (query == null || query.Length < 3)
+		    {
+			    this.Alert("Длина строки должна быть больше 2 символов", AlertType.Info);
+			    return View(new UserVM[0]);
+		    }
+		    return View(UserVM.SearchUsers(query));
+	    }
     }
 }

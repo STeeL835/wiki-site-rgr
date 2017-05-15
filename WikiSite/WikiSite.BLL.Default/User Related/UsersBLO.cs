@@ -163,10 +163,38 @@ namespace WikiSite.BLL.Default
 		/// <returns>Collection of users whose nickname matches the criteria</returns>
 		public IEnumerable<UserDTO> SearchUsers(string searchInput)
 		{
-			if (string.IsNullOrWhiteSpace(searchInput) || searchInput.Length < 5)
-				throw new ArgumentNullException(nameof(searchInput), "Search query should be more than 4 charachter long");
+			if (string.IsNullOrWhiteSpace(searchInput) || searchInput.Length < 3)
+				throw new ArgumentNullException(nameof(searchInput), "Search query should be more than 2 character long");
 
-			return _usersDAL.SearchUsers(searchInput).ToArray();
+			/* Wildcards support */
+			searchInput = searchInput.Replace("[", "[[]").Replace("%", "[%]").Replace("‌​_", "[_]"); // escaping sql wildcards
+			searchInput = searchInput.Replace("?", "_").Replace("*", "%"); //converting
+
+			var found = new List<UserDTO>();
+
+			/* Nickname */
+			found.AddRange(_usersDAL.SearchUsers(searchInput));
+
+			/* ID */
+			var shortId = 0;
+			if (int.TryParse(searchInput, out shortId))
+			{
+				try {
+					found.Add(GetUser(shortId));
+				}
+				catch (EntryNotFoundException) { } // but throws other exceptions
+			}
+			/* GUID */
+			var id = Guid.Empty;
+			if (Guid.TryParse(searchInput, out id))
+			{
+				try {
+					found.Add(GetUser(id));
+				}
+				catch (EntryNotFoundException) { } // but throws other exceptions
+			}
+
+			return found;
 		}
 
 		/// <summary>

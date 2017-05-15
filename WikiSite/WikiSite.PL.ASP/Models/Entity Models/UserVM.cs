@@ -209,6 +209,11 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.UpdateUser(user);
 		}
 
+		public static IEnumerable<UserVM> SearchUsers(string searchInput)
+		{
+			return _bll.SearchUsers(searchInput).Select(dto => (UserVM) dto);
+		}
+
 		#endregion
 	}
 }

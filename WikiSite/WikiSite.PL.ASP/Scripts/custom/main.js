@@ -15,4 +15,7 @@
 	for (var i = 0; i < list.length; i++) {
 		$(list[i]).popover({ animation: true, content: $(list[i]).parent().find("output").html(), html: true });
 	}
+
+	/* Enabling tooltips */
+	$('[data-toggle="tooltip"]').tooltip();
 })();

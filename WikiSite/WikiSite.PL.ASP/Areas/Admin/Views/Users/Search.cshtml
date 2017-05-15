@@ -1,0 +1,17 @@
+﻿@model IEnumerable<WikiSite.PL.ASP.Models.UserVM>
+
+@{
+    ViewBag.Title = "Поиск для: " + ViewBag.SearchQuery;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-header">
+	<a href="@Url.Action("Index")" class="btn btn-link page-back-button" data-toggle="tooltip" data-placement="left" title="К списку пользователей"><i class="fa fa-angle-left"></i></a>
+	@ViewBag.Title
+</h1>
+@using (Html.BeginForm("Search", "Users"))
+{
+	@Html.TextBox("query", (object)ViewBag.SearchQuery, new { @class = "col-xs-12"});
+}
+
+@Html.Partial("_UsersTablePartial", Model)
