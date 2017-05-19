@@ -29,7 +29,7 @@ namespace WikiSite.DAL.SQL
                 var sqlCom = new SqlCommand("INSERT INTO [ArticleContents] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
                 sqlCom.Parameters.AddWithValue("@id", content.Id);
                 sqlCom.Parameters.AddWithValue("@definition", content.Definition);
-                sqlCom.Parameters.AddWithValue("ent_id", content.Text);
+                sqlCom.Parameters.AddWithValue("@text", content.Text);
                 connection.Open();
 
                 addedRows = sqlCom.ExecuteNonQuery();

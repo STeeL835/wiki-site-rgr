@@ -27,11 +27,11 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("INSERT INTO [ArticleVersions] (Id, Article_Id, Content_Id, Data_Of_Edition, Editor_Id, Is_Approved) VALUES(@id, @article_id, @content_id, @data_of_edition, @editor_id, @is_approved)", connection);
+                var sqlCom = new SqlCommand("INSERT INTO [ArticleVersions] (Id, Article_Id, Content_Id, Date_Of_Edition, Editor_Id, Is_Approved) VALUES(@id, @article_id, @content_id, @date_of_edition, @editor_id, @is_approved)", connection);
                 sqlCom.Parameters.AddWithValue("@id", version.Id);
                 sqlCom.Parameters.AddWithValue("@article_id", version.ArticleId);
                 sqlCom.Parameters.AddWithValue("@content_id", version.ContentId);
-                sqlCom.Parameters.AddWithValue("@data_of_edition", version.LastEditDate);
+                sqlCom.Parameters.AddWithValue("@date_of_edition", version.LastEditDate);
                 sqlCom.Parameters.AddWithValue("@editor_id", version.EditionAuthorId);
                 sqlCom.Parameters.AddWithValue("@is_approved", version.IsApproved);
                 connection.Open();

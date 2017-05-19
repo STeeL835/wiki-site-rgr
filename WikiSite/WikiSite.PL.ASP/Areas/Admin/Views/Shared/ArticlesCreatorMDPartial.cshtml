@@ -1,0 +1,19 @@
+﻿@using WikiSite.PL.ASP.Classes
+
+<div id="image-editormd" class="col-xs-12 col-sm-5 col-lg-4">
+    <img class="thumbnail" src="http://placehold.it/250" alt="">
+</div>
+<div class="col-xs-12 col-sm-7 col-lg-8">
+    <input name="Heading" type="text" id="heading-editormd"/>
+    <div id="definition-editormd">
+        <textarea name="Definition" style="display: none"></textarea>
+    </div>
+</div>
+<div id="text-editormd">
+    <textarea name="Text" style="display: none"></textarea>
+</div>
+
+@Html.RequireStyle("/Scripts/Editor.md/css/editormd.css")
+@Html.RequireScript("/Scripts/Editor.md/editormd.js")
+@Html.RequireScript("/Scripts/Editor.md/editormd.include.js")
+@Html.RequireScript("/Scripts/Editor.md/languages/en.js")

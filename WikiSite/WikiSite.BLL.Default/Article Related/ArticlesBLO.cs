@@ -171,7 +171,7 @@ namespace WikiSite.BLL.Default
             var articleBDOs = new List<ArticleBDO>();
             foreach (var article in articleDTOs)
             {
-                versionDTOs.Add(_articleVersionsDAL.GetLastApprovedVersion(article.Id));
+                versionDTOs.Add(_articleVersionsDAL.GetLastVersion(article.Id));
             }
             if (articleDTOs.Count != versionDTOs.Count)
                 throw new ApplicationException("Something has gone wrong with getting articles from database.");
@@ -198,7 +198,7 @@ namespace WikiSite.BLL.Default
             var articleBDOs = new List<ArticleBDO>();
             foreach (var article in articleDTOs)
             {
-                versionDTOs.Add(_articleVersionsDAL.GetLastApprovedVersion(article.Id));
+                versionDTOs.Add(_articleVersionsDAL.GetLastVersion(article.Id));
             }
             if (articleDTOs.Count != versionDTOs.Count)
                 throw new ApplicationException("Something has gone wrong with getting articles from database.");
