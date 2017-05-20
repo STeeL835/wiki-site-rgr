@@ -57,12 +57,12 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
             var article = ArticleVM.GetArticle(shortUrl);
             if (ArticleVM.RemoveArticle(article.Id))
             {
-                this.AlertNextAction($"Статья \"{article.Heading}({article.ShortUrl})\" успешно удалена.", AlertType.Success);
+                this.AlertNextAction($"Статья \"{article.Heading} ({article.ShortUrl})\" успешно удалена.", AlertType.Success);
             }
             else
             {
                 this.AlertNextAction(
-                    $"Произошла ошибка при удалении статьи \"{article.Heading}({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
+                    $"Произошла ошибка при удалении статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
             return RedirectToAction("Index");
         }
@@ -84,23 +84,32 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
             article.IsApproved = false;
             if (ArticleVM.AddArticle(article))
             {
-                this.AlertNextAction($"Статья \"{article.Heading}({article.ShortUrl})\" успешно добавлена.", AlertType.Success);
+                this.AlertNextAction($"Статья \"{article.Heading} ({article.ShortUrl})\" успешно добавлена.", AlertType.Success);
             }
             else
             {
                 this.AlertNextAction(
-                    $"Произошла ошибка при добавлении статьи \"{article.Heading}({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
+                    $"Произошла ошибка при добавлении статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult Update(string shortUrl)
         {
             ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(shortUrl).Heading}\"";
             ViewBag.ShortUrl = shortUrl;
-            return View();
+            return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(shortUrl).Id));
         }
 
+        [HttpPost]
+        public ActionResult Update(ArticleVM version)
+        {
+
+            return RedirectToAction("Index");//TODO: Как передать Id из той вьюхи?
+        }
+
+        [HttpGet]
         public ActionResult UpdateByGuid(Guid articleId)
         {
             return RedirectToAction("Update", "Articles", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl});

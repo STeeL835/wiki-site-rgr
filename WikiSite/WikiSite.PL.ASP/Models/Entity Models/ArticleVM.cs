@@ -97,7 +97,7 @@ namespace WikiSite.PL.ASP.Models
         [DataType(DataType.Text)]
         [Display(Name = "Название")]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
-        [MaxLength(100, ErrorMessage = "Минимальное количество символов - 100")]
+        [MaxLength(50, ErrorMessage = "Минимальное количество символов - 50")]
         public string Heading
         {
             get { return _heading; }
