@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>My Name Jeff</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Other styles -->
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/bootstrap-overrides.css">
+	
+	<!-- Scripts -->	
+	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div class="wrapper">
+		
+		<!-- Admin panel -->
+		<section class="topbar topbar-default">
+		
+			<a href="#!" class="sidebar-control btn btn-sm btn-inverse">
+				<span class="sr-only">Open sidebar</span>
+				<i class="fa fa-bars"></i>
+			</a>
+			
+			<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right ">
+				<span class="sr-only">Войти</span>
+				<i class="fa fa-user"></i>
+			</a>
+			
+		</section>
+		
+		<!-- Log in panel -->
+		<form class="login-form animated" action="">
+			<div class="form-group stretch">
+				<label for="login-login">Логин</label>
+				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
+			</div>
+				
+			<div class="form-group stretch has-error">
+				<label for="login-pass">Пароль</label>
+				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
+			</div>
+				
+			<div class="form-group">
+				<input type="submit" class="btn btn-success pull-right" value="Войти">
+				<a href="#!" class="btn btn-link pull-right">Регистрация</a>
+			</div>
+		</form>
+		
+		<!-- Sidebar menu -->
+		<section class="sidebar animated sidebar-default">
+			<i class="sidebar-image" alt=""></i>
+			<ul>
+				<li class="logo"><a href="#!"><span class="sr-only">My name Jeff</span></a></li>
+				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
+				<li class="divider"></li>
+				<li><a href="#!">На главную страницу</a></li>
+				<li><a href="#!">Случайная статья</a></li>
+				<li class="divider"></li>
+				<li><a href="#!">Создать статью</a></li>
+				<li><a href="#!">Редактировать статью</a></li>
+				<li><a href="#!">Версии этой статьи</a></li>
+				<li><a href="#!">Перейти к обсуждению</a></li>
+			</ul>
+		</section>
+		
+		<!-- Content of a page -->
+		<section class="content animated">
+			<div class="container-fluid">
+				
+				<h1 class="page-header">
+					<a href="#!" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+					Обсуждение статьи <span class="text-primary">Блэд Нэвэльны</span>
+				</h1>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="comment list-group-item">
+							<div class="row">
+								<div class="comment-actions">
+									<a href="#!" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
+										<i class="fa fa-pencil"></i>
+									</a>
+									<a href="#!" title="Удалить" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-danger">
+										<i class="fa fa-trash"></i>
+									</a>
+								</div>
+								<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
+									<a href="#!"><img src="https://www.gravatar.com/avatar/205e460b479e2e5b48a7710c08d52?s=80&d=retro" alt=""></a>
+									<div class="comment-author-info">
+										<h4 class="comment-nickname"><a href="#!">STeeL835</a></h4>
+										<div>
+											<span class="label label-warning">Admin</span>
+											<span class="label label-primary">Автор статьи</span>
+										</div>
+										<em class="comment-date">15.07.1997 10:35:21</em>
+									</div>
+								</div>
+								<p class="col-xs-12 col-sm-9 col-lg-10">
+									Статья лишена самой статьи. Серьезно, где текст, Нэвельный? Где сама статья? Я что, пишу на простой HTML странице, что ли? Плюс, Нэвельны<strong>й</strong>.
+								</p>
+							</div>
+						</div>
+						<div href="#" class="comment list-group-item">
+							<div class="row">
+								<div class="comment-actions">
+									<a href="#!" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
+										<i class="fa fa-pencil"></i>
+									</a>
+									<a href="#!" title="Удалить" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-danger">
+										<i class="fa fa-trash"></i>
+									</a>
+								</div>
+								<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
+									<a href="#!"><img src="https://www.gravatar.com/avatar/205e460b49e2eee48a770c08d52?s=80&d=retro" alt=""></a>
+									<div class="comment-author-info">
+										<h4 class="comment-nickname"><a href="#!">Чечбахтыр</a></h4>
+										<div>
+											<span class="label label-inverse">Автор правки</span>
+										</div>
+										<em class="comment-date">15.07.1997 10:35:21</em>
+									</div>
+								</div>
+								<p class="col-xs-12 col-sm-9 col-lg-10">
+									Статья лишена самой статьи. Серьезно, где текст, Нэвельный? Где сама статья? Я что, пишу на простой HTML странице, что ли? Плюс, Нэвельны<strong>й</strong>.
+								</p>
+							</div>
+						</div>
+						<div class="newversion">
+							<a href="#!">Правка 12</a>
+							<span class="newversion-date">17.07.1997</span>
+						</div>
+						<div href="#" class="comment list-group-item">
+							<div class="row">
+								<div class="comment-actions">
+									<a href="#!" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
+										<i class="fa fa-pencil"></i>
+									</a>
+									<a href="#!" title="Удалить" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-danger">
+										<i class="fa fa-trash"></i>
+									</a>
+								</div>
+								<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
+									<a href="#!"><img src="https://www.gravatar.com/avatar/205e460b479e2e5b48a771f8d52?s=80&d=retro" alt=""></a>
+									<div class="comment-author-info">
+										<h4 class="comment-nickname"><a href="#!">Gulman</a></h4>
+										<em class="comment-date">15.07.1997 10:35:21</em>
+									</div>
+								</div>
+								<p class="col-xs-12 col-sm-9 col-lg-10">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi est animi veritatis ratione, quos pariatur reiciendis molestiae quibusdam sequi hic voluptates voluptatem sapiente error, dolore. Enim animi, explicabo molestiae distinctio fuga, nisi commodi nemo perspiciatis nesciunt laboriosam dignissimos, inventore expedita harum eius beatae voluptas vel sint quod alias eos cumque.</p>
+									<p>Autem fugit eveniet libero eligendi nam dolore a nesciunt mollitia, soluta atque id reprehenderit quia perspiciatis nulla voluptas corporis quasi commodi sit, modi sint vero sed deleniti! Tenetur fugit dolorem officia, dolor vitae doloremque voluptatem facere quia earum nisi ratione et temporibus. Omnis consectetur consequatur officiis quia ut atque. Facilis?</p>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<h3>Оставить свой комментарий</h3>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

@@ -90,3 +90,8 @@ form label {
 	margin-right: -1px;
 	color: #eee;
 }
+
+/* Labels */
+.label-inverse {
+	background-color: #444;
+}

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - My ASP.NET Application</title>
+	<title>@ViewBag.Title - MNJ</title>
 
 	<!-- Bootstrap -->
 	<link href="~/Content/bootswatch/lumen/bootstrap.min.css" rel="stylesheet">
@@ -45,9 +45,9 @@
 					{
 						<li>@Html.ActionLink("Админка", "Index", "Home", new { area="Admin" }, new { @class = "btn btn-warning btn-xs" })</li>
 					}
-					<li><a href="#!" class="btn btn-success btn-xs">Кабинет</a></li>
+					<li><a href="@Url.Action("Index", "User")" class="btn btn-success btn-xs">Кабинет</a></li>
 					<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
-					<li><img src="http://placehold.it/30" alt="Profile image"/></li>
+					<li><img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(User.Identity.Name)?s=30&d=retro" alt="Profile image"/></li>
 					<li>
 						<a href="@Url.Action("Logout", "Auth")" class="btn btn-inverse btn-sm">
 							<i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -69,16 +69,16 @@
 		<!-- Log in panel -->
 		@if (!Request.IsAuthenticated)
 		{
-			<form class="login-form animated" method="post" action="Auth/Login">
+			<form class="login-form animated" method="post" action="/Auth/Login?ReturnUrl=@HttpContext.Current.Request.RawUrl">
 				@Html.AntiForgeryToken()
 				<div class="form-group stretch">
 					<label for="login-login">Логин или e-mail</label>
-					@Html.TextBox("LoginEmail", "", new { @class = "form-control", id = "login-login", placeholder = "Логин или e-mail"})
+					@Html.TextBox("LoginEmail", "", new {@class = "form-control", id = "login-login", placeholder = "Логин или e-mail"})
 				</div>
 
 				<div class="form-group stretch">
 					<label for="login-pass">Пароль</label>
-					@Html.Password("Password", "", new { @class = "form-control", id = "login-pass", placeholder = "Пароль" })
+					@Html.Password("Password", "", new {@class = "form-control", id = "login-pass", placeholder = "Пароль"})
 				</div>
 
 				<div class="form-group pull-right">
@@ -86,9 +86,7 @@
 						@Html.CheckBox("DontRememberMe")
 						<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
 					</label>
-					@Html.ActionLink("Регистрация", "Register", "Auth", null, new {@class = "btn btn-link"}) @{
-																												/* TODO: Throw a return url */
-					                                                                                          }
+					@Html.ActionLink("Регистрация", "Register", "Auth", new {ReturnUrl = HttpContext.Current.Request.RawUrl}, new {@class = "btn btn-link"})
 					<input type="submit" class="btn btn-success" value="Войти">
 				</div>
 			</form>
@@ -105,9 +103,10 @@
 				</li>
 				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
 				<li class="divider"></li>
-				<li><a href="#!">На главную страницу</a></li>
+				<li><a href="@Url.Action("Index", "Home")">На главную страницу</a></li>
 				<li><a href="#!">Случайная статья</a></li>
 				<li class="divider"></li>
+				<li><a href="#!">Создать статью</a></li>
 				<li><a href="#!">Редактировать статью</a></li>
 				<li><a href="#!">Версии этой статьи</a></li>
 				<li><a href="#!">Перейти к обсуждению</a></li>
@@ -117,6 +116,10 @@
 		<!-- Content of a page -->
 		<section class="content animated">
 			<div class="container-fluid">
+				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
+				{
+					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
+				}
 				@RenderBody()
 			</div>
 		</section>

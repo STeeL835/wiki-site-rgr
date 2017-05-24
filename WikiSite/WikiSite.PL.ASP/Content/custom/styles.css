@@ -101,10 +101,14 @@ body {
 }
 
 .article-head {
+	position:relative;
 	background: #e5e5e5;
 	padding-top: 40px;
 	padding-bottom: 40px;
 	margin-bottom: 15px;
+}
+.article-head blockquote {
+	border-left-color: silver;
 }
 
 .head-thumbnail img {
@@ -154,6 +158,155 @@ body {
 .stats .stat-number {
 	font-size: 40px;	font-weight: 600;
 
+	margin-bottom: 0;
+}
+
+.page-actions {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+
+.error-container {
+	position: relative;
+}
+.error-container h1 {
+	color: rgba(0, 0, 0, 0.2);
+	font-size: 70px;
+	font-weight: 600;
+	position: absolute;
+	left: -15px;
+	top: 0;
+}
+.error-container h2 {
+	padding-top: 70px;
+	font-weight: bold;
+}
+.error-container pre {
+	margin: 20px 0;
+	color:whitesmoke;
+	background-color: #333;
+}
+
+.welcome-message:before {
+	content: "";
+	position: absolute;
+	top: -35px;
+	bottom: 0px;
+	left: -30px;
+	right: -30px;
+	z-index: -1;
+	background: #eee;
+	border-bottom: 3px solid #ddd;
+}
+.welcome-message {
+	position: relative;
+	padding-bottom: 30px;
+	margin-bottom: 10px;
+}
+.welcome-message img {
+	max-width: 80%;
+	display: block;
+	margin: auto;
+}
+.welcome-message h2 {
+	font-weight: bold;
+}
+
+.search-results {
+	margin-top: 15px;
+}
+.search-results h3 {
+	font-weight: bold;
+}
+.search-results .list-group-item {
+	display: table;
+}
+.search-results .list-group-item img {
+	margin-right: 15px;
+}
+.search-results .list-group-item img,
+.search-results .list-group-item .text {
+	display: table-cell;
+	vertical-align: top
+}
+
+.search-notfound {
+	text-align: center;
+	margin-top: 50px;
+}
+.search-notfound .fa {
+	color: silver;
+	font-size: 70px;
+}
+
+.newversion {
+	background-color: #127ba3;
+	border-bottom: 3px solid #0f678a;
+	margin-top: -1px;
+	color:white;
+	position: relative;
+	font-weight: bold;
+	text-align: center;
+	padding: 3px 0;
+}
+.newversion:active{
+	border-bottom-width: 2px;
+	margin-top: 1px;
+}
+.newversion a {
+	color: inherit;
+}
+.newversion a:active {
+	color: rgba(255, 255, 255, 0.8);
+}
+.newversion-date {
+	position: absolute;
+	right: 7px;
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: normal;
+}
+
+.page-back-button {
+  position: absolute;
+  left: -3em;
+	top: -2px;
+}
+.page-back-button * {
+    font-size: 30px !important;
+}
+
+.comment-author {
+	text-align: left;
+	display: flex;
+	margin-bottom: 10px;
+}
+.comment-author h4 {
+	margin: 5px 0;
+}
+.comment-author img {
+	padding-right: 5px;
+		border-right: 1px solid silver;
+}
+.comment p {
+	margin-bottom: 0;
+}
+.comment-author-info {
+	margin-left: 5px;
+}
+.comment-date {
+	color:silver;
+	font-size: 12px;
+	position: absolute;
+	right: 15px;
+	bottom: 5px;
+}
+.comment-actions {
+	position: absolute;
+	right: 10px;
+}
+.user-about {
+	margin-top: 15px;
 	margin-bottom: 0;
 }
 
@@ -213,6 +366,46 @@ body {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
+	
+	.page-actions {
+		top: 15px;
+		right: 15px;
+	}
+	
+	.error-container h1 {
+		font-size: 100px;
+	}
+	.error-container h2 {
+		padding-top: 100px;
+	}
+	
+	.comment-author {
+		display: block;
+		text-align: right;
+		border-right: 1px solid silver;
+	}
+	.comment-author img {
+		padding: 0;
+		border: none;
+	}
+	.comment-author h4 {
+		text-align: right
+	}
+	.comment-date {
+		position: static;
+	}
+	.comment-actions {
+		display: none;
+	}
+	.comment:hover .comment-actions {
+		display: block;
+		z-index: 1;
+		background-color: white;
+		padding: 5px;
+		margin-right: -5px;
+		margin-top: -5px;
+		border-radius: 5px;
+	}
 }
 
 
@@ -234,6 +427,13 @@ body {
 	
 	.login-form {
 		left: 250px;
+	}
+	.welcome-message > * {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.welcome-text {
+		width: 60%;
 	}
 }
 

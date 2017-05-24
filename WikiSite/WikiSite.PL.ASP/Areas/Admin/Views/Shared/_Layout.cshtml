@@ -41,11 +41,11 @@
 			</button>
 
 			<ul class="pull-right list-inline list-unstyled">
-				<li><a href="#!" class="btn btn-success btn-xs">Личный кабинет</a></li>
+				<li><a href="@Url.Action("Index", "User", new { area = "Default" })" class="btn btn-success btn-xs">Личный кабинет</a></li>
 				<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
-				<li><img src="http://placehold.it/30" alt="Profile image" /></li>
+				<li><img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(User.Identity.Name)?s=30&d=retro" alt="Profile image" /></li>
 				<li>
-					@Html.ActionLink("Выйти", "Logout", "Auth", new { area = "" }, new { @class = "btn btn-inverse btn-sm" })
+					@Html.ActionLink("Выйти", "Logout", "Auth", new { area = "Default" }, new { @class = "btn btn-inverse btn-sm" })
 				</li>
 			</ul>
 

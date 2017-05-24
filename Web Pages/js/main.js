@@ -12,4 +12,5 @@
 	
 	$('[data-toggle="popoverx"]').popover({animation:true, content:$('[data-toggle="popoverx"]').parent().find('output').html(), html:true});
 	
+	$('[data-toggle=tooltip]').tooltip();
 })();

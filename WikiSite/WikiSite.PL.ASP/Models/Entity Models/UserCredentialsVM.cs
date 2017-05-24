@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
+using System.Text;
 using Foolproof;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
@@ -89,6 +91,7 @@ namespace WikiSite.PL.ASP.Models
 		#region Static
 
 		private static IUsersBLL _bll;
+		private static MD5 _md5 = MD5.Create();
 
 		static UserCredentialsVM()
 		{
@@ -150,6 +153,21 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.UpdateUserCredentials(credentials);
 		}
 
+		public static string GetEmailHash(Guid userId)
+		{
+			var data = _md5.ComputeHash(Encoding.UTF8.GetBytes(GetEmail(userId))); // getting hash
+			StringBuilder sBuilder = new StringBuilder();
+			foreach (byte b in data) //converting byte array to hex string
+			{
+				sBuilder.Append(b.ToString("x2"));
+			}
+			return sBuilder.ToString();
+		}
+
+		public static string GetEmailHash(string userId)
+		{
+			return GetEmailHash(Guid.Parse(userId));
+		}
 
 		#endregion
 	}

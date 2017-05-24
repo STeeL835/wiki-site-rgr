@@ -47,9 +47,9 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		    return View(model);
 	    }
 
-	    public ActionResult Edit(Guid guid)
+	    public ActionResult EditByGuid(Guid id)
 	    {
-		    return RedirectToAction("Edit", "Users", new {id = UserVM.GetUser(guid).ShortId});
+		    return RedirectToAction("Edit", "Users", new {id = UserVM.GetUser(id).ShortId});
 	    }
 	    public ActionResult Edit(int id)
 	    {
@@ -122,24 +122,18 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 			return View(model);
 	    }
 
-		public ActionResult Details(Guid guid)
+		public ActionResult DetailsByGuid(Guid id)
 		{
-			return RedirectToAction("Details", "Users", new { id = UserVM.GetUser(guid).ShortId });
+			return RedirectToAction("Details", "Users", new { id = UserVM.GetUser(id).ShortId });
 		}
 		public ActionResult Details(int id)
 	    {
-		    var user = UserVM.GetUser(id);
-		    ViewBag.Role = RoleVM.GetRole(user.RoleId);
-		    ViewBag.Articles = ArticleVM.GetAllArticles(user.Id);
-		    ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(user.Id);
-		    ViewBag.CommentsCount = "228*";
-
-			return View(user);
+			return RedirectToAction("Details", "User", new { id, area = "Default" });
 	    }
 
-		public ActionResult Delete(Guid guid)
+		public ActionResult DeleteByGuid(Guid id)
 		{
-			return RedirectToAction("Delete", "Users", new { id = UserVM.GetUser(guid).ShortId });
+			return RedirectToAction("Delete", "Users", new { id = UserVM.GetUser(id).ShortId });
 		}
 		public ActionResult Delete(int id)
 	    {
