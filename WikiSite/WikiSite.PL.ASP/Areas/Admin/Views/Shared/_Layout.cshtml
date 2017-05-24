@@ -1,4 +1,5 @@
-﻿@using WikiSite.PL.ASP.Models
+﻿@using WikiSite.PL.ASP.Classes
+@using WikiSite.PL.ASP.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +14,9 @@
 	<!-- Other styles -->
 	<!--	<link rel="stylesheet" href="css/styles.css">-->
 	<link rel="stylesheet" href="~/Content/custom/admin-styles-override.css">
-    <link href="~/Content/custom/special-styles.css" rel="stylesheet" />
+    <link href="~/Content/custom/special-styles.css" rel="stylesheet"/>
 	@RenderSection("style", false)
+    @Html.EmitRequiredStyles()
 
 	<!-- Scripts -->
 	<script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -92,7 +94,7 @@
 	<script src="~/Scripts/bootstrap.min.js"></script>
 	<script src="~/Scripts/custom/main.js"></script>
 	@RenderSection("js", false)
-
+    @Html.EmitRequiredScripts()
 
 </body>
 </html>

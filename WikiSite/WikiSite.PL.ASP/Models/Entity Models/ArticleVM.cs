@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using WikiSite.BLL.Abstract;
@@ -92,6 +93,11 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Название")]
+        [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
+        [MaxLength(50, ErrorMessage = "Минимальное количество символов - 50")]
         public string Heading
         {
             get { return _heading; }
@@ -130,6 +136,10 @@ namespace WikiSite.PL.ASP.Models
         }
         public bool IsApproved { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
+        [MaxLength(300, ErrorMessage = "Максимальное количество символов - 300")]
+        [Display(Name = "Краткое описание")]
         public string Definition
         {
             get { return _definition; }
@@ -140,6 +150,9 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
+        [DataType(DataType.MultilineText)]
+        [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
+        [Display(Name = "Содержание")]
         public string Text {
             get { return _text; }
             set

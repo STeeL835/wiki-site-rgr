@@ -31,9 +31,9 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("INSERT INTO [Articles] (Id, Short_Url, Author_Id, Heading, Date_Of_Creation) VALUES(@id, @Short_Url @author_id, @heading, @date_of_creation)", connection);
+                var sqlCom = new SqlCommand("INSERT INTO [Articles] (Id, Short_Url, Author_Id, Heading, Date_Of_Creation) VALUES(@id, @short_url, @author_id, @heading, @date_of_creation)", connection);
                 sqlCom.Parameters.AddWithValue("@id", article.Id);
-                sqlCom.Parameters.AddWithValue("@Short_Url", article.ShortUrl);
+                sqlCom.Parameters.AddWithValue("@short_url", article.ShortUrl);
                 sqlCom.Parameters.AddWithValue("@author_id", article.AuthorId);
                 sqlCom.Parameters.AddWithValue("@heading", article.Heading);
                 sqlCom.Parameters.AddWithValue("@date_of_creation", article.CreationDate);

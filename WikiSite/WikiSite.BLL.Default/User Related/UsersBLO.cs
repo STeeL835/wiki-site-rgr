@@ -315,7 +315,7 @@ namespace WikiSite.BLL.Default
 		/// <returns></returns>
 		private UserCredentialsDBDTO InDB(UserCredentialsDTO dtoFromPL)
 		{
-			if (dtoFromPL == null) throw new ArgumentNullException(nameof(dtoFromPL), "Credentials DTO is null");
+			if (dtoFromPL == null) throw new ArgumentNullException(nameof(dtoFromPL), "Credentials DTO is null");//TODO: use ErrorGuard
 			Lowerify(dtoFromPL);
 			return new UserCredentialsDBDTO //TODO: map this with Mapper
 				{
