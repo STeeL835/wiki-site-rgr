@@ -1,6 +1,7 @@
-﻿
+﻿@model WikiSite.PL.ASP.Models.ErrorVM
 @{
     Layout = null;
+	ViewBag.Title = "Упс..";
 }
 
 <!DOCTYPE html>
@@ -14,17 +15,15 @@
 	<title>@ViewBag.Title</title>
 
 	<!-- Bootstrap -->
-	<link href="~/Content/bootswatch/lumen/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="~/Content/bootstrap.min.css">
 	<link rel="stylesheet" href="~/Content/custom/bootstrap-overrides.css">
 
 	<!-- Other styles -->
 	<link rel="stylesheet" href="~/Content/custom/styles.css">
-	@RenderSection("style", false)
-
 
 	<!-- Scripts -->
 	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
-	@RenderSection("headjs", false)
+
 
 	<!-- HTML5 shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,31 +37,34 @@
 
 	<div class="container">
 
-		<img class="logo" src="~/Content/Images/logo-full.png" />
+		<div class="row">
+			<div class="col-xs-12">
+				<img class="logo" src="~/Content/Images/logo-full.png" alt="Logo"/>
+			</div>
+		</div>
 
-
-		<!-- Log in panel -->
-		<div class="panel panel-inverse">
-			<header class="panel-heading">
-				@ViewBag.Title
-			</header>
-			<div class="panel-body clearfix">
-				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
-				{
-					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
-				}
-				@RenderBody()
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-md-push-2">
+				<div class="error-container">
+					<h1>@Model.Header</h1>
+					<h2>@Model.Title</h2>
+					<dfn>@Model.Message</dfn>
+					@if (Model.ExceptionDetails != null && Request.IsAuthenticated && User.IsInRole("admin"))
+					{
+						<pre>@Model.ExceptionDetails</pre>
+					}
+				</div>
 			</div>
 		</div>
 
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+	<script src="/Scripts/jquery-3.1.1.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="~/Scripts/bootstrap.min.js"></script>
-	<script src="~/Scripts/custom/main.js"></script>
-	@RenderSection("js", false)
+	<script src="/Scripts/bootstrap.min.js"></script>
+	<script src="/Scripts/custom/main.js"></script>
+
 </body>
 
 </html>

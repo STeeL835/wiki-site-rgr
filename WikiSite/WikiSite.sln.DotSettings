@@ -130,6 +130,26 @@ catch (Exception e)&#xD;
 	&lt;a href="@Url.Action("$Index$")" title="Назад к списку" class="btn btn-link page-back-button"&gt;&lt;i class="fa fa-angle-left"&gt;&lt;/i&gt;&lt;/a&gt;&#xD;
 	@ViewBag.Title&#xD;
 &lt;/h1&gt;</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/@KeyIndexDefined">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Description/@EntryValue">new ErrorVM constriuctor template</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=HEADER/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=HEADER/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=MESSAGE/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=MESSAGE/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=TITLE/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Field/=TITLE/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Shortcut/@EntryValue">errvm</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F4F125EAE9BCB2429C552E99BBB7F87A/Text/@EntryValue">var error = new ErrorVM(&#xD;
+	header: "$HEADER$",&#xD;
+	title: "$TITLE$",&#xD;
+	message: "$MESSAGE$"&#xD;
+	);</s:String>
 	
 	
 	

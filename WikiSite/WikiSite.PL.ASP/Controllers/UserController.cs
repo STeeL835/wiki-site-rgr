@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using WikiSite.DAL.Abstract;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -16,14 +17,46 @@ namespace WikiSite.PL.ASP.Controllers
 
 	    public ActionResult Details(int id)
 	    {
-		    var user = UserVM.GetUser(id);
+		    UserVM user;
+		    try
+		    {
+				user = UserVM.GetUser(id);
+			}
+		    catch (EntryNotFoundException e)
+		    {
+			    var error = new ErrorVM(
+				    header: "404",
+				    title: "Пользователь не найден",
+				    message: $"Пользователя с ID {id} не найден. " +
+				             $"Проверьте id в адресной строке или, если это не ваша вина, " +
+				             $"обратитесь к администратору.",
+					exceptionDetails: e.ToString()
+			    );
+			    return View("Error", error);
+		    }
 		    return View(user);
 	    }
 
 		[Authorize]
 		public ActionResult Edit(int id)
 		{
-			var user = UserVM.GetUser(id);
+			UserVM user;
+			try
+			{
+				user = UserVM.GetUser(id);
+			}
+			catch (EntryNotFoundException e)
+			{
+				var error = new ErrorVM(
+					header: "404",
+					title: "Пользователь не найден",
+					message: $"Пользователя с ID {id} не найден. " +
+							 $"Проверьте id в адресной строке или, если это не ваша вина, " +
+							 $"обратитесь к администратору.",
+					exceptionDetails: e.ToString()
+				);
+				return View("Error", error);
+			}
 			var login = UserCredentialsVM.GetLogin(user.Id);
 			var email = UserCredentialsVM.GetEmail(user.Id);
 			var model = new UserEditModel(user);

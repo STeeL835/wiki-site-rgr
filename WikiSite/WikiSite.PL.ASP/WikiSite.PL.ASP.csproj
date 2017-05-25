@@ -739,6 +739,7 @@
     <Compile Include="Classes\DefaultRoleProvider.cs" />
     <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -751,6 +752,7 @@
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
+    <Compile Include="Models\Page Models\ErrorVM.cs" />
     <Compile Include="Models\Page Models\RegisterVM.cs" />
     <Compile Include="Models\Page Models\UserEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -771,6 +773,7 @@
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -782,6 +785,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Search\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">
@@ -791,6 +795,10 @@
     <ProjectReference Include="..\WikiSite.Caretakers\WikiSite.Caretakers.csproj">
       <Project>{2378a4ed-f04a-44ac-8bdc-7a36a7e07152}</Project>
       <Name>WikiSite.Caretakers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WikiSite.DAL.Abstract\WikiSite.DAL.Abstract.csproj">
+      <Project>{2F51132C-74AC-4E82-8B41-E1E477495DB7}</Project>
+      <Name>WikiSite.DAL.Abstract</Name>
     </ProjectReference>
     <ProjectReference Include="..\WikiSite.DI.Provider\WikiSite.DI.Provider.csproj">
       <Project>{C2ADEC93-7A34-4E05-9149-0CAA8AC6091B}</Project>
