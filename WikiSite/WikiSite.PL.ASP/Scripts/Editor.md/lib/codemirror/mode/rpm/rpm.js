@@ -89,7 +89,7 @@ CodeMirror.defineMode("rpm-spec", function() {
       }
       if (stream.match(/^%\{\??[\w \-]+\}/)) { return "macro"; } // Macros like '%{defined fedora}'
 
-      //TODO: Include bash script sub-parser (CodeMirror supports that)
+      //TOD: Include bash script sub-parser (CodeMirror supports that)
       stream.next();
       return null;
     }
