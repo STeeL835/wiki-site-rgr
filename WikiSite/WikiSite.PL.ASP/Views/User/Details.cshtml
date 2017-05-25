@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Microsoft.Security.Application
 @using WikiSite.PL.ASP.Models
 @model UserVM
 
@@ -6,8 +7,9 @@
     ViewBag.Title = $"Пользователь {Model.Nickname}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id);
-	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id);
+	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
+	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
+	ViewBag.Comments = new int[0]; // TODO: [Comments] Implement when done
 	ViewBag.CommentsCount = 123;
 }
 
@@ -21,14 +23,41 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right">
-				<li><a href="#">Редактировать профиль</a></li>
-				@if (User.IsInRole("admin"))
+				<li><a href="@Url.Action("Edit", new { id = Model.ShortId })">Редактировать профиль</a></li>
+				@if (User.IsInRole("admin") && User.Identity.Name != Model.Id.ToString())
 				{
-					<li><a href="#">Удалить профиль</a></li>
+					<li><a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить профиль</a></li>
 				}
 			</ul>
 		</div>
 	}
+	
+	<!-- OnDelete Modal Window -->
+	@if (Request.IsAuthenticated)
+	{
+		<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">
+								<i class="fa fa-times"></i>
+							</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Удаление пользователя @Model.Nickname</h4>
+					</div>
+					<div class="modal-body">
+						Это действие необратимо. Нет, серьёзно, подумой!
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+						<a href="@Url.Action("Delete", "Users", new {area = "Admin", id = Model.ShortId})" class="btn btn-danger">Удалить навсегда</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+
 	<div class="head-thumbnail col-xs-12 col-sm-6 col-lg-5">
 		<img class="thumbnail" src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(Model.Id)?s=250&d=retro" alt="">
 	</div>
@@ -62,11 +91,11 @@
 			<p>
 				@if (Model.About == null)
 				{
-					<ins>Пользователь ничего о себе не написал.</ins>
+					<span>Пользователь ничего о себе не написал.</span>
 				}
 				else
 				{
-					@Model.About
+					@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMark.CommonMarkConverter.Convert(Model.About)))
 				}
 			</p>
 		</blockquote>
@@ -80,100 +109,139 @@
 		<li><a href="#comments" data-toggle="tab">Комментарии</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
+		
+		<!-- Own articles -->
 		<div class="tab-pane fade active in" id="new-articles">
-			<h1 class="page-header col-xs-12">Статьи</h1>
-			<table class="table table-hover table-responsive col-xs-12">
-				<thead>
-					<tr>
-						<th>URL</th>
-						<th>Название</th>
-						<th class="hidden-xs">Дата создания</th>
-						<th class="hidden-xs">Дата редактирования</th>
-						<th class="hidden-xs">Исправил</th>
-						<th class="hidden-xs">Количество версий</th>
-						<th class="hidden-xs">Действия</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var article in ViewBag.Articles)
-					{
+			<div class="col-xs-12">
+				@if (ViewBag.Articles.Length == 0)
+				{
+					<div class="not-found">
+						<i class="fa fa-frown-o"></i>
+						<h3>Похоже, что этот пользователь ничего не писал</h3>
+					</div>
+				}
+				else
+				{
+					<table class="table table-hover table-responsive col-xs-12">
+						<thead>
 						<tr>
-							<td class="table-max-width-100">@article.ShortUrl</td>
-							<td class="table-max-width-200">
-								<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
-									@article.Heading
-								</a>
-							</td>
-							<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
-							<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
-							<td class="table-max-width-100 hidden-xs">
-								<a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
-									@UserVM.GetUser(article.EditionAuthorId).Nickname
-								</a>
-							</td>
-							<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
-							<td class="table-action hidden-xs">
-								<a href="@Url.Action("Details", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
-								<span>
-									<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-									<output hidden>
-										<a href="@Url.Action("Delete", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-danger btn-sm">Я уверен, удалить</a>
-									</output>
-								</span>
-							</td>
+							<th>URL</th>
+							<th>Название</th>
+							<th class="hidden-xs">Дата создания</th>
+							<th class="hidden-xs">Дата редактирования</th>
+							<th class="hidden-xs">Исправил</th>
+							<th class="hidden-xs">Количество версий</th>
+							<th class="hidden-xs">Действия</th>
 						</tr>
-					}
-				</tbody>
-			</table>
+						</thead>
+						<tbody>
+						@foreach (var article in ViewBag.Articles)
+						{
+							<tr>
+								<td class="table-max-width-100">@article.ShortUrl</td>
+								<td class="table-max-width-200">
+									<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+										@article.Heading
+									</a>
+								</td>
+								<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
+								<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
+								<td class="table-max-width-100 hidden-xs">
+									<a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
+										@UserVM.GetUser(article.EditionAuthorId).Nickname
+									</a>
+								</td>
+								<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
+								<td class="table-action hidden-xs">
+									<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
+									<span>
+										<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+										<output hidden>
+											<a href="@Url.Action("Delete", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-danger btn-sm">Я уверен, удалить</a>
+										</output>
+									</span>
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				}</div>
 		</div>
+
+		<!-- Own edits -->
 		<div class="tab-pane fade" id="edited-articles">
-			<h1 class="page-header col-xs-12">Редактированные</h1>
-			<table class="table table-hover table-responsive col-xs-12">
-				<thead>
-					<tr>
-						<th>URL</th>
-						<th>Название</th>
-						<th class="hidden-xs">Дата создания</th>
-						<th class="hidden-xs">Автор</th>
-						<th class="hidden-xs">Дата редактирования</th>
-						<th class="hidden-xs">Количество версий</th>
-						<th class="hidden-xs">Действия</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var article in ViewBag.Versions)
-					{
+			<div class="col-xs-12">
+				@if (ViewBag.Versions.Length == 0)
+				{
+					<div class="not-found">
+						<i class="fa fa-frown-o"></i>
+						<h3>Похоже, что этот пользователь никаких правок не делал</h3>
+					</div>
+				}
+				else
+				{
+					<table class="table table-hover table-responsive col-xs-12">
+						<thead>
 						<tr>
-							<td class="table-max-width-100">@article.ShortUrl</td>
-							<td class="table-max-width-200">
-								<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
-									@article.Heading
-								</a>
-							</td>
-							<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
-							<td class="table-max-width-100 hidden-xs">
-								<a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.AuthorId).ShortId})" class="btn btn-link btn-xs">
-									@UserVM.GetUser(article.EditionAuthorId).Nickname
-								</a>
-							</td>
-							<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
-							<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
-							<td class="table-action hidden-xs">
-								<a href="@Url.Action("Details", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
-								<span>
-									<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-									<output hidden>
-										<a href="@Url.Action("Delete", "Articles", new { shortUrl = article.ShortUrl })" class="btn btn-danger btn-sm">Я уверен, удалить</a>
-									</output>
-								</span>
-							</td>
+							<th>URL</th>
+							<th>Название</th>
+							<th class="hidden-xs">Дата создания</th>
+							<th class="hidden-xs">Автор</th>
+							<th class="hidden-xs">Дата редактирования</th>
+							<th class="hidden-xs">Количество версий</th>
+							<th class="hidden-xs">Действия</th>
 						</tr>
-					}
-				</tbody>
-			</table>
+						</thead>
+						<tbody>
+						@foreach (var article in ViewBag.Versions)
+						{
+							<tr>
+								<td class="table-max-width-100">@article.ShortUrl</td>
+								<td class="table-max-width-200">
+									<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+										@article.Heading
+									</a>
+								</td>
+								<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
+								<td class="table-max-width-100 hidden-xs">
+									<a href="@Url.Action("Details", "Users", new {id = UserVM.GetUser(article.AuthorId).ShortId})" class="btn btn-link btn-xs">
+										@UserVM.GetUser(article.EditionAuthorId).Nickname
+									</a>
+								</td>
+								<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
+								<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
+								<td class="table-action hidden-xs">
+									<a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
+									<span>
+										<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+										<output hidden>
+											<a href="@Url.Action("Delete", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-danger btn-sm">Я уверен, удалить</a>
+										</output>
+									</span>
+								</td>
+							</tr>
+						}
+						</tbody>
+					</table>
+				}</div>
 		</div>
+
+		<!-- Comments-->
+
 		<div class="tab-pane fade" id="comments">
-			<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+			<div class="col-xs-12">
+				@if (ViewBag.Comments.Length == 0)
+				{
+					<div class="not-found">
+						<i class="fa fa-frown-o"></i>
+						<h3>Похоже, что этот пользователь ничего не комментил</h3>
+					</div>
+				}
+				else /* TODO: [Comments] Implement when done */
+				{
+				 <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organiclomoretrofannypacklo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craftbeer,iphoneskateboardlocavorecarles etsy salvia banksy hoodie helvetica. DIY synth PBR banksyirony.Leggingsgentrify squid 8-bitcredpitchfork.</p>
+				}
+			</div>
 		</div>
 	</div>
 

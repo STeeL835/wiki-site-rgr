@@ -5,11 +5,36 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@section style
+{
+	<link href="~/Scripts/Editor.md/css/editormd.css" rel="stylesheet" />
+}
+
 @section js
 {
 	<script src="~/Scripts/jquery.validate.min.js"></script>
 	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js"></script>
+
+	<script src="~/Scripts/Editor.md/editormd.js"></script>
+	<script>
+		var aboutEditor;
+		$(function () {
+			aboutEditor = editormd({
+				id: "about-editor",
+				toolbarIcons: "full",
+				width: "100%",
+				height: 230,
+				toc: false,
+				path: "/Scripts/Editor.md/lib/",
+				pluginPath: "/Scripts/Editor.md/plugins/",
+				emoji: true,
+				imageUpload: false,
+				placeholder: "Информация о пользователе"
+			});
+		});
+	</script>
+	<script src="~/Scripts/Editor.md/languages/ru-ru.js"></script>
 }
 
 <h1 class="page-header">
@@ -19,83 +44,85 @@
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-		
-		<!-- Nickname -->
-	    <div class="form-group">
-            @Html.LabelFor(model => model.Nickname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-9">
-                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
-            </div>
-        </div>
+	@Html.AntiForgeryToken()
 
-		<!-- About -->
-	    <div class="form-group">
-		    @Html.LabelFor(model => model.About, htmlAttributes: new { @class = "control-label col-md-2" })
-		    <div class="col-md-9">
-			    @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control" } })
-			    @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
-		    </div>
-	    </div>
-		
-		<!-- Role select -->
-	    <div class="form-group">
-			@Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+	<div class="form-horizontal">
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+		<!-- Nickname -->
+		<div class="form-group">
+			@Html.LabelFor(model => model.Nickname, htmlAttributes: new { @class = "control-label col-md-2" })
 			<div class="col-md-9">
-				@Html.DropDownListFor(model => model.RoleId, Model.Roles, htmlAttributes: new { @class = "form-control" })
+				@Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
 			</div>
 		</div>
 
-	    <!-- Change password checkbox -->
-        <div class="form-group">
-	        <div class="col-md-offset-2 col-md-9">
-		        @Html.LabelFor(model => model.ChangePassword, htmlAttributes: new {@class = "btn btn-inverse", data_toggle = "collapse", data_target = "#passwords"})
-	        </div>
-            <div class="col-md-9" hidden>
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.ChangePassword)
-                    @Html.ValidationMessageFor(model => model.ChangePassword, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+		<!-- About -->
+		<div class="form-group">
+			@Html.LabelFor(model => model.About, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-9">
+				<div id="about-editor">
+					@Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control", style = "display: none" } })
+				</div>
+				@Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+			</div>
+		</div>
 
-	    <div class="collapse" id="passwords">
-		    <!-- Old password -->
-		    <div class="form-group">
-			    @Html.LabelFor(model => model.OldPassword, htmlAttributes: new {@class = "control-label col-md-2"})
-			    <div class="col-md-9">
-				    @Html.EditorFor(model => model.OldPassword, new {htmlAttributes = new {@class = "form-control"}})
-				    @Html.ValidationMessageFor(model => model.OldPassword, "", new {@class = "text-danger"})
-			    </div>
-		    </div>
+		<!-- Role select -->
+		<div class="form-group">
+			@Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class ="control-label col-md-2" })
+			<div class="col-md-9">
+				@Html.DropDownListFor(model => model.RoleId, Model.Roles,htmlAttributes: new { @class = "form-control" })
+			</div>
+		</div>
 
-		    <!-- New Password -->
-		    <div class="form-group">
-			    @Html.LabelFor(model => model.NewPassword, htmlAttributes: new {@class = "control-label col-md-2"})
-			    <div class="col-md-9">
-				    @Html.EditorFor(model => model.NewPassword, new {htmlAttributes = new {@class = "form-control"}})
-				    @Html.ValidationMessageFor(model => model.NewPassword, "", new {@class = "text-danger"})
-			    </div>
-		    </div>
+		<!-- Change password checkbox -->
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-9">
+				@Html.LabelFor(model => model.ChangePassword, htmlAttributes: new { @class = "btn btn-inverse", data_toggle = "collapse", data_target = "#passwords" })
+			</div>
+			<div class="col-md-9" hidden>
+				<div class="checkbox">
+					@Html.EditorFor(model => model.ChangePassword)
+					@Html.ValidationMessageFor(model => model.ChangePassword, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
 
-		    <!-- New password again -->
-		    <div class="form-group">
-			    @Html.LabelFor(model => model.ConfirmNewPassword, htmlAttributes: new {@class = "control-label col-md-2"})
-			    <div class="col-md-9">
-				    @Html.EditorFor(model => model.ConfirmNewPassword, new {htmlAttributes = new {@class = "form-control"}})
-				    @Html.ValidationMessageFor(model => model.ConfirmNewPassword, "", new {@class = "text-danger"})
-			    </div>
-		    </div>
-	    </div>
+		<div class="collapse" id="passwords">
+			<!-- Old password -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.OldPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-9">
+					@Html.EditorFor(model => model.OldPassword, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
+				</div>
+			</div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-9">
-                <input type="submit" value="Сохранить изменения" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+			<!-- New Password -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-9">
+					@Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<!-- New password again -->
+			<div class="form-group">
+				@Html.LabelFor(model => model.ConfirmNewPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+				<div class="col-md-9">
+					@Html.EditorFor(model => model.ConfirmNewPassword, new { htmlAttributes = new { @class = "form-control" } })
+					@Html.ValidationMessageFor(model => model.ConfirmNewPassword, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-9">
+				<input type="submit" value="Сохранить изменения" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
 }

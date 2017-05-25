@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
@@ -23,6 +20,7 @@ namespace WikiSite.PL.ASP.Controllers
 		    return View(user);
 	    }
 
+		[Authorize]
 		public ActionResult Edit(int id)
 		{
 			var user = UserVM.GetUser(id);
@@ -47,6 +45,8 @@ namespace WikiSite.PL.ASP.Controllers
 				var user = (UserVM) TempData.Peek("user");
 				var login = (string) TempData.Peek("login");
 				var email = (string) TempData.Peek("email");
+
+				if (model.RoleId == Guid.Empty) model.RoleId = user.RoleId;
 
 				if (UserVM.UpdateUser(model.GetUserVM(user)))
 				{
@@ -83,5 +83,7 @@ namespace WikiSite.PL.ASP.Controllers
 			}
 			return View(model);
 		}
+
+
 	}
 }
