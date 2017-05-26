@@ -19,3 +19,6 @@
 	/* Enabling tooltips */
 	$('[data-toggle="tooltip"]').tooltip();
 })();
+
+/* If screen is 993px wide, it's probably a PC */
+var IsMobile = window.matchMedia("only screen and (max-width: 992px)").matches;
