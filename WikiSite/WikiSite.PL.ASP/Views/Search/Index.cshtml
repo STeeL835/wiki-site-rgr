@@ -1,0 +1,91 @@
+﻿@using WikiSite.PL.ASP.Models
+
+@{
+    ViewBag.Title = "Поиск";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section js
+{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<!-- Search bar -->
+<div class="row">
+	@using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "col-xs-12" }))
+	{
+		<div class="input-group input-group-lg">
+			@Html.TextBox("query", (string)ViewBag.SearchQuery, new { @class = "form-control", placeholder = "Искать" })
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-inverse"><i class="fa fa-search"></i></button>
+			</span>
+		</div>
+	}
+</div>
+
+ <!-- Tabs -->
+<div class="row">
+	<div class="col-xs-12">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#articles">Статьи</a></li>
+			<li><a data-toggle="tab" href="#users">Пользователи</a></li>
+		</ul>
+
+		<div class="tab-content">
+			
+			<!-- Articles -->
+			<div id="articles" class="tab-pane fade in active">
+				@if (ViewBag.Articles == null || ((ArticleVM[]) ViewBag.Articles).Length == 0)
+				{
+					<div class="not-found">
+						<i class="fa fa-frown-o"></i>
+						<h3>Сорри, мы не нашли статей по этому запросу</h3>
+					</div>
+				}
+				else
+				{
+					<div class="list-group search-results">
+						@foreach (ArticleVM article in ViewBag.Articles)
+						{
+							<a href="@Url.Action("Show", "Article", new { id = article.ShortUrl })" class="list-group-item">
+								<img src="http://placehold.it/80" alt="Изображение статьи @article.Heading">
+								<div class="text">
+									<h3 class="list-group-item-heading">@article.Heading</h3>
+									<p class="list-group-item-text">@article.Definition</p>
+								</div>
+							</a>
+						}
+					</div>
+
+				}
+			</div>
+
+			<!-- Users -->
+			<div id="users" class="tab-pane fade">
+				@if (ViewBag.Users == null || ((UserVM[]) ViewBag.Users).Length == 0)
+				{
+					<div class="not-found">
+						<i class="fa fa-frown-o"></i>
+						<h3>Сорри, мы не нашли пользователей по этому запросу</h3>
+					</div>
+				}
+				else
+				{
+					<div class="list-group search-results search-results-users">
+						@foreach (UserVM user in ViewBag.Users)
+						{
+							<a href="@Url.Action("Details", "User", new {id = user.ShortId})" class="list-group-item col-xs-12 col-sm-6 col-lg-4">
+								<img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(user.Id)?s=80&d=retro" alt="Аватар пользователя @user.Nickname">
+								<div class="text">
+									<h3 class="list-group-item-heading">@user.Nickname</h3>
+								</div>
+							</a>
+						}
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+

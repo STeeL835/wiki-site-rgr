@@ -234,15 +234,16 @@ body {
 	font-weight: bold;
 }
 .search-results .list-group-item {
-	display: table;
+	display: flex;
+	align-items: flex-start;
 }
 .search-results .list-group-item img {
+	min-width: 80px;
+	width: 80px;
 	margin-right: 15px;
 }
-.search-results .list-group-item img,
-.search-results .list-group-item .text {
-	display: table-cell;
-	vertical-align: top
+.search-results-users .list-group-item {
+	border-radius: 0;
 }
 
 .not-found {
@@ -326,25 +327,20 @@ body {
 }
 
 .input-notice {
-	display: none;
+	display: block;
+	padding: 6px 10px 10px 10px;
+	background-color: #f1f1f1;
+	font-size: 12px;
+	border: 1px solid #e7e7e7;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	position: relative;
+	top: -4px;
 }
-@media only screen and (max-width: 992px) {
-	.input-notice {
-		display: block;
-		padding: 6px 10px 10px 10px;
-		background-color: #f1f1f1;
-		font-size: 12px;
-		border: 1px solid #e7e7e7;
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-		position: relative;
-		top: -4px;
-    }
-    .input-notice svg.markdown-icon {
-    	position: relative;
-    	top: 3px;
-    }
-}
+.input-notice svg.markdown-icon {
+   	position: relative;
+   	top: 3px;
+   }
 
 @media (max-width: 767px){
 	.user-about{
