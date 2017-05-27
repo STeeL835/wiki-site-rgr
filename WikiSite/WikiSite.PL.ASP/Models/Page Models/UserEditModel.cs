@@ -12,6 +12,8 @@ namespace WikiSite.PL.ASP.Models
 
 		#region VM
 
+		public int ShortId { get; }
+
 		[Required]
 		[DataType(DataType.Text)]
 		[Display(Name = "Никнейм")]
@@ -80,6 +82,7 @@ namespace WikiSite.PL.ASP.Models
 			About = user.About;
 			Nickname = user.Nickname;
 			RoleId = user.RoleId;
+			ShortId = user.ShortId;
 		}
 
 		/// <summary>

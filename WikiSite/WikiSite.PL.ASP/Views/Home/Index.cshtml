@@ -27,7 +27,10 @@
 				<div class="input-group input-group-lg">
 					@Html.TextBox("query","", htmlAttributes: new { @class = "form-control", placeholder = "О чем хотите узнать?" })
 					<span class="input-group-btn">
-						<button class="btn btn-warning hidden-xs" type="submit">Искать статью</button>
+						<button class="btn btn-warning" type="submit">
+							<span class="hidden-xs">Искать статью</span>
+							<i class="fa fa-search visible-xs"></i>
+						</button>
 					</span>
 				</div>
 			</div>
@@ -54,12 +57,10 @@
 						<span>Dolorum quisquam magnam tempora ea cum tenetur? Quo assumenda consectetur, voluptatum voluptate rerum earum nulla inventore ipsam repellendus porro quaerat! Repudiandae mollitia eum suscipit commodi voluptatum, impedit amet iste. Mollitia!</span>
 					</p>
 				</div>
-				<div class="list-group-item clearfix">
-					<a href="#!" class="pull-right">
+					<a href="#!" class="list-group-item text-right">
 						Читать далее
 						<i class="fa fa-arrow-right"></i>
 					</a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -114,12 +115,14 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Как пользоваться (кратко)</h3>
 			</div>
-			<div class="list-group-item">
-				Читать могут все. Редактировать могут зарегистрированные пользователи. По умолчанию показывается последняя подтвержденная версия, но за не подтвержденные можно голосовать. Модераторы отдают решающий голос.
-			</div>
-			<div class="list-group-item clearfix">
-				<a href="#!" class="pull-right"> @{ /* TODO: [Articles] Implement when done */ }
-						Подробнее
+			<div class="list-group">
+
+				<div class="list-group-item">
+					Читать могут все. Редактировать могут зарегистрированные пользователи. По умолчанию показывается последняя правка, можно голосовать за или против, если против перевешивает, то правка становится недоверенной. Модераторы отдают решающий голос.
+				</div>
+				<a href="#!" class="list-group-item text-right">
+					@{ /* TODO: [Articles] Implement when done */ }
+					Подробнее
 					<i class="fa fa-arrow-right"></i>
 				</a>
 			</div>
