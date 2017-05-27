@@ -74,7 +74,7 @@ namespace WikiSite.DI.Provider
 					UsersBLO = new WikiSite.BLL.Default.UsersBLO(UsersDAO, CredentialsDAO);
 					RolesBLO = new WikiSite.BLL.Default.RolesBLO(RolesDAO);
                     ArticlesBLO = new WikiSite.BLL.Default.ArticleBLO(ArticlesDAO, ArticleVersionsDAO, ArticleContentsDAO);
-					VersionVotesBLO = new WikiSite.BLL.Default.VersionVotesBLO(VersionVotesDAO, ArticlesDAO);
+					VersionVotesBLO = new WikiSite.BLL.Default.VersionVotesBLO(VersionVotesDAO, ArticleVersionsDAO);
 					break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}.");
