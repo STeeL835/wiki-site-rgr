@@ -12,6 +12,8 @@ namespace WikiSite.PL.ASP
             {
                 cfg.CreateMap<ArticleBDO, ArticleVM>();
                 cfg.CreateMap<ArticleVM, ArticleBDO>();
+	            cfg.CreateMap<CommentVM, ArticleCommentDTO>();
+	            cfg.CreateMap<ArticleCommentDTO, CommentVM>();
             });
         }
     }

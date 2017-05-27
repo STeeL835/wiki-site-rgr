@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleMeta Related\IArticleCommentsDAL.cs" />
     <Compile Include="ArticleMeta Related\IVersionVotesDAL.cs" />
     <Compile Include="Articles Related\IArticleContentDAL.cs" />
     <Compile Include="Articles Related\IArticlesDAL.cs" />

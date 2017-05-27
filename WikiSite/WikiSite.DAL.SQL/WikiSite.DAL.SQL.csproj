@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleMeta Related\ArticleCommentsDAO.cs" />
     <Compile Include="ArticleMeta Related\VersionVotesDAO.cs" />
     <Compile Include="Articles Related\ArticleContentsDAO.cs" />
     <Compile Include="Articles Related\ArticleDAO.cs" />
