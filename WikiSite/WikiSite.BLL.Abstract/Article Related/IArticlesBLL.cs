@@ -136,5 +136,12 @@ namespace WikiSite.BLL.Abstract
         /// <param name="articleId">Artcle to count</param>
         /// <returns>Number of versions</returns>
         int VersionsCount(Guid articleId);
+
+        /// <summary>
+        /// Checks for login in database.
+        /// </summary>
+        /// <param name="shortUrl">Checked short url</param>
+        /// <returns>Whether heading is exist or not</returns>
+        bool IsShortUrlExist(string shortUrl);
     }
 }

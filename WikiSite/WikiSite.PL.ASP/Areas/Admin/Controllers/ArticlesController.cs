@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Linq;
+using System.Web;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -70,18 +71,18 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return View(new ArticleVM());
         }
 
         [HttpPost]
         public ActionResult Create(ArticleVM article)
         {
             article.Id = Guid.NewGuid();
-            article.AuthorId = Guid.Parse("1e9723c9-27b9-4d7e-8ec6-4fdc14a12f4c");//TODO: FIX THIS SHIT, ASSHOLE
+            article.AuthorId = Guid.Parse(User.Identity.Name);
             article.EditionAuthorId = article.AuthorId;
             article.CreationDate = DateTime.Now;
             article.LastEditDate = article.CreationDate;
-            article.IsApproved = false;
+            article.IsApproved = true;
             if (ArticleVM.AddArticle(article))
             {
                 this.AlertNextAction($"Статья \"{article.Heading} ({article.ShortUrl})\" успешно добавлена.", AlertType.Success);
@@ -99,14 +100,34 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         {
             ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(shortUrl).Heading}\"";
             ViewBag.ShortUrl = shortUrl;
+
+            var article = ArticleVM.GetArticle(shortUrl);
+            TempData["Id"] = article.Id;
+            TempData["AuthorId"] = article.AuthorId;
+            TempData["CreationDate"] = article.CreationDate;
+            TempData["Heading"] = article.Heading;
+
             return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(shortUrl).Id));
         }
 
         [HttpPost]
         public ActionResult Update(ArticleVM version)
         {
-
-            return RedirectToAction("Index");//TODO: Как передать Id из той вьюхи?
+            version.Id = (Guid) TempData.Peek("Id");
+            version.AuthorId = (Guid) TempData.Peek("AuthorId");
+            version.EditionAuthorId = Guid.Parse(User.Identity.Name);
+            version.CreationDate = (DateTime) TempData.Peek("CreationDate");
+            version.LastEditDate = DateTime.Now;
+            version.IsApproved = false; if (ArticleVM.UpdateArticle(version))
+            {
+                this.AlertNextAction($"Статья \"{(string) TempData.Peek("Heading")} ({version.ShortUrl})\" успешно изменена.", AlertType.Success);
+            }
+            else
+            {
+                this.AlertNextAction(
+                    $"Произошла ошибка при изменении статьи \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

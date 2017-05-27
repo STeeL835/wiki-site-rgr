@@ -640,7 +640,6 @@
     <Content Include="Areas\Admin\Views\Articles\Update.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Search.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersTablePartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\ArticlesCreatorMDPartial.cshtml" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-Bold-webfont.eot" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-Bold-webfont.woff" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-BoldItalic-webfont.eot" />
@@ -736,6 +735,7 @@
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
+    <Compile Include="Models\Page Models\ArticleEditModel.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\ErrorVM.cs" />
@@ -760,6 +760,7 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

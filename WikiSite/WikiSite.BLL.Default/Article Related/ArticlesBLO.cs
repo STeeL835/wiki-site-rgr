@@ -39,7 +39,6 @@ namespace WikiSite.BLL.Default
             var articleDTO = CreateArticleDTO(article);
             var contentDTO = CreateArticleContentDTO(article);
             var versionDTO = CreateArticleVersionDTO(article, contentDTO);
-            versionDTO.IsApproved = true;
             return _articlesDAL.AddArticle(articleDTO) && _articleContentsDAL.AddContent(contentDTO) &&
                    _articleVersionsDAL.AddVersion(versionDTO);
         }
@@ -292,6 +291,16 @@ namespace WikiSite.BLL.Default
         public int VersionsCount(Guid articleId)
         {
             return GetAllVersionOfArticle(articleId).Count();
+        }
+
+        /// <summary>
+        /// Checks for login in database.
+        /// </summary>
+        /// <param name="shortUrl">Checked short url</param>
+        /// <returns>Whether heading is exist or not</returns>
+        public bool IsShortUrlExist(string shortUrl)
+        {
+            return _articlesDAL.GetArticle(shortUrl) == null;
         }
 
         private ArticleBDO CreateArticleBDO(ArticleVersionDTO versionDTO)
