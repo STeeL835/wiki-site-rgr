@@ -78,7 +78,7 @@ namespace WikiSite.BLL.Default
 		{
 			ErrorGuard.Check(articleVersionId);
 
-			return _versionVotesDal.GetVotesForVersion(articleVersionId); // getting all votes for article
+			return _versionVotesDal.GetVotesForVersion(articleVersionId).ToArray(); // getting all votes for article
 		}
 
 		public int CountVotesFor(Guid articleVersionId)
