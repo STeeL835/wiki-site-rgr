@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using WikiSite.DAL.Abstract;
-using WikiSite.Entities.ArticleMeta_Related;
+using WikiSite.Entities;
 
 namespace WikiSite.DAL.SQL
 {
@@ -33,7 +33,7 @@ namespace WikiSite.DAL.SQL
 				sqlCom.Parameters.AddWithValue("@id", vote.Id);
 				sqlCom.Parameters.AddWithValue("@version_id", vote.ArticleVersionId);
 				sqlCom.Parameters.AddWithValue("@user_id", vote.UserId);
-				sqlCom.Parameters.AddWithValue("@vote", vote.Vote);
+				sqlCom.Parameters.AddWithValue("@vote", vote.IsVoteFor);
 				connection.Open();
 
 				addedRows = sqlCom.ExecuteNonQuery();
@@ -80,7 +80,7 @@ namespace WikiSite.DAL.SQL
 				sqlCom.Parameters.AddWithValue("@id", vote.Id);
 				sqlCom.Parameters.AddWithValue("@version_id", vote.ArticleVersionId);
 				sqlCom.Parameters.AddWithValue("@user_id", vote.UserId);
-				sqlCom.Parameters.AddWithValue("@vote", vote.Vote);
+				sqlCom.Parameters.AddWithValue("@vote", vote.IsVoteFor);
 				connection.Open();
 
 				affectedRows = sqlCom.ExecuteNonQuery();
@@ -111,7 +111,7 @@ namespace WikiSite.DAL.SQL
 						Id = (Guid)reader["Id"],
 						UserId = (Guid)reader["User_Id"],
 						ArticleVersionId = (Guid)reader["ArticleVersion_Id"],
-						Vote = (bool)reader["Vote"]
+						IsVoteFor = (bool)reader["Vote"]
 					};
 				}
 			}
@@ -140,7 +140,7 @@ namespace WikiSite.DAL.SQL
 						Id = (Guid)reader["Id"],
 						UserId = (Guid)reader["User_Id"],
 						ArticleVersionId = (Guid)reader["ArticleVersion_Id"],
-						Vote = (bool)reader["Vote"]
+						IsVoteFor = (bool)reader["Vote"]
 					};
 				}
 			}
@@ -168,7 +168,7 @@ namespace WikiSite.DAL.SQL
 						Id = (Guid)reader["Id"],
 						UserId = (Guid)reader["User_Id"],
 						ArticleVersionId = (Guid)reader["ArticleVersion_Id"],
-						Vote = (bool)reader["Vote"]
+						IsVoteFor = (bool)reader["Vote"]
 					};
 				}
 			}

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WikiSite.Entities.ArticleMeta_Related;
+using WikiSite.Entities;
 
 namespace WikiSite.DAL.Abstract
 {
@@ -29,7 +29,7 @@ namespace WikiSite.DAL.Abstract
 		/// Gets vote from db by it's id
 		/// </summary>
 		/// <param name="voteId">Id of vote DTO</param>
-		/// <returns>Vote DTO</returns>
+		/// <returns>Vote DTO or null if does'nt exist</returns>
 		VersionVoteDTO GetVote(Guid voteId);
 		/// <summary>
 		/// Gets all votes made by user from db
