@@ -111,10 +111,7 @@
 				<li><a href="@Url.Action("Index", "Home")">На главную страницу</a></li>
 				<li><a href="#!">Случайная статья</a></li>
 				<li class="divider"></li>
-				<li><a href="#!">Создать статью</a></li>
-				<li><a href="#!">Редактировать статью</a></li>
-				<li><a href="#!">Версии этой статьи</a></li>
-				<li><a href="#!">Перейти к обсуждению</a></li>
+				@RenderSection("actions", required: false)
 			</ul>
 		</section>
 

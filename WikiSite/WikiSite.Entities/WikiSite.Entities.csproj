@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArticleMeta Related\ArticleCommentDTO.cs" />
+    <Compile Include="ArticleMeta Related\VersionVoteDTO.cs" />
     <Compile Include="Articles Related\ArticleBDO.cs" />
     <Compile Include="Articles Related\ArticleContentDTO.cs" />
     <Compile Include="Articles Related\ArticleDTO.cs" />

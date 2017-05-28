@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article Related\ArticlesBLO.cs" />
+    <Compile Include="ArticleMeta Related\ArticleCommentsBLO.cs" />
+    <Compile Include="ArticleMeta Related\VersionVotesBLO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User Related\RolesBLO.cs" />
     <Compile Include="User Related\UsersBLO.cs" />
