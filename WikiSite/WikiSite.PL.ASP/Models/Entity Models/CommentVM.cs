@@ -10,6 +10,8 @@ namespace WikiSite.PL.ASP.Models
 {
 	public class CommentVM
 	{
+		#region Instance
+
 		public Guid Id { get; set; }
 		public Guid ArticleId { get; set; }
 		public Guid AuthorId { get; set; }
@@ -41,6 +43,8 @@ namespace WikiSite.PL.ASP.Models
 			DateOfCreation = creationtime;
 		}
 
+		#endregion
+
 		#region Static
 
 		private static IArticleCommentsBLL _bll = Provider.ArticleCommentsBLO;
@@ -50,7 +54,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="comment">comment DTO</param>
 		/// <returns>Whether operation was successful</returns>
-		public bool AddComment(CommentVM comment)
+		public static bool AddComment(CommentVM comment)
 		{
 			return _bll.AddComment(Mapper.Map<ArticleCommentDTO>(comment));
 		}
@@ -60,7 +64,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="commentId">Id of the comment</param>
 		/// <returns>Whether operation was successful</returns>
-		public bool RemoveComment(Guid commentId)
+		public static bool RemoveComment(Guid commentId)
 		{
 			return _bll.RemoveComment(commentId);
 		}
@@ -70,7 +74,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="comment">comment DTO</param>
 		/// <returns>Whether operaation was successful</returns>
-		public bool UpdateComment(CommentVM comment)
+		public static bool UpdateComment(CommentVM comment)
 		{
 			return _bll.UpdateComment(Mapper.Map<ArticleCommentDTO>(comment));
 		}
@@ -80,7 +84,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="commentId">id of the comment</param>
 		/// <returns>Comment DTO, null if doesn't exist</returns>
-		public CommentVM GetComment(Guid commentId)
+		public static CommentVM GetComment(Guid commentId)
 		{
 			return Mapper.Map<CommentVM>(_bll.GetComment(commentId));
 		}
@@ -90,7 +94,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="articleId">id of the article</param>
 		/// <returns>Comment DTOs</returns>
-		public IEnumerable<CommentVM> GetCommentsForArticle(Guid articleId)
+		public static IEnumerable<CommentVM> GetCommentsForArticle(Guid articleId)
 		{
 			return Mapper.Map<IEnumerable<CommentVM>>(_bll.GetCommentsForArticle(articleId));
 		}
@@ -100,7 +104,7 @@ namespace WikiSite.PL.ASP.Models
 		/// </summary>
 		/// <param name="userId">id of the user</param>
 		/// <returns>Comment DTOs</returns>
-		public IEnumerable<CommentVM> GetCommentsForUser(Guid userId)
+		public static IEnumerable<CommentVM> GetCommentsForUser(Guid userId)
 		{
 			return Mapper.Map<IEnumerable<CommentVM>>(_bll.GetCommentsForUser(userId));
 		}
@@ -109,7 +113,7 @@ namespace WikiSite.PL.ASP.Models
 		/// Returns the latest comment made on site
 		/// </summary>
 		/// <returns>Comment DTO, null if doesn't exist</returns>
-		public CommentVM GetLatestComment()
+		public static CommentVM GetLatestComment()
 		{
 			return Mapper.Map<CommentVM>(_bll.GetLatestComment());
 		}

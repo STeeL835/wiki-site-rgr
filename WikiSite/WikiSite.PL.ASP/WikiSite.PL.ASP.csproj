@@ -725,6 +725,7 @@
     <Compile Include="Classes\DefaultRoleProvider.cs" />
     <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -739,6 +740,7 @@
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
+    <Compile Include="Models\Page Models\CommentArticleEditModel.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\ErrorVM.cs" />
     <Compile Include="Models\Page Models\RegisterVM.cs" />
@@ -763,6 +765,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

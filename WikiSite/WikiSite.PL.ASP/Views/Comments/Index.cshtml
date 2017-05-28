@@ -1,0 +1,96 @@
+﻿@using Microsoft.Security.Application
+@using WikiSite.PL.ASP.Models
+@model IEnumerable<CommentArticleVersionModel>
+
+@{
+	ViewBag.Title = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	Guid CurrentUserId = Guid.Parse(User.Identity.Name);
+	ArticleVM Article = (ArticleVM) ViewBag.Article;
+}
+
+<h1 class="page-header"> @{/* TODO: [Article] Check when done */}
+	<a href="@Url.Action("Show", "Article", new { id = Article.ShortUrl})" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+	Обсуждение статьи <span class="text-primary">@Article.Heading</span>
+</h1>
+
+<div class="row">
+	<div class="col-xs-12">
+		@foreach (CommentArticleVersionModel item in Model)
+		{
+			var lastEdit = Article;
+			if (item.CommentOrVersion == CommentArticleVersionModel.CVType.Comment)
+			{
+				var comment = item.Comment;
+				var user = UserVM.GetUser(comment.AuthorId);
+				<div class="comment list-group-item">
+					<div class="row">
+						@if (Request.IsAuthenticated && (CurrentUserId == comment.AuthorId || User.IsInRole("admin") || User.IsInRole("moderator")))
+						{
+							<div class="comment-actions">
+								<a href="@Url.Action("Edit", new {id = comment.Id})" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
+									<i class="fa fa-pencil"></i>
+								</a>
+								<a href="@Url.Action("Delete", new {id = comment.Id})" title="Удалить" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-danger">
+									<i class="fa fa-trash"></i>
+								</a>
+							</div>
+						}
+						<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
+							<a href="@Url.Action("Details", "User", new {id = user.ShortId})">
+								<img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(CurrentUserId)?s=80&d=retro" alt="Изображение профиля">
+							</a>
+							<div class="comment-author-info">
+								<h4 class="comment-nickname"><a href="@Url.Action("Details", "User", new {id = user.ShortId})">@user.Nickname</a></h4>
+								<div>
+									@if (User.IsInRole("admin"))
+									{
+										<span class="label label-warning">Админ</span>
+									}
+									@if (User.IsInRole("moderator"))
+									{
+										<span class="label label-success">Модератор</span>
+									}
+									@if (user.Id == lastEdit.AuthorId)
+									{
+										<span class="label label-inverse">Автор правки</span>
+									}
+									@if (user.Id == Article.AuthorId)
+									{
+										<span class="label label-primary">Автор статьи</span>
+									}
+								</div>
+								<em class="comment-date">@comment.DateOfCreation</em>
+							</div>
+						</div>
+						<p class="col-xs-12 col-sm-9 col-lg-10">
+							@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMark.CommonMarkConverter.Convert(comment.Text)))
+						</p>
+					</div>
+				</div>
+			}
+			else if (item.CommentOrVersion == CommentArticleVersionModel.CVType.ArticleVersion)
+			{
+				var version = lastEdit = item.ArticleVersion;
+				<div class="newversion">
+					<a href="#!">Правка 12</a> @{/* TODO: [Articles] Add link when done */}
+					<span class="newversion-date">@version.LastEditDate</span>
+				</div>
+			}
+		}
+	</div>
+</div>
+
+@if (Request.IsAuthenticated)
+{
+	<div class="row">
+		<div class="col-xs-12">
+			<h3>Оставить свой комментарий</h3>
+			@using (Html.BeginForm("Add", "Comments", FormMethod.Post))
+			{
+				@Html.AntiForgeryToken()
+			}
+		</div>
+	</div>
+}
+
