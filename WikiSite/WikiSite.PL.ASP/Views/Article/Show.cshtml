@@ -1,15 +1,24 @@
 ﻿@using CommonMark
+@using Microsoft.Security.Application
 @model WikiSite.PL.ASP.Models.ArticleVM
 
 @{
     ViewBag.Title = $"{Model.Heading}";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section actions
+{
+    @if (Request.IsAuthenticated)
+    {
+        <li><a href="@Url.Action("Update", new { shortUrl = Model.ShortUrl })">Редактировать статью</a></li>
+        <li><a href="@Url.Action("Details", new { shortUrl = Model.ShortUrl })">Версии этой статьи</a></li>
+        <li><a href="#">Перейти к обсуждению</a></li>
+    }
+}
 <!-- Head of an article (title/description) -->
 <header class="row article-head">
-
-    <div class="article-thumbnail col-xs-12 col-sm-5 col-lg-4">
+    <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
         <img class="thumbnail" src="http://placehold.it/250" alt="">
     </div>
 
@@ -18,16 +27,16 @@
             <span>@ViewBag.Title</span>
         </div>
 
-        <p class="article-desc">
-            @Html.Raw(CommonMarkConverter.Convert(Model.Definition))
-        </p>
+        <div class="article-desc">
+            @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Definition)))
+        </div>
     </div>
 </header>
-				
+
 <!-- Article itself -->
 <article class="row">
     <div class="col-xs-12">
-        @Html.Raw(CommonMarkConverter.Convert(Model.Text))
+        @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Text)))
     </div>
 </article>
 

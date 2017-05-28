@@ -18,7 +18,7 @@ namespace WikiSite.PL.ASP.Controllers
 
         public ActionResult ShowByGuid(Guid articleId, int number = 0)
         {
-            return RedirectToAction("Show", "Articles", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
+            return RedirectToAction("Show", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
         }
 
         public ActionResult Show(string shortUrl, int number = 0)
@@ -95,7 +95,7 @@ namespace WikiSite.PL.ASP.Controllers
         [HttpGet]
         public ActionResult UpdateByGuid(Guid articleId)
         {
-            return RedirectToAction("Update", "Articles", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
+            return RedirectToAction("Update", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
         }
     }
 }
