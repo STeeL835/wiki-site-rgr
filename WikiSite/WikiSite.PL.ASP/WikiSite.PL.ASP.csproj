@@ -726,9 +726,11 @@
     <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -740,6 +742,7 @@
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\ArticleEditModel.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
+    <Compile Include="Models\Page Models\CommentArticleEditModel.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\ErrorVM.cs" />
     <Compile Include="Models\Page Models\RegisterVM.cs" />
@@ -763,6 +766,8 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Article\Create.cshtml" />
     <Content Include="Views\Article\Show.cshtml" />
     <Content Include="Views\Article\Update.cshtml" />
