@@ -136,5 +136,18 @@ namespace WikiSite.BLL.Abstract
         /// <param name="articleId">Artcle to count</param>
         /// <returns>Number of versions</returns>
         int VersionsCount(Guid articleId);
+
+        /// <summary>
+        /// Checks for short url in database.
+        /// </summary>
+        /// <param name="shortUrl">Checked short url</param>
+        /// <returns>Whether article with short url is exist or not</returns>
+        bool IsShortUrlExist(string shortUrl);
+
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        ArticleBDO GetRandomArticle();
     }
 }

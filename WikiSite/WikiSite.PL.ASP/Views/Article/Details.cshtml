@@ -1,0 +1,50 @@
+﻿@using System.Globalization
+@using WikiSite.PL.ASP.Models
+@model IEnumerable<WikiSite.PL.ASP.Models.ArticleVM>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section actions
+{
+    <li><a href="@Url.Action("Show", new { shortUrl = Model.ToArray()[0].ShortUrl, number = 0 })">К последней версии</a></li>
+}
+
+<h1 class="page-header">
+    <a href="@Url.Action("Show", new { shortUrl = Model.ToArray()[0].ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
+    @ViewBag.Title
+</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Номер</th>
+        <th>Дата создания</th>
+        <th class="hidden-xs">Автор</th>
+        <th>Подтверждена</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        var i = 1;
+        foreach (var version in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td class="table-max-width-200">
+                    <a href="@Url.Action("Show", "Article", new {shortUrl = version.ShortUrl, number = i})" class="btn btn-link btn-xs">@version.LastEditDate.ToString(CultureInfo.CurrentCulture)</a>
+                </td>
+                <td class="table-max-width-100 hidden-xs">
+                    <a href="@Url.Action("Details", "User", new {id = UserVM.GetUser(version.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
+                        @UserVM.GetUser(version.EditionAuthorId).Nickname
+                    </a>
+                </td>
+                <td>@version.IsApproved</td>
+            </tr>
+            i++;
+        }
+    }
+    </tbody>
+</table>
+

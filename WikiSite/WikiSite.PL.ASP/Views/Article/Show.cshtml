@@ -4,12 +4,18 @@
 
 @{
     ViewBag.Title = $"{Model.Heading}";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<a href="@Url.Action("Details", "Articles", new {shortUrl = ViewBag.ShortUrl})" t title="К списку версий" class="btn btn-link page-back-button">
-    <i class="fa fa-angle-left"></i>
-</a>
+@section actions
+{
+    @if (Request.IsAuthenticated)
+    {
+        <li><a href="@Url.Action("Update", new { shortUrl = Model.ShortUrl })">Редактировать статью</a></li>
+    }
+    <li><a href="@Url.Action("Details", new { shortUrl = Model.ShortUrl })">Версии этой статьи</a></li>
+    <li><a href="#">Перейти к обсуждению</a></li>
+}
 
 <!-- Head of an article (title/description) -->
 <header class="row article-head">
@@ -34,3 +40,4 @@
         @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Text)))
     </div>
 </article>
+

@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +48,7 @@
     <Compile Include="Articles Related\IArticlesDAL.cs" />
     <Compile Include="Articles Related\IArticleVersionsDAL.cs" />
     <Compile Include="EntryNotFoundException.cs" />
+    <Compile Include="IImagesDAL.cs" />
     <Compile Include="Users Related\IRolesDAL.cs" />
     <Compile Include="Users Related\IUserCredentialsDAL.cs" />
     <Compile Include="Users Related\IUsersDAL.cs" />

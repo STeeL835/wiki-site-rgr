@@ -640,7 +640,6 @@
     <Content Include="Areas\Admin\Views\Articles\Update.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Search.cshtml" />
     <Content Include="Areas\Admin\Views\Users\_UsersTablePartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\ArticlesCreatorMDPartial.cshtml" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-Bold-webfont.eot" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-Bold-webfont.woff" />
     <Content Include="Scripts\Editor.md\docs\fonts\OpenSans-BoldItalic-webfont.eot" />
@@ -694,7 +693,8 @@
     <Content Include="Scripts\Editor.md\LICENSE" />
     <Content Include="Scripts\Editor.md\package.json" />
     <Content Include="Scripts\Editor.md\README.md" />
-    <Content Include="Areas\Admin\Views\Shared\ArticlesEditorMDPartial.cshtml" />
+    <Content Include="Views\Shared\ArticlesEditorMDPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Articles\AddImage.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -725,6 +725,7 @@
     <Compile Include="Classes\DefaultRoleProvider.cs" />
     <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -739,6 +740,7 @@
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
+    <Compile Include="Models\Page Models\ArticleEditModel.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CommentArticleEditModel.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
@@ -766,6 +768,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Article\Create.cshtml" />
+    <Content Include="Views\Article\Show.cshtml" />
+    <Content Include="Views\Article\Update.cshtml" />
+    <Content Include="Views\Article\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -777,6 +783,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Search\" />
+    <Folder Include="Content\Images\Uploaded\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

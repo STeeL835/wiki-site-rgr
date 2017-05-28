@@ -33,7 +33,7 @@
         <tr>
             <td class="table-max-width-100">@article.ShortUrl</td>
             <td class="table-max-width-200">
-                <a href="@Url.Action("Details", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+                <a href="@Url.Action("Show", "Articles", new {shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
                     @article.Heading
                 </a>
             </td>

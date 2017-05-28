@@ -26,10 +26,12 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("INSERT INTO [ArticleContents] (Id, Definition, Text) VALUES(@id, @definition, @text)", connection);
+                var sqlCom = new SqlCommand("INSERT INTO [ArticleContents] (Id, Heading, Definition, Text, Main_Image) VALUES(@id, @heading, @definition, @text, @main_image)", connection);
                 sqlCom.Parameters.AddWithValue("@id", content.Id);
+                sqlCom.Parameters.AddWithValue("@heading", content.Heading);
                 sqlCom.Parameters.AddWithValue("@definition", content.Definition);
                 sqlCom.Parameters.AddWithValue("@text", content.Text);
+                sqlCom.Parameters.AddWithValue("@main_image", content.MainImage);
                 connection.Open();
 
                 addedRows = sqlCom.ExecuteNonQuery();
@@ -57,8 +59,10 @@ namespace WikiSite.DAL.SQL
                     return new ArticleContentDTO
                     {
                         Id = (Guid) reader["Id"],
+                        Heading = (string) reader["Heading"],
                         Definition = (string) reader["Definition"],
-                        Text = (string) reader["Text"]
+                        Text = (string) reader["Text"],
+                        MainImage = (Guid) reader["Main_Image"]
                     };
                 }
             }

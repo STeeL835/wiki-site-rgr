@@ -31,11 +31,10 @@ namespace WikiSite.DAL.SQL
             int addedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("INSERT INTO [Articles] (Id, Short_Url, Author_Id, Heading, Date_Of_Creation) VALUES(@id, @short_url, @author_id, @heading, @date_of_creation)", connection);
+                var sqlCom = new SqlCommand("INSERT INTO [Articles] (Id, Short_Url, Author_Id, Date_Of_Creation) VALUES(@id, @short_url, @author_id, @date_of_creation)", connection);
                 sqlCom.Parameters.AddWithValue("@id", article.Id);
                 sqlCom.Parameters.AddWithValue("@short_url", article.ShortUrl);
                 sqlCom.Parameters.AddWithValue("@author_id", article.AuthorId);
-                sqlCom.Parameters.AddWithValue("@heading", article.Heading);
                 sqlCom.Parameters.AddWithValue("@date_of_creation", article.CreationDate);
                 connection.Open();
 
@@ -64,7 +63,6 @@ namespace WikiSite.DAL.SQL
                         Id = (Guid) reader["Id"],
                         ShortUrl = (string) reader["Short_Url"],
                         AuthorId = (Guid) reader["Author_Id"],
-                        Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
                     };
                 }
@@ -92,7 +90,6 @@ namespace WikiSite.DAL.SQL
                         Id = (Guid)reader["Id"],
                         ShortUrl = (string)reader["Short_Url"],
                         AuthorId = (Guid)reader["Author_Id"],
-                        Heading = (string)reader["Heading"],
                         CreationDate = (DateTime)reader["Date_Of_Creation"]
                     };
                 }
@@ -120,7 +117,6 @@ namespace WikiSite.DAL.SQL
                         Id = (Guid) reader["Id"],
                         ShortUrl = (string) reader["Short_Url"],
                         AuthorId = (Guid) reader["Author_Id"],
-                        Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
                     };
                 }
@@ -149,12 +145,36 @@ namespace WikiSite.DAL.SQL
                         Id = (Guid) reader["Id"],
                         ShortUrl = (string) reader["Short_Url"],
                         AuthorId = (Guid) reader["Author_Id"],
-                        Heading = (string) reader["Heading"],
                         CreationDate = (DateTime) reader["Date_Of_Creation"]
                     };
                 }
             }
             throw new EntryNotFoundException($"Article with id {articleId} has not found.");
+        }
+
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        public ArticleDTO GetRandomArticle()
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var sqlCom = new SqlCommand("SELECT TOP 1 * FROM [Articles] ORDER BY NEWID()", connection);
+                connection.Open();
+                var reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    return new ArticleDTO
+                    {
+                        Id = (Guid)reader["Id"],
+                        ShortUrl = (string)reader["Short_Url"],
+                        AuthorId = (Guid)reader["Author_Id"],
+                        CreationDate = (DateTime)reader["Date_Of_Creation"]
+                    };
+                }
+            }
+            throw new EntryNotFoundException("Article has not found.");
         }
 
         /// <summary>

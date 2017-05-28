@@ -1,7 +1,10 @@
-﻿
+﻿@using WikiSite.PL.ASP.Models
+
 @{
 	Layout = "../Shared/_Layout.cshtml";
-    ViewBag.Title = "Index";
+    ViewBag.Title = "My Name Jeff";
+    ViewBag.RandomArticle = ArticleVM.GetRandomArticle();
+
 }
 
 <div class="row">
@@ -46,8 +49,10 @@
 				<h3 class="panel-title">Случайная статья</h3>
 			</div>
 			<div class="list-group">
-				<div class="list-group-item">
-					<h1>Le Memes</h1>
+			    <div class="list-group-item">
+			        <h3>@ViewBag.RandomArticle.Heading</h3>
+			        <p>@Html.Raw(CommonMark.CommonMarkConverter.Convert(ViewBag.RandomArticle.Definition))</p>
+			        @*<h1>Le Memes</h1>
 					<p>
 						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat rem, ab, eveniet vero, ipsum facilis ducimus reprehenderit exercitationem, suscipit accusantium vel fugit. Perspiciatis sint, cupiditate, at dolor quo consequuntur dicta!</span>
 						<span>Eligendi voluptates velit excepturi laudantium optio aliquam corrupti, error, deleniti a esse vel? Cumque dolore quibusdam explicabo nisi, veritatis iure est animi doloribus quos blanditiis debitis iste maiores, voluptate molestiae.</span>
@@ -55,12 +60,14 @@
 						<span>Alias officiis laborum quisquam placeat suscipit earum vitae quam perferendis officia fuga rem, sequi distinctio harum similique accusantium ullam, odit corporis magnam dolores, amet, ipsa. Hic animi itaque voluptatibus inventore!</span>
 						<span>Veritatis dolorum saepe eum, facilis enim velit vero maxime quo. Vero quibusdam quidem veritatis velit, dicta expedita illo provident deserunt aut fugit nisi quaerat amet, reprehenderit optio architecto eius perspiciatis.</span>
 						<span>Dolorum quisquam magnam tempora ea cum tenetur? Quo assumenda consectetur, voluptatum voluptate rerum earum nulla inventore ipsam repellendus porro quaerat! Repudiandae mollitia eum suscipit commodi voluptatum, impedit amet iste. Mollitia!</span>
-					</p>
-				</div>
-					<a href="#!" class="list-group-item text-right">
-						Читать далее
-						<i class="fa fa-arrow-right"></i>
-					</a>
+					</p>*@
+			    </div>
+                <div class="list-group-item clearfix">
+                    <a href="@Url.Action("Show", "Article", new {shortUrl = ViewBag.RandomArticle.ShortUrl})" class="list-group-item text-right">
+                        Читать далее
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
 			</div>
 		</div>
 	</div>

@@ -23,6 +23,7 @@ namespace WikiSite.PL.ASP.Models
         private Guid _editionAuthorId;
         private string _definition;
         private string _text;
+        private Guid _mainImage;
 
         /// <summary>
         /// ONLY for model binder
@@ -30,6 +31,8 @@ namespace WikiSite.PL.ASP.Models
         public ArticleVM()
         {
             Id = Guid.NewGuid();
+            CreationDate = DateTime.Now;
+            LastEditDate = DateTime.Now;
         }
 
         public ArticleVM(string heading, Guid authorId, string definition, string text, bool isApproved = false)
@@ -39,7 +42,7 @@ namespace WikiSite.PL.ASP.Models
             AuthorId = authorId;
             CreationDate = DateTime.Now;
             EditionAuthorId = authorId;
-            LastEditDate = DateTime.Now;
+            LastEditDate = CreationDate;
             Definition = definition;
             Text = text;
             IsApproved = isApproved;
@@ -52,7 +55,7 @@ namespace WikiSite.PL.ASP.Models
             AuthorId = authorId;
             CreationDate = DateTime.Now;
             EditionAuthorId = authorId;
-            LastEditDate = DateTime.Now;
+            LastEditDate = CreationDate;
             Definition = definition;
             Text = text;
             IsApproved = isApproved;
@@ -81,8 +84,6 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
-        public string ShortUrl { get; private set; }
-
         public Guid AuthorId
         {
             get { return _authorId; }
@@ -97,17 +98,20 @@ namespace WikiSite.PL.ASP.Models
         [DataType(DataType.Text)]
         [Display(Name = "Название")]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
-        [MaxLength(50, ErrorMessage = "Минимальное количество символов - 50")]
+        [MaxLength(50, ErrorMessage = "Максимальное количество символов - 50")]
         public string Heading
         {
             get { return _heading; }
             set
             {
+                value = value.Trim();
                 ErrorGuard.Check(value);
                 _heading = value;
-                ShortUrl = HttpUtility.UrlEncode(value);
+                ShortUrl = HttpUtility.UrlEncode(value.ToLower());
             }
         }
+
+        public string ShortUrl { get; private set; }
 
         public DateTime CreationDate
         {
@@ -136,6 +140,7 @@ namespace WikiSite.PL.ASP.Models
         }
         public bool IsApproved { get; set; }
 
+        [Required]
         [DataType(DataType.MultilineText)]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
         [MaxLength(300, ErrorMessage = "Максимальное количество символов - 300")]
@@ -145,11 +150,13 @@ namespace WikiSite.PL.ASP.Models
             get { return _definition; }
             set
             {
+                value = value.Trim();
                 ErrorGuard.Check(value);
                 _definition = value;
             }
         }
 
+        [Required]
         [DataType(DataType.MultilineText)]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
         [Display(Name = "Содержание")]
@@ -157,8 +164,17 @@ namespace WikiSite.PL.ASP.Models
             get { return _text; }
             set
             {
+                value = value.Trim();
                 ErrorGuard.Check(value);
                 _text = value;
+            }
+        }
+
+        public Guid MainImage {
+            get { return _mainImage; }
+            set {
+                //ErrorGuard.Check(value);
+                _mainImage = value;
             }
         }
 
@@ -356,6 +372,25 @@ namespace WikiSite.PL.ASP.Models
         public static int VersionsCount(Guid articleId)
         {
             return _bll.VersionsCount(articleId);
+        }
+
+        /// <summary>
+        /// Checks for login in database.
+        /// </summary>
+        /// <param name="shortUrl">Checked short url</param>
+        /// <returns>Whether heading is exist or not</returns>
+        public static bool IsShortUrlExist(string shortUrl)
+        {
+            return _bll.IsShortUrlExist(shortUrl);
+        }
+        
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        public static ArticleBDO GetRandomArticle()
+        {
+            return _bll.GetRandomArticle();
         }
 
         #endregion

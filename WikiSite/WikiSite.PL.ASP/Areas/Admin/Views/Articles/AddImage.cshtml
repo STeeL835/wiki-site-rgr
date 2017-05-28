@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h3>Выберите загружаемый файл</h3>
+
+@using (Html.BeginForm("AddImage", "Articles", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <input type="file" name="upload"/>
+    <input type="submit" value="Загрузить"/>
+}

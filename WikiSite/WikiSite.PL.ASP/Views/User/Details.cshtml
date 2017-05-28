@@ -83,7 +83,7 @@
 		</div>
 		<div class="col-xs-12 col-md-10 col-md-push-1">
 			<blockquote class="user-about">
-				<p>
+				<div>
 					@if (Model.About == null)
 					{
 						<span>Пользователь ничего о себе не написал.</span>
@@ -92,7 +92,7 @@
 					{
 						@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMark.CommonMarkConverter.Convert(Model.About)))
 					}
-				</p>
+				</div>
 			</blockquote>
 		</div>
 	</div>

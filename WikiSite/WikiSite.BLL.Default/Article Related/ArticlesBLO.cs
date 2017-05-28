@@ -39,7 +39,6 @@ namespace WikiSite.BLL.Default
             var articleDTO = CreateArticleDTO(article);
             var contentDTO = CreateArticleContentDTO(article);
             var versionDTO = CreateArticleVersionDTO(article, contentDTO);
-            versionDTO.IsApproved = true;
             return _articlesDAL.AddArticle(articleDTO) && _articleContentsDAL.AddContent(contentDTO) &&
                    _articleVersionsDAL.AddVersion(versionDTO);
         }
@@ -294,6 +293,26 @@ namespace WikiSite.BLL.Default
             return GetAllVersionOfArticle(articleId).Count();
         }
 
+        /// <summary>
+        /// Checks for login in database.
+        /// </summary>
+        /// <param name="shortUrl">Checked short url</param>
+        /// <returns>Whether heading is exist or not</returns>
+        public bool IsShortUrlExist(string shortUrl)
+        {
+            return _articlesDAL.GetArticle(shortUrl) == null;
+        }
+
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        public ArticleBDO GetRandomArticle()
+        {
+            var article = _articlesDAL.GetRandomArticle();
+            return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(article.Id));
+        }
+
         private ArticleBDO CreateArticleBDO(ArticleVersionDTO versionDTO)
         {
             var articleDTO = _articlesDAL.GetArticle(versionDTO.ArticleId);
@@ -303,15 +322,16 @@ namespace WikiSite.BLL.Default
                 Id = articleDTO.Id,
                 ShortUrl = articleDTO.ShortUrl,
                 AuthorId = articleDTO.AuthorId,
-                Heading = articleDTO.Heading,
                 CreationDate = articleDTO.CreationDate,
 
                 LastEditDate = versionDTO.LastEditDate,
                 EditionAuthorId = versionDTO.EditionAuthorId,
                 IsApproved = versionDTO.IsApproved,
 
+                Heading = contentDTO.Heading,
                 Definition = contentDTO.Definition,
-                Text = contentDTO.Text
+                Text = contentDTO.Text,
+                MainImage = contentDTO.MainImage
             };
         }
 
@@ -322,7 +342,6 @@ namespace WikiSite.BLL.Default
                 Id = articleBDO.Id,
                 ShortUrl = articleBDO.ShortUrl,
                 AuthorId = articleBDO.AuthorId,
-                Heading = articleBDO.Heading,
                 CreationDate = articleBDO.CreationDate
             };
         }
@@ -332,8 +351,10 @@ namespace WikiSite.BLL.Default
             return new ArticleContentDTO()
             {
                 Id = Guid.NewGuid(),
+                Heading = articleBDO.Heading,
                 Definition = articleBDO.Definition,
-                Text = articleBDO.Text
+                Text = articleBDO.Text,
+                MainImage = articleBDO.MainImage
             };
         }
 

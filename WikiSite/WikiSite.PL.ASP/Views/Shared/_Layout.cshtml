@@ -12,6 +12,7 @@
 
 	<!-- Other styles -->
 	<link rel="stylesheet" href="~/Content/custom/styles.css">
+    <link href="~/Content/custom/special-styles.css" rel="stylesheet" />
 	@RenderSection("style", false)
 	
 	<!-- Scripts -->
@@ -109,7 +110,7 @@
 				</li>
 				<li class="divider"></li>
 				<li><a href="@Url.Action("Index", "Home")">На главную страницу</a></li>
-				<li><a href="#!">Случайная статья</a></li>
+				<li><a href="@Url.Action("Show","Article", new {shortUrl = ArticleVM.GetRandomArticle().ShortUrl})">Случайная статья</a></li>
 				<li class="divider"></li>
 				@RenderSection("actions", required: false)
 			</ul>

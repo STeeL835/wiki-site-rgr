@@ -44,5 +44,11 @@ namespace WikiSite.DAL.Abstract
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' DTOs</returns>
         IEnumerable<ArticleDTO> GetAllArticles(Guid authorId);
+
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        ArticleDTO GetRandomArticle();
     }
 }
