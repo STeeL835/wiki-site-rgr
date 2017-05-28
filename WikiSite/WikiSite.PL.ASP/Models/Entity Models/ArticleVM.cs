@@ -336,10 +336,11 @@ namespace WikiSite.PL.ASP.Models
         /// Approves a certain version of article from database.
         /// </summary>
         /// <param name="versionId">>GUID of version to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public static bool ApproveVersionOfArticle(Guid versionId)
+        public static bool ApproveVersionOfArticle(Guid versionId, bool value = true)
         {
-            return _bll.ApproveVersionOfArticle(versionId);
+            return _bll.ApproveVersionOfArticle(versionId, value);
         }
 
         /// <summary>
@@ -347,10 +348,11 @@ namespace WikiSite.PL.ASP.Models
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="date">DateTime of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public static bool ApproveVersionOfArticle(Guid articleId, DateTime date)
+        public static bool ApproveVersionOfArticle(Guid articleId, DateTime date, bool value = true)
         {
-            return _bll.ApproveVersionOfArticle(articleId, date);
+            return _bll.ApproveVersionOfArticle(articleId, date, value);
         }
 
         /// <summary>
@@ -358,10 +360,11 @@ namespace WikiSite.PL.ASP.Models
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="number">Number of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public static bool ApproveVersionOfArticle(Guid articleId, int number)
+        public static bool ApproveVersionOfArticle(Guid articleId, int number, bool value = true)
         {
-            return _bll.ApproveVersionOfArticle(articleId, number);
+            return _bll.ApproveVersionOfArticle(articleId, number, value);
         }
 
         /// <summary>
@@ -393,6 +396,24 @@ namespace WikiSite.PL.ASP.Models
             return _bll.GetRandomArticle();
         }
 
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="versionId">GUID of version to get</param>
+        public static int GetNumberOfVersion(Guid versionId)
+        {
+            return _bll.GetNumberOfVersion(versionId);
+        }
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="articleId">GUID of article to get</param>
+        /// <param name="date">DateTime of version of article to get</param>
+        public static int GetNumberOfVersion(Guid articleId, DateTime date)
+        {
+            return _bll.GetNumberOfVersion(articleId, date);
+        }
         #endregion
     }
 }

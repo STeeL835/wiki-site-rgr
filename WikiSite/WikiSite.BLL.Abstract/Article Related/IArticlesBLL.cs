@@ -111,24 +111,27 @@ namespace WikiSite.BLL.Abstract
         /// Approves a certain version of article from database.
         /// </summary>
         /// <param name="versionId">>GUID of version to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        bool ApproveVersionOfArticle(Guid versionId);
+        bool ApproveVersionOfArticle(Guid versionId, bool value = true);
 
         /// <summary>
         /// Approves a certain article's version by date time in database.
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="date">DateTime of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        bool ApproveVersionOfArticle(Guid articleId, DateTime date);
+        bool ApproveVersionOfArticle(Guid articleId, DateTime date, bool value = true);
 
         /// <summary>
         /// Approves a certain article's version by number in sorted database by time.
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="number">Number of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        bool ApproveVersionOfArticle(Guid articleId, int number);
+        bool ApproveVersionOfArticle(Guid articleId, int number, bool value = true);
 
         /// <summary>
         /// Returns a number of versions for article.
@@ -149,5 +152,18 @@ namespace WikiSite.BLL.Abstract
         /// </summary>
         /// <returns></returns>
         ArticleBDO GetRandomArticle();
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="versionId">GUID of version to get</param>
+        int GetNumberOfVersion(Guid versionId);
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="articleId">GUID of article to get</param>
+        /// <param name="date">DateTime of version of article to get</param>
+        int GetNumberOfVersion(Guid articleId, DateTime date);
     }
 }

@@ -174,8 +174,7 @@ namespace WikiSite.DAL.SQL
                     };
                 }
             }
-            throw new EntryNotFoundException(
-                $"Version for article with id {articleId} by time {date} has not found.");
+            throw new EntryNotFoundException($"Version for article with id {articleId} by time {date} has not found.");
         }
 
         /// <summary>
@@ -207,8 +206,7 @@ namespace WikiSite.DAL.SQL
                     };
                 }
             }
-            throw new EntryNotFoundException(
-                $"Version for article with id {articleId} by number {number} has not found.");
+            throw new EntryNotFoundException($"Version for article with id {articleId} by number {number} has not found.");
         }
 
         /// <summary>
@@ -277,15 +275,16 @@ namespace WikiSite.DAL.SQL
         /// Approves a certain article's version by id in database.
         /// </summary>
         /// <param name="versionId">GUID of version to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersion(Guid versionId)
+        public bool ApproveVersion(Guid versionId, bool value = true)
         {
             int affectedRows;
             using (var connection = new SqlConnection(ConnectionString))
             {
                 var sqlCom = new SqlCommand("UPDATE [ArticleVersions] SET Is_Approved = @is_approved WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@id", versionId);
-                sqlCom.Parameters.AddWithValue("@is_approved", true);
+                sqlCom.Parameters.AddWithValue("@is_approved", value);
                 connection.Open();
 
                 affectedRows = sqlCom.ExecuteNonQuery();
@@ -299,11 +298,12 @@ namespace WikiSite.DAL.SQL
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="date">DateTime of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersion(Guid articleId, DateTime date)
+        public bool ApproveVersion(Guid articleId, DateTime date, bool value = true)
         {
             var version = GetVersion(articleId, date);
-            return ApproveVersion(version.Id);
+            return ApproveVersion(version.Id, value);
         }
 
         /// <summary>
@@ -311,11 +311,59 @@ namespace WikiSite.DAL.SQL
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="number">Number of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersion(Guid articleId, int number)
+        public bool ApproveVersion(Guid articleId, int number, bool value = true)
         {
             var version = GetVersion(articleId, number);
-            return ApproveVersion(version.Id);
+            return ApproveVersion(version.Id, value);
+        }
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="versionId">GUID of version to get</param>
+        public int GetNumberOfVersion(Guid versionId)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X Id = @id",
+                    connection);
+                sqlCom.Parameters.AddWithValue("@article_id", GetVersion(versionId).ArticleId);
+                sqlCom.Parameters.AddWithValue("@id", versionId);
+
+                connection.Open();
+                var reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (int)reader["Number"];
+                }
+            }
+            throw new EntryNotFoundException();
+        }
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="articleId">GUID of article to get</param>
+        /// <param name="date">DateTime of version of article to get</param>
+        public int GetNumberOfVersion(Guid articleId, DateTime date)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X Id = @id",
+                    connection);
+                sqlCom.Parameters.AddWithValue("@article_id", articleId);
+                sqlCom.Parameters.AddWithValue("@id", GetVersion(articleId, date).Id);
+
+                connection.Open();
+                var reader = sqlCom.ExecuteReader();
+                while (reader.Read())
+                {
+                    return (int)reader["Number"];
+                }
+            }
+            throw new EntryNotFoundException($"Version for article with id {articleId} by time {date} has not found.");
         }
     }
 }

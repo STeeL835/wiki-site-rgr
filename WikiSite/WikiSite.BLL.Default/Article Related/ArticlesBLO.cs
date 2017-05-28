@@ -255,10 +255,11 @@ namespace WikiSite.BLL.Default
         /// Approves a certain version of article from database.
         /// </summary>
         /// <param name="versionId">>GUID of version to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersionOfArticle(Guid versionId)
+        public bool ApproveVersionOfArticle(Guid versionId, bool value = true)
         {
-            return _articleVersionsDAL.ApproveVersion(versionId);
+            return _articleVersionsDAL.ApproveVersion(versionId, value);
         }
 
         /// <summary>
@@ -266,10 +267,11 @@ namespace WikiSite.BLL.Default
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="date">DateTime of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersionOfArticle(Guid articleId, DateTime date)
+        public bool ApproveVersionOfArticle(Guid articleId, DateTime date, bool value = true)
         {
-            return _articleVersionsDAL.ApproveVersion(articleId, date);
+            return _articleVersionsDAL.ApproveVersion(articleId, date, value);
         }
 
         /// <summary>
@@ -277,10 +279,11 @@ namespace WikiSite.BLL.Default
         /// </summary>
         /// <param name="articleId">GUID of article to approve</param>
         /// <param name="number">Number of version of article to approve</param>
+        /// <param name="value">Feature for disapprove, default is true</param>
         /// <returns></returns>
-        public bool ApproveVersionOfArticle(Guid articleId, int number)
+        public bool ApproveVersionOfArticle(Guid articleId, int number, bool value = true)
         {
-            return _articleVersionsDAL.ApproveVersion(articleId, number);
+            return _articleVersionsDAL.ApproveVersion(articleId, number, value);
         }
 
         /// <summary>
@@ -311,6 +314,25 @@ namespace WikiSite.BLL.Default
         {
             var article = _articlesDAL.GetRandomArticle();
             return CreateArticleBDO(_articleVersionsDAL.GetLastVersion(article.Id));
+        }
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="versionId">GUID of version to get</param>
+        public int GetNumberOfVersion(Guid versionId)
+        {
+            return _articleVersionsDAL.GetNumberOfVersion(versionId);
+        }
+
+        /// <summary>
+        /// Returns a number of article's version by date time in database.
+        /// </summary>
+        /// <param name="articleId">GUID of article to get</param>
+        /// <param name="date">DateTime of version of article to get</param>
+        public int GetNumberOfVersion(Guid articleId, DateTime date)
+        {
+            return _articleVersionsDAL.GetNumberOfVersion(articleId, date);
         }
 
         private ArticleBDO CreateArticleBDO(ArticleVersionDTO versionDTO)
