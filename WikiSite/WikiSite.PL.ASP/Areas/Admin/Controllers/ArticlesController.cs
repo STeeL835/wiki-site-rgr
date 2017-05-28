@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
@@ -134,6 +135,25 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
         public ActionResult UpdateByGuid(Guid articleId)
         {
             return RedirectToAction("Update", "Articles", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl});
+        }
+
+        [HttpGet]
+        public ActionResult AddImage()
+        {
+            return View();
+        }
+
+        public ActionResult AddImage(HttpPostedFileBase upload)
+        {
+            if (upload != null)
+            {
+                //получаем имя файла полностью с расширением
+                string filename = System.IO.Path.GetFileName(upload.FileName);
+                //сохраняем изображение в папку Files, которую незабываем создать в проекте
+                upload.SaveAs(Server.MapPath("~/Content/Images/Uploaded/" + filename));
+                var drt = upload.ContentType;
+            }
+            return RedirectToAction("Index", "Articles");
         }
     }
 }

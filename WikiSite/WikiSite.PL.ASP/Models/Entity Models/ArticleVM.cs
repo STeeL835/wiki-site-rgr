@@ -23,7 +23,7 @@ namespace WikiSite.PL.ASP.Models
         private Guid _editionAuthorId;
         private string _definition;
         private string _text;
-        private string _shortUrl;
+        private Guid _mainImage;
 
         /// <summary>
         /// ONLY for model binder
@@ -98,7 +98,7 @@ namespace WikiSite.PL.ASP.Models
         [DataType(DataType.Text)]
         [Display(Name = "Название")]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
-        [MaxLength(50, ErrorMessage = "Минимальное количество символов - 50")]
+        [MaxLength(50, ErrorMessage = "Максимальное количество символов - 50")]
         public string Heading
         {
             get { return _heading; }
@@ -107,18 +107,11 @@ namespace WikiSite.PL.ASP.Models
                 value = value.Trim();
                 ErrorGuard.Check(value);
                 _heading = value;
-                ShortUrl = value;
+                ShortUrl = HttpUtility.UrlEncode(value.ToLower());
             }
         }
 
-        public string ShortUrl
-        {
-            get { return _shortUrl; }
-            private set
-            {
-                _shortUrl = HttpUtility.UrlEncode(value.ToLower());
-            }
-        }
+        public string ShortUrl { get; private set; }
 
         public DateTime CreationDate
         {
@@ -174,6 +167,14 @@ namespace WikiSite.PL.ASP.Models
                 value = value.Trim();
                 ErrorGuard.Check(value);
                 _text = value;
+            }
+        }
+
+        public Guid MainImage {
+            get { return _mainImage; }
+            set {
+                //ErrorGuard.Check(value);
+                _mainImage = value;
             }
         }
 
@@ -381,6 +382,15 @@ namespace WikiSite.PL.ASP.Models
         public static bool IsShortUrlExist(string shortUrl)
         {
             return _bll.IsShortUrlExist(shortUrl);
+        }
+        
+        /// <summary>
+        /// Gets a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        public static ArticleBDO GetRandomArticle()
+        {
+            return _bll.GetRandomArticle();
         }
 
         #endregion

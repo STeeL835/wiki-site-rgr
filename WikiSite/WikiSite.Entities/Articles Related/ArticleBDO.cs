@@ -8,7 +8,6 @@ namespace WikiSite.Entities
         public Guid Id { get; set; }
         public string ShortUrl { get; set; }
         public Guid AuthorId { get; set; }
-        public string Heading { get; set; }
         public DateTime CreationDate { get; set; }
 
         //ArticleVersionDTO
@@ -17,7 +16,9 @@ namespace WikiSite.Entities
         public bool IsApproved { get; set; }
 
         //ArticleContentDTO
+        public string Heading { get; set; }
         public string Definition { get; set; }
         public string Text { get; set; }
+        public Guid MainImage { get; set; }
     }
 }

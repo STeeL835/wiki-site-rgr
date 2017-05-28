@@ -1,0 +1,33 @@
+﻿@using CommonMark
+@model WikiSite.PL.ASP.Models.ArticleVM
+
+@{
+    ViewBag.Title = $"{Model.Heading}";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Head of an article (title/description) -->
+<header class="row article-head">
+
+    <div class="article-thumbnail col-xs-12 col-sm-5 col-lg-4">
+        <img class="thumbnail" src="http://placehold.it/250" alt="">
+    </div>
+
+    <div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
+        <div class="article-title">
+            <span>@ViewBag.Title</span>
+        </div>
+
+        <p class="article-desc">
+            @Html.Raw(CommonMarkConverter.Convert(Model.Definition))
+        </p>
+    </div>
+</header>
+				
+<!-- Article itself -->
+<article class="row">
+    <div class="col-xs-12">
+        @Html.Raw(CommonMarkConverter.Convert(Model.Text))
+    </div>
+</article>
+

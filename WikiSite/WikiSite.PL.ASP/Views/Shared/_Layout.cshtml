@@ -46,7 +46,7 @@
 						<li>@Html.ActionLink("Админка", "Index", "Home", new { area="Admin" }, new { @class = "btn btn-warning btn-xs" })</li>
 					}
 					<li><a href="@Url.Action("Index", "User")" class="btn btn-success btn-xs">Кабинет</a></li>
-					<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> <!-- А так можно? -->
+					<li>@UserVM.GetUser(Guid.Parse(User.Identity.Name)).Nickname</li> 
 					<li><img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(User.Identity.Name)?s=30&d=retro" alt="Profile image"/></li>
 					<li>
 						<a href="@Url.Action("Logout", "Auth")" class="btn btn-inverse btn-sm">
@@ -101,7 +101,12 @@
 						<span class="sr-only">My Name Jeff</span>
 					</a>
 				</li>
-				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
+				<li>
+					@using (Html.BeginForm("Index", "Search", FormMethod.Get))
+					{
+						@Html.TextBox("query", "", new { @class = "form-control", placeholder = "Искать статью..." })
+					}
+				</li>
 				<li class="divider"></li>
 				<li><a href="@Url.Action("Index", "Home")">На главную страницу</a></li>
 				<li><a href="#!">Случайная статья</a></li>
