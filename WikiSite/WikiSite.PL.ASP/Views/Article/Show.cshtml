@@ -12,10 +12,11 @@
     @if (Request.IsAuthenticated)
     {
         <li><a href="@Url.Action("Update", new { shortUrl = Model.ShortUrl })">Редактировать статью</a></li>
-        <li><a href="@Url.Action("Details", new { shortUrl = Model.ShortUrl })">Версии этой статьи</a></li>
-        <li><a href="#">Перейти к обсуждению</a></li>
     }
+    <li><a href="@Url.Action("Details", new { shortUrl = Model.ShortUrl })">Версии этой статьи</a></li>
+    <li><a href="#">Перейти к обсуждению</a></li>
 }
+
 <!-- Head of an article (title/description) -->
 <header class="row article-head">
     <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">

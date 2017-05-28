@@ -1,4 +1,5 @@
 ﻿@using CommonMark
+@using Microsoft.Security.Application
 @model WikiSite.PL.ASP.Models.ArticleVM
 
 @{
@@ -12,8 +13,7 @@
 
 <!-- Head of an article (title/description) -->
 <header class="row article-head">
-
-    <div class="article-thumbnail col-xs-12 col-sm-5 col-lg-4">
+    <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
         <img class="thumbnail" src="http://placehold.it/250" alt="">
     </div>
 
@@ -22,16 +22,15 @@
             <span>@ViewBag.Title</span>
         </div>
 
-        <p class="article-desc">
-            @Html.Raw(CommonMarkConverter.Convert(Model.Definition))
-        </p>
+        <div class="article-desc">
+            @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Definition)))
+        </div>
     </div>
 </header>
-				
+
 <!-- Article itself -->
 <article class="row">
     <div class="col-xs-12">
-        @Html.Raw(CommonMarkConverter.Convert(Model.Text))
+        @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Text)))
     </div>
 </article>
-

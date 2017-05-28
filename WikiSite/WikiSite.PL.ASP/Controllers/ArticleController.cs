@@ -80,7 +80,8 @@ namespace WikiSite.PL.ASP.Controllers
             version.EditionAuthorId = Guid.Parse(User.Identity.Name);
             version.CreationDate = (DateTime)TempData.Peek("CreationDate");
             version.LastEditDate = DateTime.Now;
-            version.IsApproved = false; if (ArticleVM.UpdateArticle(version))
+            version.IsApproved = false;
+            if (ArticleVM.UpdateArticle(version))
             {
                 this.AlertNextAction($"Статья \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\" успешно изменена.", AlertType.Success);
             }
@@ -96,6 +97,20 @@ namespace WikiSite.PL.ASP.Controllers
         public ActionResult UpdateByGuid(Guid articleId)
         {
             return RedirectToAction("Update", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
+        }
+
+        public ActionResult DetailsByGuid(Guid articleId)
+        {
+            return RedirectToAction("Details", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
+        }
+
+        public ActionResult Details(string shortUrl)
+        {
+            ViewBag.ShortUrl = shortUrl;
+            var article = ArticleVM.GetArticle(shortUrl);
+            ViewBag.Title = $"Все версии статьи \"{article.Heading}\"";
+            var versions = ArticleVM.GetAllVersionOfArticle(article.Id).Reverse();
+            return View(versions);
         }
     }
 }
