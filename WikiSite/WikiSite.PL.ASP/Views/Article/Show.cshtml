@@ -11,9 +11,9 @@
 {
     @if (Request.IsAuthenticated)
     {
-        <li><a href="@Url.Action("Update", new { shortUrl = Model.ShortUrl })">Редактировать статью</a></li>
+        <li><a href="@Url.Action("Update", new { url = Model.ShortUrl })">Редактировать статью</a></li>
     }
-    <li><a href="@Url.Action("Details", new { shortUrl = Model.ShortUrl })">Версии этой статьи</a></li>
+    <li><a href="@Url.Action("Details", new { url = Model.ShortUrl })">Версии этой статьи</a></li>
     <li><a href="#">Перейти к обсуждению</a></li>
 }
 

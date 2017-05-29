@@ -8,11 +8,11 @@
 
 @section actions
 {
-    <li><a href="@Url.Action("Show", new { shortUrl = Model.ToArray()[0].ShortUrl, number = 0 })">К последней версии</a></li>
+    <li><a href="@Url.Action("Show", new { url = Model.ToArray()[0].ShortUrl, number = 0 })">К последней версии</a></li>
 }
 
 <h1 class="page-header">
-    <a href="@Url.Action("Show", new { shortUrl = Model.ToArray()[0].ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
+    <a href="@Url.Action("Show", new { url = Model.ToArray()[0].ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
     @ViewBag.Title
 </h1>
 
@@ -33,7 +33,7 @@
             <tr>
                 <td>@i</td>
                 <td class="table-max-width-200">
-                    <a href="@Url.Action("Show", "Article", new {shortUrl = version.ShortUrl, number = i})" class="btn btn-link btn-xs">@version.LastEditDate.ToString(CultureInfo.CurrentCulture)</a>
+                    <a href="@Url.Action("Show", "Article", new {url = version.ShortUrl, number = i})" class="btn btn-link btn-xs">@version.LastEditDate.ToString(CultureInfo.CurrentCulture)</a>
                 </td>
                 <td class="table-max-width-100 hidden-xs">
                     <a href="@Url.Action("Details", "User", new {id = UserVM.GetUser(version.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">

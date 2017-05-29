@@ -21,14 +21,14 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Show", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
         }
 
-        public ActionResult Show(string shortUrl, int number = 0)
+        public ActionResult Show(string url, int number = 0)
         {
-            ViewBag.ShortUrl = shortUrl;
+            ViewBag.ShortUrl = url;
             if (number == 0)
             {
-                return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(shortUrl).Id));
+                return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(url).Id));
             }
-            return View(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(shortUrl).Id, number));
+            return View(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number));
         }
 
         [HttpGet]
@@ -58,18 +58,18 @@ namespace WikiSite.PL.ASP.Controllers
         }
 
         [HttpGet]
-        public ActionResult Update(string shortUrl)
+        public ActionResult Update(string url)
         {
-            ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(shortUrl).Heading}\"";
-            ViewBag.ShortUrl = shortUrl;
+            ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(url).Heading}\"";
+            ViewBag.ShortUrl = url;
 
-            var article = ArticleVM.GetArticle(shortUrl);
+            var article = ArticleVM.GetArticle(url);
             TempData["Id"] = article.Id;
             TempData["AuthorId"] = article.AuthorId;
             TempData["CreationDate"] = article.CreationDate;
             TempData["Heading"] = article.Heading;
 
-            return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(shortUrl).Id));
+            return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(url).Id));
         }
 
         [HttpPost]
@@ -104,10 +104,10 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Details", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
         }
 
-        public ActionResult Details(string shortUrl)
+        public ActionResult Details(string url)
         {
-            ViewBag.ShortUrl = shortUrl;
-            var article = ArticleVM.GetArticle(shortUrl);
+            ViewBag.ShortUrl = url;
+            var article = ArticleVM.GetArticle(url);
             ViewBag.Title = $"Все версии статьи \"{article.Heading}\"";
             var versions = ArticleVM.GetAllVersionOfArticle(article.Id).Reverse();
             return View(versions);

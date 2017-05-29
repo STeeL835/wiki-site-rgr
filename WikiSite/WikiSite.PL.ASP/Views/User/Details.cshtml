@@ -1,4 +1,6 @@
 ﻿@using System.Globalization
+@using CommonMark
+@using Markdig
 @using Microsoft.Security.Application
 @using WikiSite.PL.ASP.Models
 @model UserVM
@@ -90,7 +92,7 @@
 					}
 					else
 					{
-						@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMark.CommonMarkConverter.Convert(Model.About)))
+						@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.About)))
 					}
 				</div>
 			</blockquote>
