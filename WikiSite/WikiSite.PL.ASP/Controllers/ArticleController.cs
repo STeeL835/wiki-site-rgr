@@ -109,7 +109,7 @@ namespace WikiSite.PL.ASP.Controllers
             ViewBag.ShortUrl = url;
             var article = ArticleVM.GetArticle(url);
             ViewBag.Title = $"Все версии статьи \"{article.Heading}\"";
-            var versions = ArticleVM.GetAllVersionOfArticle(article.Id).Reverse();
+            var versions = ArticleVM.GetAllVersionOfArticle(article.Id);
             return View(versions);
         }
     }

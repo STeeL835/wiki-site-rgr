@@ -787,7 +787,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Search\" />
-    <Folder Include="Content\Images\Uploaded\" />
     <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>

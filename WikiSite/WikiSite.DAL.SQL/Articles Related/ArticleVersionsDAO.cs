@@ -67,7 +67,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE Article_Id = @article_id", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM[ArticleVersions] WHERE(Article_Id = @article_id)) X", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
@@ -95,7 +95,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM [ArticleVersions] WHERE Editor_Id = @editor_id", connection);
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM[ArticleVersions] WHERE (Editor_Id = @editor_id)) X", connection);
                 sqlCom.Parameters.AddWithValue("@editor_id", authorId);
                 connection.Open();
                 var reader = sqlCom.ExecuteReader();
