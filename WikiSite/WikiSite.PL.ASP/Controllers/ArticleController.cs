@@ -15,14 +15,12 @@ namespace WikiSite.PL.ASP.Controllers
         {
             return View();
         }
-
-        [Authorize]
+        
         public ActionResult ShowByGuid(Guid articleId, int number = 0)
         {
             return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
         }
-
-        [Authorize]
+        
         public ActionResult Show(string url, int number = 0)
         {
             ViewBag.ShortUrl = url;
