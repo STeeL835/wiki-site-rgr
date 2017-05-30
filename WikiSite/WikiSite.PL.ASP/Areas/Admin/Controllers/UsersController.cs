@@ -68,9 +68,11 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		[HttpPost][ValidateAntiForgeryToken]
 		public ActionResult Edit(UserEditModel model)
 		{
+			var user = (UserVM) TempData.Peek("user");
+			model.ShortId = user.ShortId;
+
 			if (ModelState.IsValid)
 			{
-				var user = (UserVM) TempData.Peek("user");
 				var login = (string) TempData.Peek("login");
 				var email = (string) TempData.Peek("email");
 

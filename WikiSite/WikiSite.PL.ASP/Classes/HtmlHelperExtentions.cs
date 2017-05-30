@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Markdig;
+using Microsoft.Security.Application;
 
 namespace WikiSite.PL.ASP.Classes
 {
@@ -72,5 +74,19 @@ namespace WikiSite.PL.ASP.Classes
             }
             return new HtmlString(sb.ToString());
         }
-    }
+
+		#region MarkdownHelper
+
+	    private static MarkdownPipeline Pipeline { get; } = new MarkdownPipelineBuilder()
+		                                                             .UseBootstrap()
+		                                                             .UseEmojiAndSmiley()
+		                                                             .Build();
+
+		public static IHtmlString Markdown(this HtmlHelper html, string markText)
+		{
+			return html.Raw(Sanitizer.GetSafeHtmlFragment(Markdig.Markdown.ToHtml(markText, Pipeline)));
+		}
+
+	    #endregion
+	}
 }

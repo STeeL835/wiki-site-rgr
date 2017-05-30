@@ -12,7 +12,7 @@ namespace WikiSite.PL.ASP.Models
 
 		#region VM
 
-		public int ShortId { get; }
+		public int ShortId { get; set; }
 
 		[Required]
 		[DataType(DataType.Text)]

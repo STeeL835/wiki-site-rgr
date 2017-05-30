@@ -67,8 +67,8 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Markdig, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Markdig.0.12.0\lib\net40\Markdig.dll</HintPath>
+    <Reference Include="Markdig, Version=0.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.12.1\lib\net40\Markdig.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -745,7 +745,7 @@
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
-    <Compile Include="Models\Page Models\CommentArticleEditModel.cs" />
+    <Compile Include="Models\Page Models\CommentArticleVersionModel.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\ErrorVM.cs" />
     <Compile Include="Models\Page Models\RegisterVM.cs" />

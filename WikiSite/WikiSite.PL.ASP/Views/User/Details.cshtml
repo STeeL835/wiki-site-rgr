@@ -1,7 +1,6 @@
 ﻿@using System.Globalization
-@using CommonMark
-@using Markdig
 @using Microsoft.Security.Application
+@using WikiSite.PL.ASP.Classes
 @using WikiSite.PL.ASP.Models
 @model UserVM
 
@@ -11,7 +10,7 @@
 
 	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
 	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
-	ViewBag.Comments = new int[0]; // TODO: [Comments] Implement when done
+	ViewBag.Comments = CommentVM.GetCommentsForUser(Model.Id).ToArray(); 
 	ViewBag.CommentsCount = 123;
 }
 
@@ -92,7 +91,7 @@
 					}
 					else
 					{
-						@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.About)))
+						@Html.Markdown(Model.About)
 					}
 				</div>
 			</blockquote>

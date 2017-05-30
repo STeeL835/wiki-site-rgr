@@ -1,4 +1,5 @@
 ﻿@using WikiSite.PL.ASP.Models
+@using WikiSite.PL.ASP.Classes
 
 @{
 	Layout = "../Shared/_Layout.cshtml";
@@ -51,7 +52,7 @@
 			<div class="list-group">
 			    <div class="list-group-item">
 			        <h3>@ViewBag.RandomArticle.Heading</h3>
-			        <p>@Html.Raw(CommonMark.CommonMarkConverter.Convert(ViewBag.RandomArticle.Definition))</p>
+			        <div>@Html.Markdown((string)ViewBag.RandomArticle.Definition)</div>
 			        @*<h1>Le Memes</h1>
 					<p>
 						<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat rem, ab, eveniet vero, ipsum facilis ducimus reprehenderit exercitationem, suscipit accusantium vel fugit. Perspiciatis sint, cupiditate, at dolor quo consequuntur dicta!</span>
@@ -62,12 +63,10 @@
 						<span>Dolorum quisquam magnam tempora ea cum tenetur? Quo assumenda consectetur, voluptatum voluptate rerum earum nulla inventore ipsam repellendus porro quaerat! Repudiandae mollitia eum suscipit commodi voluptatum, impedit amet iste. Mollitia!</span>
 					</p>*@
 			    </div>
-                <div class="list-group-item clearfix">
-                    <a href="@Url.Action("Show", "Article", new {url = ViewBag.RandomArticle.ShortUrl})" class="list-group-item text-right">
-                        Читать далее
-                        <i class="fa fa-arrow-right"></i>
-                    </a>
-                </div>
+				<a href="@Url.Action("Show", "Article", new {url = ViewBag.RandomArticle.ShortUrl})" class="list-group-item text-right">
+					Читать далее
+					<i class="fa fa-arrow-right"></i>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -77,27 +76,27 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">Ссылки</h3>
 			</div>
-			<ul class="list-group">
-				<li class="list-group-item">
-					<a href="#!"> @{ /* TODO: [Articles] Implement when done */ }
+			<ul class="list-group list-unstyled">
+				<li>
+					<a href="#!" class="list-group-item"> @{ /* TODO: [Articles] Implement when done */ }
 						<i class="fa fa-question"></i>
 						Как пользоваться сайтом
 					</a>
 				</li>
-				<li class="list-group-item">
-					<a href="https://github.com/STeeL835/wiki-site-rgr">
+				<li>
+					<a href="https://github.com/STeeL835/wiki-site-rgr" class="list-group-item">
 						<i class="fa fa-github"></i>
 						Github
 					</a>
 				</li>
-				<li class="list-group-item">
-					<a href="https://vk.com/steel835">
+				<li>
+					<a href="https://vk.com/steel835" class="list-group-item">
 						<i class="fa fa-vk"></i>
 						Дмитрий
 					</a>
 				</li>
-				<li class="list-group-item">
-					<a href="https://vk.com/id70469726">
+				<li>
+					<a href="https://vk.com/id70469726" class="list-group-item">
 						<i class="fa fa-vk"></i>
 						Евгений
 					</a>

@@ -365,6 +365,11 @@ body {
 /* Tablets */
 
 @media (min-width: 768px) {
+	.content {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
 	.sidebar {
 		width: 300px;
 		left: -300px;
