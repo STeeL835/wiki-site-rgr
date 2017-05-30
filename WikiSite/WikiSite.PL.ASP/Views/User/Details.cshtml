@@ -11,7 +11,6 @@
 	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
 	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
 	ViewBag.Comments = CommentVM.GetCommentsForUser(Model.Id).ToArray(); 
-	ViewBag.CommentsCount = 123;
 }
 
 @section actions
@@ -69,15 +68,15 @@
 			<h2>@Model.Nickname</h2>
 			<div class="stats">
 				<div>
-					<p class="stat-number">@(((IEnumerable<ArticleVM>)(ViewBag.Articles)).Count())</p>
+					<p class="stat-number">@ViewBag.Articles.Length</p>
 					<p>Статей</p>
 				</div>
 				<div>
-					<p class="stat-number">@(((IEnumerable<ArticleVM>)(ViewBag.Versions)).Count())</p>
+					<p class="stat-number">@ViewBag.Versions.Length</p>
 					<p>Правок</p>
 				</div>
 				<div>
-					<p class="stat-number">@ViewBag.CommentsCount</p>
+					<p class="stat-number">@ViewBag.Comments.Length</p>
 					<p>Комментариев</p>
 				</div>
 			</div>

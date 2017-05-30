@@ -18,20 +18,21 @@
 }
 
 <!-- Head of an article (title/description) -->
-<header class="row article-head">
-    <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-        <img class="thumbnail" src="http://placehold.it/250" alt="">
-    </div>
+<header class="article-head">
+	<div class="row">
+		<div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
+			<img class="thumbnail" src="http://placehold.it/250" alt="">
+		</div>
 
-    <div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
-        <div class="article-title">
-            <span>@ViewBag.Title</span>
-        </div>
+		<div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
+			<div class="article-title">
+				<span>@ViewBag.Title</span>
+			</div>
 
-        <div class="article-desc">
-            @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Definition)))
-        </div>
-    </div>
+			<div class="article-desc">
+				@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Definition)))
+			</div>
+		</div></div>
 </header>
 
 <!-- Article itself -->

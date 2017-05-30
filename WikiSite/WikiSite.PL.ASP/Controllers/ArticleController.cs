@@ -22,7 +22,6 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
         }
 
-        [Authorize]
         public ActionResult Show(string url, int number = 0)
         {
             ViewBag.ShortUrl = url;
@@ -101,6 +100,7 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Update", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });
         }
 
+		[Authorize]
         public ActionResult DetailsByGuid(Guid articleId)
         {
             return RedirectToAction("Details", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });

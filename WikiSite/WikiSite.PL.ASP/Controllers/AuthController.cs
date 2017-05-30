@@ -29,7 +29,8 @@ namespace WikiSite.PL.ASP.Controllers
 			    if (user != null)
 			    {
 					// also gives him auth-cookies
-				    FormsAuthentication.RedirectFromLoginPage(user.Id.ToString(), !model.DontRememberMe);
+					FormsAuthentication.SetAuthCookie(user.Id.ToString(), !model.DontRememberMe);
+				    return Redirect(Request.Params["ReturnUrl"] ?? FormsAuthentication.DefaultUrl);
 			    }
 			    this.Alert("Не удалось войти, проверьте данные и попробуйте еще раз.", AlertType.Danger);
 			}
