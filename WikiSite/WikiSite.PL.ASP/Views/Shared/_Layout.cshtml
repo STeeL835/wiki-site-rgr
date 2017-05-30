@@ -1,4 +1,5 @@
-﻿@using WikiSite.PL.ASP.Models
+﻿@using WikiSite.PL.ASP.Classes
+@using WikiSite.PL.ASP.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,7 @@
 	<link rel="stylesheet" href="~/Content/custom/styles.css">
     <link href="~/Content/custom/special-styles.css" rel="stylesheet" />
 	@RenderSection("style", false)
+    @Html.EmitRequiredStyles()
 	
 	<!-- Scripts -->
 	<script src="~/Scripts/modernizr-2.6.2.js"></script>
@@ -111,7 +113,8 @@
 				<li class="divider"></li>
 				<li><a href="@Url.Action("Index", "Home")">На главную страницу</a></li>
 				<li><a href="@Url.Action("Show","Article", new {url = ArticleVM.GetRandomArticle().ShortUrl})">Случайная статья</a></li>
-				<li class="divider"></li>
+			    <li><a href="@Url.Action("Create", "Article")">Создать статью</a></li>
+			    <li class="divider"></li>
 				@RenderSection("actions", required: false)
 			</ul>
 		</section>
@@ -135,7 +138,7 @@
 	<script src="~/Scripts/bootstrap.min.js"></script>
 	<script src="~/Scripts/custom/main.js"></script>
 	@RenderSection("js", false)
-
-
+    @Html.EmitRequiredScripts()
+    @Html.EmitRequiredLocalScripts()
 </body>
 </html>

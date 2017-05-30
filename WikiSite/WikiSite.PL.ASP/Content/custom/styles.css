@@ -97,7 +97,7 @@ body {
 
 .content {
 	margin-top: 40px;
-	padding: 15px 15px 0 15px;
+	padding-top: 15px;
 	overflow: hidden;
 }
 
@@ -128,8 +128,6 @@ body {
 }
 .article-head {
 	position: relative;
-    background: #e5e5e5;
-    padding-top: 40px;
 	padding-bottom: 30px;
 	margin-bottom: 10px;
 }

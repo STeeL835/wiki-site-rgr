@@ -16,11 +16,13 @@ namespace WikiSite.PL.ASP.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult ShowByGuid(Guid articleId, int number = 0)
         {
-            return RedirectToAction("Show", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
+            return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
         }
 
+        [Authorize]
         public ActionResult Show(string url, int number = 0)
         {
             ViewBag.ShortUrl = url;
@@ -31,13 +33,13 @@ namespace WikiSite.PL.ASP.Controllers
             return View(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number));
         }
 
-        [HttpGet]
+        [HttpGet][Authorize]
         public ActionResult Create()
         {
             return View(new ArticleVM());
         }
 
-        [HttpPost]
+        [HttpPost][Authorize]
         public ActionResult Create(ArticleVM article)
         {
             article.Id = Guid.NewGuid();
@@ -57,7 +59,7 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet][Authorize]
         public ActionResult Update(string url)
         {
             ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(url).Heading}\"";
@@ -72,7 +74,7 @@ namespace WikiSite.PL.ASP.Controllers
             return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(url).Id));
         }
 
-        [HttpPost]
+        [HttpPost][Authorize]
         public ActionResult Update(ArticleVM version)
         {
             version.Id = (Guid)TempData.Peek("Id");
@@ -93,15 +95,15 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [HttpGet][Authorize]
         public ActionResult UpdateByGuid(Guid articleId)
         {
-            return RedirectToAction("Update", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
+            return RedirectToAction("Update", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });
         }
 
         public ActionResult DetailsByGuid(Guid articleId)
         {
-            return RedirectToAction("Details", "Article", new { shortUrl = ArticleVM.GetArticle(articleId).ShortUrl });
+            return RedirectToAction("Details", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });
         }
 
         public ActionResult Details(string url)
@@ -111,6 +113,13 @@ namespace WikiSite.PL.ASP.Controllers
             ViewBag.Title = $"Все версии статьи \"{article.Heading}\"";
             var versions = ArticleVM.GetAllVersionOfArticle(article.Id);
             return View(versions);
+        }
+
+        public JsonResult IsHeadingExist(string heading)
+        {
+            var throwError = !ArticleVM.IsShortUrlExist(HttpUtility.UrlEncode(heading));
+
+            return Json(throwError, JsonRequestBehavior.AllowGet);
         }
     }
 }

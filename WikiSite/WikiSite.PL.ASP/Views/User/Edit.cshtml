@@ -25,15 +25,15 @@
 			// Useless on small monitors
 			if (!IsMobile) {
 				$(function() {
-					aboutEditor = editormd({
-						id: "about-editor",
-						toolbarIcons: "simple",
-						width: "100%",
-						height: 300,
-						toc: false,
-						path: "/Scripts/Editor.md/lib/",
-						pluginPath: "/Scripts/Editor.md/plugins/",
-						emoji: true,
+				    aboutEditor = editormd({
+				        id: "about-editor",
+				        toolbarIcons: "simple",
+				        width: "100%",
+				        height: 300,
+				        toc: false,
+				        path: "/Scripts/Editor.md/lib/",
+				        pluginPath: "/Scripts/Editor.md/plugins/",
+				        emoji: false,
 						imageUpload: false,
 						placeholder: "Что можете о себе рассказать?"
 					});

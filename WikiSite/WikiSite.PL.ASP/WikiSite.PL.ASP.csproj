@@ -744,7 +744,6 @@
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
-    <Compile Include="Models\Page Models\ArticleEditModel.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CommentArticleEditModel.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />

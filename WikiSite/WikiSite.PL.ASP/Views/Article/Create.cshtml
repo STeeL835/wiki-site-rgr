@@ -11,5 +11,9 @@
 
 <form method="post" class="form-override">
     @Html.Partial("~/Views/Shared/ArticlesEditorMDPartial.cshtml", Model)
-    <button class="button-override">Отправить</button>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <input type="submit" value="Отправить" class="btn btn-default button-override" />
+        </div>
+    </div>
 </form>

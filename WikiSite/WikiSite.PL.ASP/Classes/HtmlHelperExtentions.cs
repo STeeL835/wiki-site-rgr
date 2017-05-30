@@ -9,6 +9,11 @@ namespace WikiSite.PL.ASP.Classes
 {
     public static class HtmlHelperExtentions
     {
+        public class ResourceInclude
+        {
+            public string Path { get; set; }
+            public int Priority { get; set; }
+        }
         public static string RequireStyle(this HtmlHelper html, string path, int priority = 0)
         {
             var requiredStyle = HttpContext.Current.Items["RequiredStyle"] as List<ResourceInclude>;
@@ -47,10 +52,25 @@ namespace WikiSite.PL.ASP.Classes
             }
             return new HtmlString(sb.ToString());
         }
-        public class ResourceInclude
+
+        public static string RequireLocalScript(this HtmlHelper html, string code, int priority = 0)
         {
-            public string Path { get; set; }
-            public int Priority { get; set; }
+            var requiredScripts = HttpContext.Current.Items["RequiredLocalScripts"] as List<ResourceInclude>;
+            if (requiredScripts == null) HttpContext.Current.Items["RequiredLocalScripts"] = requiredScripts = new List<ResourceInclude>();
+            if (!requiredScripts.Any(i => i.Path == code)) requiredScripts.Add(new ResourceInclude() { Path = code, Priority = priority });
+            return null;
+        }
+
+        public static HtmlString EmitRequiredLocalScripts(this HtmlHelper html)
+        {
+            var requiredScripts = HttpContext.Current.Items["RequiredLocalScripts"] as List<ResourceInclude>;
+            if (requiredScripts == null) return null;
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in requiredScripts.OrderBy(i => i.Priority))
+            {
+                sb.AppendFormat("<script>{0}</script>\n", item.Path);
+            }
+            return new HtmlString(sb.ToString());
         }
     }
 }

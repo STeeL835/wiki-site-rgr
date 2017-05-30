@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using WikiSite.BLL.Abstract;
 using WikiSite.DI.Provider;
 using WikiSite.Entities;
@@ -99,6 +100,7 @@ namespace WikiSite.PL.ASP.Models
         [Display(Name = "Название")]
         [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
         [MaxLength(50, ErrorMessage = "Максимальное количество символов - 50")]
+        [Remote("IsHeadingExist", "Article", AreaReference.UseRoot, ErrorMessage = "Такой заголовок уже существует. Воспользуйтесь редактированием.")]
         public string Heading
         {
             get { return _heading; }
@@ -170,6 +172,7 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
+        [Display(Name = "Картинка")]
         public Guid MainImage {
             get { return _mainImage; }
             set {
