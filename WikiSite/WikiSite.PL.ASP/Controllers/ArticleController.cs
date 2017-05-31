@@ -115,7 +115,7 @@ namespace WikiSite.PL.ASP.Controllers
 
         public JsonResult IsHeadingExist(string heading)
         {
-            var throwError = !ArticleVM.IsShortUrlExist(HttpUtility.UrlEncode(heading));
+            var throwError = ArticleVM.IsShortUrlExist(HttpUtility.UrlEncode(heading.ToLower().Trim()));
 
             return Json(throwError, JsonRequestBehavior.AllowGet);
         }

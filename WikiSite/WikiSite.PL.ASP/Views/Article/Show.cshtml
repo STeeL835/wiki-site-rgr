@@ -1,5 +1,7 @@
 ﻿@using CommonMark
 @using Microsoft.Security.Application
+@using WikiSite.PL.ASP.Classes
+@using WikiSite.PL.ASP.Models
 @model WikiSite.PL.ASP.Models.ArticleVM
 
 @{
@@ -29,7 +31,7 @@
         </div>
 
         <div class="article-desc">
-            @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Definition)))
+            @Html.Markdown(Model.Definition)
         </div>
     </div>
 </header>
@@ -37,7 +39,7 @@
 <!-- Article itself -->
 <article class="row">
     <div class="col-xs-12">
-        @Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMarkConverter.Convert(Model.Text)))
+        @Html.Markdown(Model.Text)
     </div>
 </article>
 

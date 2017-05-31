@@ -3,50 +3,23 @@
 
 <header class="row article-head">
     <div id="image-editormd" class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-        @Html.LabelFor(model => model.MainImage, htmlAttributes: new {@class = "control-label label-override"})
+        @Html.LabelFor(model => model.MainImage, htmlAttributes: new { @class = "control-label label-override" })
         <img class="thumbnail" src="http://placehold.it/250" alt="">
     </div>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-        <div class="col-xs-12 col-sm-7 col-lg-8">
-            <!--Heading-->
-            <div class="form-group">
-                @Html.LabelFor(model => model.Heading, htmlAttributes: new {@class = "control-label"})
-                @Html.EditorFor(model => model.Heading, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Heading, "", new {@class = "text-danger"})
-            </div>
-            <!--Definition-->
-            <div class="form-group">
-                @Html.LabelFor(model => model.Definition, htmlAttributes: new {@class = "control-label"})
-                <div id="definition-editormd">
-                    @Html.EditorFor(model => model.Definition, new {htmlAttributes = new {@class = "form-control input-notice-input"}})
-                    <div class="input-notice visible-xs visible-sm">
-                        <svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
-                        <span>Поддерживается Markdown</span>
-                    </div>
-                    <noscript class="hidden-xs hidden-sm">
-                        <div class="input-notice">
-                            <svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
-                            <span>Поддерживается Markdown</span>
-                        </div>
-                    </noscript>
-                </div>
-                @Html.ValidationMessageFor(model => model.Definition, "", new {@class = "text-danger"})
-            </div>
-        </div>
-    }
-</header>
-
-<article>
-    @using (Html.BeginForm())
-    {
-             <!--Text-->
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-xs-12 col-sm-7 col-lg-8">
+        <!--Heading-->
         <div class="form-group">
-            @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label" })
-            <div id="text-editormd">
-                @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control input-notice-input" } })
+            @Html.LabelFor(model => model.Heading, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Heading, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Heading, "", new { @class = "text-danger" })
+        </div>
+        <!--Definition-->
+        <div class="form-group">
+            @Html.LabelFor(model => model.Definition, htmlAttributes: new { @class = "control-label" })
+            <div id="definition-editormd">
+                @Html.EditorFor(model => model.Definition, new { htmlAttributes = new { @class = "form-control input-notice-input" } })
                 <div class="input-notice visible-xs visible-sm">
                     <svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
                     <span>Поддерживается Markdown</span>
@@ -58,16 +31,71 @@
                     </div>
                 </noscript>
             </div>
-            @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(model => model.Definition, "", new { @class = "text-danger" })
         </div>
-    }
+    </div>
+</header>
+
+<article>
+    <!--Text-->
+    <div class="form-group">
+        @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label" })
+        <div id="text-editormd">
+            @Html.EditorFor(model => model.Text, new { htmlAttributes = new { @class = "form-control input-notice-input" } })
+            <div class="input-notice visible-xs visible-sm">
+                <svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
+                <span>Поддерживается Markdown</span>
+            </div>
+            <noscript class="hidden-xs hidden-sm">
+                <div class="input-notice">
+                    <svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
+                    <span>Поддерживается Markdown</span>
+                </div>
+            </noscript>
+        </div>
+        @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
+    </div>
 </article>
 
 
-@Html.RequireStyle("/Scripts/Editor.md/css/editormd.css")
-@Html.RequireScript("/Scripts/Editor.md/editormd.js")
-@{
-    var str = "var textEditor, definitionEditor; if (!IsMobile) {$(function() { definitionEditor = editormd({ id: \"definition-editormd\", toolbarIcons: \"simple\", width: \"100%\", height: 230, path: \"/Scripts/Editor.md/lib/\", pluginPath: \"/Scripts/Editor.md/plugins/\", emoji: false, imageUpload: true, placeholder: \"Введите краткое описание статьи...\" }); textEditor = editormd({ id: \"text-editormd\", height: 500, path: \"/Scripts/Editor.md/lib/\", pluginPath: \"/Scripts/Editor.md/plugins/\", emoji: false, imageUpload: true, placeholder: \"Введите основное содержание статьи...\" }); }); }";
-    @Html.RequireLocalScript(str)
+@Html.RequireScript("/Scripts/jquery.validate.min.js")
+@Html.RequireScript("/Scripts/jquery.validate.unobtrusive.min.js")
+@Html.RequireScript("/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js")
+
+@if (!Request.Browser.IsMobileDevice)
+{
+    @Html.RequireStyle("/Scripts/Editor.md/css/editormd.css")
+    @Html.RequireScript("/Scripts/Editor.md/editormd.js")
+    {
+        var str = "var textEditor, definitionEditor; " +
+                  "if (!IsMobile) { " +
+                    "$(function() { " +
+                        "/*definitionEditor = editormd({ " +
+                            "id: \"definition-editormd\", " +
+                            "toolbarIcons: \"simple\", " +
+                            "width: \"100%\", " +
+                            "height: 230, " +
+                            "path: \"/Scripts/Editor.md/lib/\", " +
+                            "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
+                            "emoji: false, " +
+                            "imageUpload: true, " +
+                            "placeholder: \"Введите краткое описание статьи...\" "+
+                        "}); */" +
+                        
+                        "textEditor = editormd({ " +
+                            "id: \"text-editormd\", " +
+                            "toolbarIcons: \"simple\", " +
+                            "width: \"100%\", " +
+                            "height: 500, " +
+                            "path: \"/Scripts/Editor.md/lib/\", " +
+                            "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
+                            "emoji: false, " +
+                            "imageUpload: true, " +
+                            "placeholder: \"Введите основное содержание статьи...\" "+
+                        "}); " +
+                    "}); " +
+                  "}";
+        @Html.RequireLocalScript(str)
+    }
+    @Html.RequireScript("/Scripts/Editor.md/languages/en.js")
 }
-@Html.RequireScript("/Scripts/Editor.md/languages/en.js")

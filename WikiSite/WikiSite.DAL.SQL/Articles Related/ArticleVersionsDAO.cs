@@ -327,7 +327,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X Id = @id",
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id",
                     connection);
                 sqlCom.Parameters.AddWithValue("@article_id", GetVersion(versionId).ArticleId);
                 sqlCom.Parameters.AddWithValue("@id", versionId);
@@ -351,7 +351,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X Id = @id",
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id",
                     connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 sqlCom.Parameters.AddWithValue("@id", GetVersion(articleId, date).Id);
