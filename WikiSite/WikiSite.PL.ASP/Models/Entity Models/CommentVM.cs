@@ -21,6 +21,7 @@ namespace WikiSite.PL.ASP.Models
 		[Required(ErrorMessage = "Текст комментария должен содержать текст")]
 		[DataType(DataType.MultilineText)]
 		[MaxLength(1500, ErrorMessage = "Длина комментария не может превышать 1500 символов")]
+		[Display(Name = "Текст комментария")]
 		public string Text { get; set; }
 		public DateTime DateOfCreation { get; set; }
 

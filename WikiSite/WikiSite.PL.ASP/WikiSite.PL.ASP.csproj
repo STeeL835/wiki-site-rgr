@@ -777,6 +777,7 @@
     <Content Include="Views\Article\Update.cshtml" />
     <Content Include="Views\Article\Details.cshtml" />
     <Content Include="Views\Comments\Add.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

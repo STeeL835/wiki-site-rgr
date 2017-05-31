@@ -78,6 +78,7 @@ namespace WikiSite.PL.ASP.Classes
 		#region MarkdownHelper
 
 	    private static MarkdownPipeline Pipeline { get; } = new MarkdownPipelineBuilder()
+		                                                             .UseAdvancedExtensions()
 		                                                             .UseBootstrap()
 		                                                             .UseEmojiAndSmiley()
 		                                                             .Build();

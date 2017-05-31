@@ -11,13 +11,25 @@
 	});
 
 	// for delete popovers with button
-	var list = $('[data-toggle="confirm-popover"]');
+	var list = $('[data-toggle="confirm-popover"]'),
+		lastPopovered,
+		alertDismissed = false;
 	for (var i = 0; i < list.length; i++) {
 		$(list[i]).popover({ animation: true, content: $(list[i]).parent().find("output").html(), html: true });
 	}
 
 	/* Enabling tooltips */
 	$('[data-toggle="tooltip"]').tooltip();
+
+	/* result auto dismiss */
+	function dismissAlert() {
+		$(".result-alert").fadeTo(5000, 500).slideUp(500,
+			function() {
+				$(".result-alert").slideUp(500);
+				alertDismissed = true;
+			});
+	}
+	$(document).ready(function(){if (!alertDismissed){dismissAlert()}});
 })();
 
 /* If screen is 993px wide, it's probably a PC */
