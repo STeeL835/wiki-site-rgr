@@ -26,6 +26,8 @@ namespace WikiSite.PL.ASP.Controllers
 
 	    public ActionResult CommentsByGuid(Guid id) // TODO: [Article] Replace with Redirect to Index when url decoding done
 	    {
+			this.CatchAlert();
+
 			var theArticle = ArticleVM.GetArticle(id);
 			var comments = CommentVM.GetCommentsForArticle(theArticle.Id);
 			var articleVersions = ArticleVM.GetAllVersionOfArticle(theArticle.Id);
@@ -71,27 +73,72 @@ namespace WikiSite.PL.ASP.Controllers
 
 		[Authorize]
 	    public ActionResult Edit(Guid id)
+		{
+			var comment = CommentVM.GetComment(id);
+			if (PrivilegesAreLegit(comment))
+			{
+				TempData["comment"] = comment;
+				return View(comment);
+			}
+			else
+				this.AlertNextAction("У вас нет доступа для редактирования этого комментария", AlertType.Danger);
+				return RedirectToAction("CommentsByGuid", new { id = comment.ArticleId });
+		}
+
+	    [Authorize][HttpPost]
+	    [ValidateAntiForgeryToken]
+	    public ActionResult Edit(CommentVM model)
 	    {
-		    return View();
-	    }
+			if (ModelState.IsValid)
+			{
+				var comment = (CommentVM) TempData["comment"];
+				if (PrivilegesAreLegit(comment))
+				{
+					comment.Text = model.Text;
+
+					if (CommentVM.UpdateComment(comment))
+						this.AlertNextAction("Комментарий изменен", AlertType.Success);
+					else
+						this.AlertNextAction("Не удалось изменить комментарий", AlertType.Danger);
+				}
+				else
+					this.AlertNextAction("У вас нет доступа для редактирования этого комментария", AlertType.Danger);
+
+				return RedirectToAction("CommentsByGuid", new { id = comment.ArticleId });
+			}
+			this.Alert("Неправильные вы комментарии пишете, проверьте, что его длина между 1 и 1500 символами", AlertType.Warning);
+			TempData.Keep("comment"); // Saves the comment for next request
+			return View(model);
+		}
 
 	    [Authorize]
-	    [HttpPost]
-	    [ValidateAntiForgeryToken]
-	    public ActionResult Edit(Guid articleId, string text)
-	    {
-		    throw new NotImplementedException();
-	    }
-
-	    [Authorize(Roles = "admin")]
-	    [Authorize(Roles = "moderator")]
 	    public ActionResult Delete(Guid id)
-	    {
-		    throw new NotImplementedException();
-	    }
+		{
+			var comment = CommentVM.GetComment(id);
+			if (PrivilegesAreLegit(comment))
+			{
+				if (CommentVM.RemoveComment(id))
+				{
+					this.AlertNextAction("Комментарий удален", AlertType.Warning);
+				}
+				else
+				{
+					this.AlertNextAction("Не удалось удалить комментарий", AlertType.Danger);
+				}
+			}
+			else
+			{
+				this.AlertNextAction("У вас нет доступа для удаления этого комментария", AlertType.Danger);
+			}
+			return RedirectToAction("CommentsByGuid", new { id = comment.ArticleId });
+		}
 
+		private bool PrivilegesAreLegit(CommentVM comment)
+		{
+			return Guid.Parse(User.Identity.Name) == comment.AuthorId || User.IsInRole("admin") || User.IsInRole("moderator");
+		}
 
-	    private CommentArticleVersionModel[] Combine(ArticleVM[] versions, CommentVM[] comments)
+		private CommentArticleVersionModel[] Combine(ArticleVM[] versions, CommentVM[] comments)
 	    {
 		    var blob = new List<CommentArticleVersionModel>(versions.Length + comments.Length);
 		    blob.AddRange(versions.Select(vm => new CommentArticleVersionModel(vm)));

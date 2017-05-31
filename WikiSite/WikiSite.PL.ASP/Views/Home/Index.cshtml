@@ -5,7 +5,7 @@
 	Layout = "../Shared/_Layout.cshtml";
     ViewBag.Title = "My Name Jeff";
     ViewBag.RandomArticle = ArticleVM.GetRandomArticle();
-
+	var lastComment = CommentVM.GetLatestComment();
 }
 
 <div class="row">
@@ -141,9 +141,9 @@
 				<h3 class="panel-title">Последний комментарий</h3>
 			</div>
 			<div class="list-group">
-				<a href="#!" class="list-group-item">
-					<h4 class="list-group-item-heading">Белэш-оглы</h4>
-					<p class="list-group-item-text">Скорбим по лягушонку Пепе. Вечная ему память.</p>
+				<a href="@Url.Action("CommentsByGuid", "Comments", new {id = lastComment.ArticleId})" class="list-group-item">
+					<h4 class="list-group-item-heading">@UserVM.GetUser(lastComment.AuthorId).Nickname</h4>
+					<p class="list-group-item-text">@Html.Markdown(lastComment.Text)</p>
 				</a>
 			</div>
 		</div>

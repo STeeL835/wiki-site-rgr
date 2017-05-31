@@ -135,7 +135,7 @@
 			<div class="container-fluid">
 				@if (ViewBag.AlertMessage != null) // Displays alert if it exist
 				{
-					<div class="alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
+					<div class="alert result-alert @ViewBag.AlertClass">@ViewBag.AlertMessage</div>
 				}
 				@RenderBody()
 			</div>

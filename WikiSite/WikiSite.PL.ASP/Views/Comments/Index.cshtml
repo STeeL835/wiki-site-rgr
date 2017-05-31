@@ -4,7 +4,7 @@
 @model CommentsShowAndAdd
 
 @{
-	ViewBag.Title = "Index";
+	ViewBag.Title = "Обсуждение статьи " + ViewBag.Article.Heading;
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	Guid CurrentUserId = Guid.Empty;
 	if (Request.IsAuthenticated)
@@ -62,7 +62,7 @@
 }
 
 <h1 class="page-header">
-	<a href="@Url.Action("Show", "Article", new { url = Article.ShortUrl})" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+	<a href="@Url.Action("Show", "Article", new { url = Article.ShortUrl})" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
 	Обсуждение статьи <span class="text-primary">@Article.Heading</span>
 </h1>
 
@@ -82,9 +82,12 @@
 								<a href="@Url.Action("Edit", new {id = comment.Id})" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
 									<i class="fa fa-pencil"></i>
 								</a>
-								<a href="@Url.Action("Delete", new {id = comment.Id})" title="Удалить" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-danger">
+								<a href="#!" tabindex="0" role="button" data-trigger="focus" data-toggle="confirm-popover" data-placement="left" class="btn btn-sm btn-danger">
 									<i class="fa fa-trash"></i>
 								</a>
+								<output hidden>
+									<a href="@Url.Action("Delete", new {id = comment.Id})" class="btn btn-danger btn-sm">Удалить бесповоротно</a>
+								</output>
 							</div>
 						}
 						<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
@@ -102,7 +105,7 @@
 									{
 										<span class="label label-success">Модератор</span>
 									}
-									@if (user.Id == lastEdit.AuthorId)
+									@if (user.Id == lastEdit.EditionAuthorId)
 									{
 										<span class="label label-inverse">Автор правки</span>
 									}
@@ -122,13 +125,14 @@
 			}
 			else if (item.CommentOrVersion == CommentArticleVersionModel.CVType.ArticleVersion)
 			{
-				var version = item.ArticleVersion;
+				var version = lastEdit = item.ArticleVersion;
 				editNumber++;
 				var editMessage = editNumber == 1 ? "Изначальная версия" : "Версия " + editNumber;
-				<div class="newversion">
-					<a href="@Url.Action("Show", "Article", new { url = Article.ShortUrl, number = editNumber })">@editMessage</a> @{/* TODO: [Articles] Add link when done */}
-					<span class="newversion-date">@version.LastEditDate</span>
-				</div>
+				<a href="@Url.Action("Show", "Article", new {url = Article.ShortUrl, number = editNumber})" class="newversion">
+					<span class="newversion-user">@UserVM.GetUser(version.EditionAuthorId).Nickname</span>
+					<span>@editMessage</span>
+					<span class="newversion-date">@version.LastEditDate.ToString("dd.MM.yy hh:mm")</span>
+				</a>
 			}
 		}
 	</div>

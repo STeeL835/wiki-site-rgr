@@ -55,7 +55,7 @@ namespace WikiSite.BLL.Default
 			if (GetComment(comment.Id) == null) return false;
 
 			/* Checking freshness of a comment if it's more than 2 hours old, then editing is bad*/
-			if (DateTime.Now - comment.DateOfCreation > TimeSpan.FromHours(2)) return false;
+			//if (DateTime.Now - comment.DateOfCreation > TimeSpan.FromHours(2)) return false;
 
 			return _articleCommentsDal.UpdateComment(comment);
 		}
