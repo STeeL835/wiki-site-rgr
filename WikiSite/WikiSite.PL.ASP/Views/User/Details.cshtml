@@ -11,7 +11,6 @@
 	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
 	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
 	ViewBag.Comments = CommentVM.GetCommentsForUser(Model.Id).ToArray(); 
-	ViewBag.CommentsCount = 123;
 }
 
 @section actions
@@ -69,15 +68,15 @@
 			<h2>@Model.Nickname</h2>
 			<div class="stats">
 				<div>
-					<p class="stat-number">@(((IEnumerable<ArticleVM>)(ViewBag.Articles)).Count())</p>
+					<p class="stat-number">@ViewBag.Articles.Length</p>
 					<p>Статей</p>
 				</div>
 				<div>
-					<p class="stat-number">@(((IEnumerable<ArticleVM>)(ViewBag.Versions)).Count())</p>
+					<p class="stat-number">@ViewBag.Versions.Length</p>
 					<p>Правок</p>
 				</div>
 				<div>
-					<p class="stat-number">@ViewBag.CommentsCount</p>
+					<p class="stat-number">@ViewBag.Comments.Length</p>
 					<p>Комментариев</p>
 				</div>
 			</div>
@@ -126,10 +125,6 @@
 								<th>URL</th>
 								<th>Название</th>
 								<th class="hidden-xs">Дата создания</th>
-								<th class="hidden-xs">Дата редактирования</th>
-								<th class="hidden-xs">Исправил</th>
-								<th class="hidden-xs">Количество версий</th>
-								<th class="hidden-xs">Действия</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -138,27 +133,11 @@
 								<tr>
 									<td class="table-max-width-100">@article.ShortUrl</td>
 									<td class="table-max-width-200">
-										<a href="@Url.Action("Details", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+										<a href="@Url.Action("Details", "Article", new { url = article.ShortUrl})" class="btn btn-link btn-xs">
 											@article.Heading
 										</a>
 									</td>
 									<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
-									<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
-									<td class="table-max-width-100 hidden-xs">
-										<a href="@Url.Action("Index", "User", new {id = UserVM.GetUser(article.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
-											@UserVM.GetUser(article.EditionAuthorId).Nickname
-										</a>
-									</td>
-									<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
-									<td class="table-action hidden-xs">
-										<a href="@Url.Action("Details", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
-										<span>
-											<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-											<output hidden>
-												<a href="@Url.Action("Delete", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-danger btn-sm">Я уверен, удалить</a>
-											</output>
-										</span>
-									</td>
 								</tr>
 							}
 							</tbody>
@@ -173,7 +152,7 @@
 					{
 						<div class="not-found">
 							<i class="fa fa-frown-o"></i>
-							<h3>Похоже, что этот пользователь никаких правок не делал</h3>
+							<h3>Похоже, что этот пользователь не делал никаких правок</h3>
 						</div>
 					}
 					else
@@ -183,10 +162,7 @@
 							<tr>
 								<th>URL</th>
 								<th>Название</th>
-								<th class="hidden-xs">Дата создания</th>
 								<th class="hidden-xs">Дата редактирования</th>
-								<th class="hidden-xs">Количество версий</th>
-								<th class="hidden-xs">Действия</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -195,22 +171,11 @@
 								<tr>
 									<td class="table-max-width-100">@article.ShortUrl</td>
 									<td class="table-max-width-200">
-										<a href="@Url.Action("Details", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-link btn-xs">
+										<a href="@Url.Action("Details", "Article", new {url = article.ShortUrl})" class="btn btn-link btn-xs">
 											@article.Heading
 										</a>
 									</td>
-									<td class="hidden-xs">@article.CreationDate.ToString(CultureInfo.CurrentCulture)</td>
 									<td class="hidden-xs">@article.LastEditDate.ToString(CultureInfo.CurrentCulture)</td>
-									<td class="hidden-xs">@ArticleVM.VersionsCount(article.Id)</td>
-									<td class="table-action hidden-xs">
-										<a href="@Url.Action("Details", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-primary btn-xs"><i class="fa fa-bars"></i></a>
-										<span>
-											<a href="#!" data-toggle="confirm-popover" data-placement="left" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-											<output hidden>
-												<a href="@Url.Action("Delete", "Articles", new {area = "Admin", shortUrl = article.ShortUrl})" class="btn btn-danger btn-sm">Я уверен, удалить</a>
-											</output>
-										</span>
-									</td>
 								</tr>
 							}
 							</tbody>

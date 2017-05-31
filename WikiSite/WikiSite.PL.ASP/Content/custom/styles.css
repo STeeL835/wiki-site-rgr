@@ -98,6 +98,7 @@ body {
 .content {
 	margin-top: 40px;
 	padding-top: 15px;
+	padding-bottom: 15px;
 	overflow: hidden;
 }
 
@@ -269,7 +270,7 @@ body {
 .newversion {
 	background-color: #127ba3;
 	border-bottom: 3px solid #0f678a;
-	margin-top: -1px;
+	margin-top: -2px;
 	color:white;
 	position: relative;
 	font-weight: bold;
@@ -277,8 +278,8 @@ body {
 	padding: 3px 0;
 }
 .newversion:active{
-	border-bottom-width: 2px;
-	margin-top: 1px;
+	border-bottom-width: 1px;
+	margin-top: 0px;
 }
 .newversion a {
 	color: inherit;
@@ -354,6 +355,10 @@ body {
 .input-notice-input {
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
+}
+
+.editor textarea {
+	height: 6em;
 }
 
 @media (max-width: 767px){

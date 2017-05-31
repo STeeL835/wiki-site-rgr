@@ -1,24 +1,75 @@
 ﻿@using Microsoft.Security.Application
+@using WikiSite.PL.ASP.Classes
 @using WikiSite.PL.ASP.Models
-@model IEnumerable<CommentArticleVersionModel>
+@model CommentsShowAndAdd
 
 @{
 	ViewBag.Title = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
-	Guid CurrentUserId = Guid.Parse(User.Identity.Name);
+	Guid CurrentUserId = Guid.Empty;
+	if (Request.IsAuthenticated)
+	{
+		CurrentUserId = Guid.Parse(User.Identity.Name);
+	}
 	ArticleVM Article = (ArticleVM) ViewBag.Article;
+	ArticleVM lastEdit = Article;
+	var editNumber = 0;
 }
 
-<h1 class="page-header"> @{/* TODO: [Article] Check when done */}
-	<a href="@Url.Action("Show", "Article", new { id = Article.ShortUrl})" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+@section style
+{
+	<link href="~/Scripts/Editor.md/css/editormd.css" rel="stylesheet" />
+}
+
+@section js
+{
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js"></script>
+
+	@if (!Request.Browser.IsMobileDevice)
+	{
+		<script src="~/Scripts/Editor.md/editormd.js"></script>
+		<script>
+			var aboutEditor;
+
+			// Useless on small monitors
+			if (!IsMobile) {
+				$(function() {
+				    aboutEditor = editormd({
+				        id: "comment-editor",
+				        toolbarIcons: "simple",
+				        width: "100%",
+				        height: 300,
+				        toc: false,
+				        path: "/Scripts/Editor.md/lib/",
+				        pluginPath: "/Scripts/Editor.md/plugins/",
+				        emoji: true,
+						imageUpload: false,
+						placeholder: "ящетаю+"
+					});
+				});
+			}
+
+		</script>
+		<script src="~/Scripts/Editor.md/languages/ru-ru.js"></script>
+	}
+}
+
+@section actions {
+	<li>@Html.ActionLink("К статье", "Show", "Article", new { url = Article.ShortUrl }, null)</li>
+	<li>@Html.ActionLink("Все правки статьи", "Show", "Article", new { url = Article.ShortUrl }, null)</li>
+}
+
+<h1 class="page-header">
+	<a href="@Url.Action("Show", "Article", new { url = Article.ShortUrl})" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
 	Обсуждение статьи <span class="text-primary">@Article.Heading</span>
 </h1>
 
 <div class="row">
 	<div class="col-xs-12">
-		@foreach (CommentArticleVersionModel item in Model)
+		@foreach (CommentArticleVersionModel item in Model.AllCommentElements)
 		{
-			var lastEdit = Article;
 			if (item.CommentOrVersion == CommentArticleVersionModel.CVType.Comment)
 			{
 				var comment = item.Comment;
@@ -38,16 +89,16 @@
 						}
 						<div class="comment-author col-xs-12 col-sm-3 col-lg-2">
 							<a href="@Url.Action("Details", "User", new {id = user.ShortId})">
-								<img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(CurrentUserId)?s=80&d=retro" alt="Изображение профиля">
+								<img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(comment.AuthorId)?s=80&d=retro" alt="Изображение профиля">
 							</a>
 							<div class="comment-author-info">
 								<h4 class="comment-nickname"><a href="@Url.Action("Details", "User", new {id = user.ShortId})">@user.Nickname</a></h4>
 								<div>
-									@if (User.IsInRole("admin"))
+									@if (RoleVM.UserIsInRole("admin", user.Id))
 									{
 										<span class="label label-warning">Админ</span>
 									}
-									@if (User.IsInRole("moderator"))
+									@if (RoleVM.UserIsInRole("moderator", user.Id))
 									{
 										<span class="label label-success">Модератор</span>
 									}
@@ -63,17 +114,19 @@
 								<em class="comment-date">@comment.DateOfCreation</em>
 							</div>
 						</div>
-						<p class="col-xs-12 col-sm-9 col-lg-10">
-							@Html.Raw(Sanitizer.GetSafeHtmlFragment(CommonMark.CommonMarkConverter.Convert(comment.Text)))
-						</p>
+						<div class="col-xs-12 col-sm-9 col-lg-10">
+							@Html.Markdown(comment.Text)
+						</div>
 					</div>
 				</div>
 			}
 			else if (item.CommentOrVersion == CommentArticleVersionModel.CVType.ArticleVersion)
 			{
-				var version = lastEdit = item.ArticleVersion;
+				var version = item.ArticleVersion;
+				editNumber++;
+				var editMessage = editNumber == 1 ? "Изначальная версия" : "Версия " + editNumber;
 				<div class="newversion">
-					<a href="#!">Правка 12</a> @{/* TODO: [Articles] Add link when done */}
+					<a href="@Url.Action("Show", "Article", new { url = Article.ShortUrl, number = editNumber })">@editMessage</a> @{/* TODO: [Articles] Add link when done */}
 					<span class="newversion-date">@version.LastEditDate</span>
 				</div>
 			}
@@ -86,11 +139,36 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3>Оставить свой комментарий</h3>
-			@using (Html.BeginForm("Add", "Comments", FormMethod.Post))
-			{
-				@Html.AntiForgeryToken()
-			}
 		</div>
+		@using (Html.BeginForm("Add", "Comments", FormMethod.Post))
+		{
+			@Html.AntiForgeryToken()
+
+			@Html.Hidden("ArticleId", Article.Id)
+			<div class="col-xs-12">
+				<div class="form-group">
+
+					<div id="comment-editor" class="editor">
+						@Html.EditorFor(model => model.Text, new {htmlAttributes = new {@class = "form-control input-notice-input"}})
+						<div class="input-notice visible-xs visible-sm">
+							<svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
+							<span>Поддерживается Markdown</span>
+						</div>
+						<noscript class="hidden-xs hidden-sm">
+							<div class="input-notice">
+								<svg class="markdown-icon" aria-hidden="true" version="1.1" width="18" height="16" viewBox="0 0 16 14" style=""><path fill-rule="evenodd" d="M14.85 3H1.15C.52 3 0 3.52 0 4.15v7.69C0 12.48.52 13 1.15 13h13.69c.64 0 1.15-.52 1.15-1.15v-7.7C16 3.52 15.48 3 14.85 3zM9 11H7V8L5.5 9.92 4 8v3H2V5h2l1.5 2L7 5h2v6zm2.99.5L9.5 8H11V5h2v3h1.5l-2.51 3.5z"></path></svg>
+								<span>Поддерживается Markdown</span>
+							</div>
+						</noscript>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				@Html.ValidationMessageFor(model => model.Text, "", new {@class = "text-danger"})
+			</div>
+			<div class="col-xs-12">
+				<input type="submit" value="Оставить комментарий" class="btn btn-primary"/>
+			</div>
+		}
 	</div>
 }
-

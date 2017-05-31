@@ -54,7 +54,7 @@ namespace WikiSite.PL.ASP.Controllers
             {
                 this.AlertNextAction($"Произошла ошибка при добавлении статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Show", "Articles", new { url = ArticleVM.GetArticle(article.Id).ShortUrl });
         }
 
         [HttpGet][Authorize]
@@ -90,7 +90,7 @@ namespace WikiSite.PL.ASP.Controllers
                 this.AlertNextAction(
                     $"Произошла ошибка при изменении статьи \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Show", "Articles", new { url = ArticleVM.GetArticle(version.Id).ShortUrl});
         }
 
         [HttpGet][Authorize]

@@ -44,6 +44,13 @@ namespace WikiSite.PL.ASP.Models
 			return _bll.GetRoles().Select(dto => (RoleVM) dto).ToArray();
 		}
 
+		public static bool UserIsInRole(string role, Guid userId)
+		{
+			var user = UserVM.GetUser(userId);
+			var rolevm = GetRole(user.RoleId);
+			return role == rolevm.Name.ToLowerInvariant();
+		}
+
 		#endregion
 	}
 }

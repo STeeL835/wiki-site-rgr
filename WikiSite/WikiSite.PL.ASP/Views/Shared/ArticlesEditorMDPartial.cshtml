@@ -70,26 +70,26 @@
         var str = "var textEditor, definitionEditor; " +
                   "if (!IsMobile) { " +
                     "$(function() { " +
-                        "/*definitionEditor = editormd({ " +
+                        "definitionEditor = editormd({ " +
                             "id: \"definition-editormd\", " +
                             "toolbarIcons: \"simple\", " +
                             "width: \"100%\", " +
                             "height: 230, " +
                             "path: \"/Scripts/Editor.md/lib/\", " +
                             "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
-                            "emoji: false, " +
+                            "emoji: true, " +
                             "imageUpload: true, " +
                             "placeholder: \"Введите краткое описание статьи...\" "+
-                        "}); */" +
+                        "}); " +
                         
                         "textEditor = editormd({ " +
                             "id: \"text-editormd\", " +
-                            "toolbarIcons: \"simple\", " +
+                            "toolbarIcons: \"full\", " +
                             "width: \"100%\", " +
                             "height: 500, " +
                             "path: \"/Scripts/Editor.md/lib/\", " +
                             "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
-                            "emoji: false, " +
+                            "emoji: true, " +
                             "imageUpload: true, " +
                             "placeholder: \"Введите основное содержание статьи...\" "+
                         "}); " +
