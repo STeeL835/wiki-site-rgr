@@ -13,10 +13,14 @@ namespace WikiSite.PL.ASP.Models
 		#region Instance
 
 		public Guid Id { get; set; }
+
+		[Required(ErrorMessage = "Потерялся id статьи, попробуйте перезагрузить страницу")]
 		public Guid ArticleId { get; set; }
 		public Guid AuthorId { get; set; }
+
 		[Required(ErrorMessage = "Текст комментария должен содержать текст")]
 		[DataType(DataType.MultilineText)]
+		[MaxLength(1500, ErrorMessage = "Длина комментария не может превышать 1500 символов")]
 		public string Text { get; set; }
 		public DateTime DateOfCreation { get; set; }
 

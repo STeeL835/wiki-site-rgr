@@ -746,6 +746,7 @@
     <Compile Include="Models\Entity Models\UserVM.cs" />
     <Compile Include="Models\Page Models\AuthVM.cs" />
     <Compile Include="Models\Page Models\CommentArticleVersionModel.cs" />
+    <Compile Include="Models\Page Models\CommentsShowAndAdd.cs" />
     <Compile Include="Models\Page Models\CredentialsUserModel.cs" />
     <Compile Include="Models\Page Models\ErrorVM.cs" />
     <Compile Include="Models\Page Models\RegisterVM.cs" />
@@ -775,6 +776,7 @@
     <Content Include="Views\Article\Show.cshtml" />
     <Content Include="Views\Article\Update.cshtml" />
     <Content Include="Views\Article\Details.cshtml" />
+    <Content Include="Views\Comments\Add.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
