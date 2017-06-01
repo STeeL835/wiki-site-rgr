@@ -106,10 +106,11 @@ namespace WikiSite.PL.ASP.Controllers
 
         public ActionResult Details(string url)
         {
+			this.CatchAlert();
             ViewBag.ShortUrl = url;
             var article = ArticleVM.GetArticle(url);
             ViewBag.Title = $"Все версии статьи \"{article.Heading}\"";
-            var versions = ArticleVM.GetAllVersionOfArticle(article.Id);
+            var versions = ArticleVM.GetAllVersionOfArticle(article.Id).Reverse().ToArray();
             return View(versions);
         }
 

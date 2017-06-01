@@ -25,35 +25,39 @@ namespace WikiSite.BLL.Default
 		{
 			CheckThrowDTO(voteDto);
 
+			var success = false;
 			var userVote = GetVote(voteDto.UserId, voteDto.ArticleVersionId);
 
 				 /* if user's vote is the same as one that comes then false, 
 				  * otherwise (if user didn't vote or his vote wasn't the same), actually change/add it */
 			if (userVote != null && userVote.IsVoteFor == voteDto.IsVoteFor) 
 				return false;
-			else 
-			if (userVote == null) // didn't vote
-				_versionVotesDal.AddVote(voteDto);
+			else if (userVote == null) // didn't vote
+				success = _versionVotesDal.AddVote(voteDto);
 			else // other vote value, revote
-				_versionVotesDal.UpdateVote(voteDto);
+			{
+				voteDto.Id = userVote.Id;
+				success = _versionVotesDal.UpdateVote(voteDto);
+			}
 
 			CheckVotes(voteDto.ArticleVersionId); // check votes and change IsApproved flag if needed
 
-			return true;
+			return success;
 		}
 
 		public bool UnVote(VersionVoteDTO voteDto)
 		{
 			CheckThrowDTO(voteDto);
 
+			var success = false;
 			var userVote = GetVote(voteDto.UserId, voteDto.ArticleVersionId); // getting vote's existence
 
 			if (userVote == null) return false;
-			else _versionVotesDal.RemoveVote(voteDto.Id);
+			else success = _versionVotesDal.RemoveVote(userVote.Id);
 
 			CheckVotes(voteDto.ArticleVersionId);
 
-			return true;
+			return success;
 		}
 
 		public VersionVoteDTO GetVote(Guid voteId)
@@ -101,7 +105,7 @@ namespace WikiSite.BLL.Default
 			var against = CountVotesAgainst(articleVersionId);
 			var isApproved = GetIsApproval(articleVersionId);
 
-			if (@for + against < 3) return;
+			//if (@for + against < 3) return;
 
 			if (@for >= against && !isApproved) // if it's not approved but needs to
 				ChangeApproval(articleVersionId, true);

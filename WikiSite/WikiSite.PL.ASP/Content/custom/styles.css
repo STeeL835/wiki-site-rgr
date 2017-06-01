@@ -476,10 +476,10 @@ ul.a-version-info > *.grow{
 	padding-left: 5px;
 	color: white;
 }
-.a-version-votes:hover .metrics{
+ul.a-versions > li:hover .a-version-votes.hoverable .metrics{
 	display: none;
 }
-.a-version-votes:hover .buttons{
+ul.a-versions > li:hover .a-version-votes.hoverable .buttons{
 	display: block;
 	margin-top: -1px;
 }
@@ -502,10 +502,11 @@ ul.a-version-info > *.grow{
 	color: white;
 }
 .a-versions .progress {
+	background-color: #127ba3; 
 	border-radius: 0;
 	border-width: 0;
 	height: 4px;
-	margin: 0;
+	margin: 0 -1px;
 }
 
 @media (max-width: 767px){

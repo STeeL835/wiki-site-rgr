@@ -26,15 +26,8 @@ namespace WikiSite.PL.ASP.Controllers
 
 	    public ActionResult CommentsByGuid(Guid id) // TODO: [Article] Replace with Redirect to Index when url decoding done
 	    {
-			this.CatchAlert();
-
 			var theArticle = ArticleVM.GetArticle(id);
-			var comments = CommentVM.GetCommentsForArticle(theArticle.Id);
-			var articleVersions = ArticleVM.GetAllVersionOfArticle(theArticle.Id);
-			var comboMix = Combine(articleVersions.ToArray(), comments.ToArray());
-			ViewBag.Article = theArticle;
-
-			return View("Index", new CommentsShowAndAdd(new CommentVM(), comboMix));
+		    return RedirectToAction("Index", new {article = theArticle.ShortUrl});
 		}
 
 
