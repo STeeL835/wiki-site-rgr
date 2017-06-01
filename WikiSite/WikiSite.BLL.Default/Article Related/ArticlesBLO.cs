@@ -346,10 +346,12 @@ namespace WikiSite.BLL.Default
                 AuthorId = articleDTO.AuthorId,
                 CreationDate = articleDTO.CreationDate,
 
+                VersionId = versionDTO.Id,
                 LastEditDate = versionDTO.LastEditDate,
                 EditionAuthorId = versionDTO.EditionAuthorId,
                 IsApproved = versionDTO.IsApproved,
 
+                ContentId = contentDTO.Id,
                 Heading = contentDTO.Heading,
                 Definition = contentDTO.Definition,
                 Text = contentDTO.Text,
@@ -370,27 +372,29 @@ namespace WikiSite.BLL.Default
 
         private ArticleContentDTO CreateArticleContentDTO(ArticleBDO articleBDO)
         {
-            return new ArticleContentDTO()
+            var contentDTO = new ArticleContentDTO()
             {
-                Id = Guid.NewGuid(),
                 Heading = articleBDO.Heading,
                 Definition = articleBDO.Definition,
                 Text = articleBDO.Text,
                 MainImage = articleBDO.MainImage
             };
+            contentDTO.Id = articleBDO.ContentId == default(Guid) ? Guid.NewGuid() : articleBDO.ContentId;
+            return contentDTO;
         }
 
         private ArticleVersionDTO CreateArticleVersionDTO(ArticleBDO articleBDO, ArticleContentDTO contentDTO)
         {
-            return new ArticleVersionDTO()
+            var versionDTO = new ArticleVersionDTO()
             {
-                Id = Guid.NewGuid(),
                 ArticleId = articleBDO.Id,
                 ContentId = contentDTO.Id,
                 LastEditDate = articleBDO.LastEditDate,
                 EditionAuthorId = articleBDO.EditionAuthorId,
                 IsApproved = articleBDO.IsApproved
             };
+            versionDTO.Id = articleBDO.VersionId == default(Guid) ? Guid.NewGuid() : articleBDO.VersionId;
+            return versionDTO;
         }
     }
 }

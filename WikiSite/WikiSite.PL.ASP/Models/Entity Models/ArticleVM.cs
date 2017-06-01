@@ -25,6 +25,8 @@ namespace WikiSite.PL.ASP.Models
         private string _definition;
         private string _text;
         private Guid _mainImage;
+        private Guid _versionId;
+        private Guid _contentId;
 
         /// <summary>
         /// ONLY for model binder
@@ -184,6 +186,24 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
+        public Guid VersionId {
+            get { return _versionId; }
+            set
+            {
+                ErrorGuard.Check(value);
+                _versionId = value;
+            }
+        }
+
+        public Guid ContentId
+        {
+            get { return _contentId; }
+            set
+            {
+                ErrorGuard.Check(value);
+                _contentId = value;
+            }
+        }
         #endregion
 
         #region Static

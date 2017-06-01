@@ -11,11 +11,13 @@ namespace WikiSite.Entities
         public DateTime CreationDate { get; set; }
 
         //ArticleVersionDTO
+        public Guid VersionId { get; set; }
         public DateTime LastEditDate { get; set; }
         public Guid EditionAuthorId { get; set; }
         public bool IsApproved { get; set; }
 
         //ArticleContentDTO
+        public Guid ContentId { get; set; }
         public string Heading { get; set; }
         public string Definition { get; set; }
         public string Text { get; set; }

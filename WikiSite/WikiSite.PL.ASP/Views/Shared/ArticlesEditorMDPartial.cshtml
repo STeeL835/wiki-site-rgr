@@ -78,7 +78,7 @@
                             "path: \"/Scripts/Editor.md/lib/\", " +
                             "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
                             "emoji: true, " +
-                            "imageUpload: true, " +
+                            "imageUpload: false, " +
                             "placeholder: \"Введите краткое описание статьи...\" "+
                         "}); " +
                         
@@ -90,12 +90,12 @@
                             "path: \"/Scripts/Editor.md/lib/\", " +
                             "pluginPath: \"/Scripts/Editor.md/plugins/\", " +
                             "emoji: true, " +
-                            "imageUpload: true, " +
+                            "imageUpload: false, " +
                             "placeholder: \"Введите основное содержание статьи...\" "+
                         "}); " +
                     "}); " +
                   "}";
         @Html.RequireLocalScript(str)
     }
-    @Html.RequireScript("/Scripts/Editor.md/languages/en.js")
+    @Html.RequireScript("/Scripts/Editor.md/languages/ru-ru.js")
 }
