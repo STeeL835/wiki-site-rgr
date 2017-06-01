@@ -73,14 +73,14 @@ namespace WikiSite.PL.ASP.Controllers
         }
 
         [HttpPost][Authorize]
-        public ActionResult Update(ArticleVM version)
+        public ActionResult Update(ArticleVM version, bool isApproved = true)
         {
             version.Id = (Guid)TempData.Peek("Id");
             version.AuthorId = (Guid)TempData.Peek("AuthorId");
             version.EditionAuthorId = Guid.Parse(User.Identity.Name);
             version.CreationDate = (DateTime)TempData.Peek("CreationDate");
             version.LastEditDate = DateTime.Now;
-            version.IsApproved = false;
+            version.IsApproved = isApproved;
             if (ArticleVM.UpdateArticle(version))
             {
                 this.AlertNextAction($"Статья \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\" успешно изменена.", AlertType.Success);
