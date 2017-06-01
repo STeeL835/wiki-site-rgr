@@ -14,6 +14,10 @@ namespace WikiSite.PL.ASP
                 cfg.CreateMap<ArticleVM, ArticleBDO>();
 	            cfg.CreateMap<CommentVM, ArticleCommentDTO>();
 	            cfg.CreateMap<ArticleCommentDTO, CommentVM>();
+	            cfg.CreateMap<AVersionVoteVM, VersionVoteDTO>()
+		           .ForMember(dto => dto.IsVoteFor, config => config.MapFrom(vm => vm.IsLike));
+	            cfg.CreateMap<VersionVoteDTO, AVersionVoteVM>()
+		           .ForMember(vm => vm.IsLike, config => config.MapFrom(dto => dto.IsVoteFor));
             });
         }
     }

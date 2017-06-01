@@ -104,9 +104,9 @@ namespace WikiSite.BLL.Default
 			if (@for + against < 3) return;
 
 			if (@for >= against && !isApproved) // if it's not approved but needs to
-				ChangeApproval(true);
+				ChangeApproval(articleVersionId, true);
 			else if (against > @for && isApproved) // if it's approved but doesn't deserve it
-				ChangeApproval(false);
+				ChangeApproval(articleVersionId, false);
 		}
 
 		private bool GetIsApproval(Guid articleVersionId)
@@ -115,9 +115,9 @@ namespace WikiSite.BLL.Default
 			return version.IsApproved;
 		}
 
-		private void ChangeApproval(bool toApprove)
+		private void ChangeApproval(Guid versionId, bool toApprove)
 		{
-			throw new NotImplementedException(); // TODO: [Articles] Implement when approval method will be implemented
+			_articlesDal.ApproveVersion(versionId, toApprove);
 		}
 
 		private void CheckThrowDTO(VersionVoteDTO dto)
