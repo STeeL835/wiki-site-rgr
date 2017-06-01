@@ -128,11 +128,11 @@
 				var version = lastEdit = item.ArticleVersion;
 				editNumber++;
 				var editMessage = editNumber == 1 ? "Изначальная версия" : "Версия " + editNumber;
-				<a href="@Url.Action("Show", "Article", new {url = Article.ShortUrl, number = editNumber})" class="newversion">
-					<span class="newversion-user">@UserVM.GetUser(version.EditionAuthorId).Nickname</span>
-					<span>@editMessage</span>
-					<span class="newversion-date">@version.LastEditDate.ToString("dd.MM.yy hh:mm")</span>
-				</a>
+				<div class="comments-notification comments-notification-primary">
+					<a href="@Url.Action("Show", "Article", new {url = Article.ShortUrl, number = editNumber})" class="comments-notification-title">@editMessage</a>
+					<a href="@Url.Action("Details", "User", new { id = UserVM.GetUser(version.EditionAuthorId).ShortId })" class="comments-notification-left">@UserVM.GetUser(version.EditionAuthorId).Nickname</a>
+					<span class="comments-notification-right">@version.LastEditDate.ToString("dd.MM.yy hh:mm")</span>
+				</div>
 			}
 		}
 	</div>

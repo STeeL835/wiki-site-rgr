@@ -267,50 +267,67 @@ body {
 	font-size: 70px;
 }
 
-.newversion {
+.comments-notification {
 	display: block;
-	background-color: #127ba3;
-	border-bottom: 3px solid #0f678a;
+	height: 20px;
+	box-sizing: content-box;
 	margin-top: -2px;
-	color:white;
+	border-bottom: 3px solid #aaa;
+	color: white;
 	position: relative;
 	font-weight: bold;
-	text-align: center;
-	padding: 3px 0px;
 	text-align: left;
+	padding: 3px 0px;
 }
-.newversion:hover{
+.comments-notification-primary {
+	background-color: #127ba3;
+	border-bottom-color: #0f678a;
+}
+.comments-notification:hover{
 	color: white;
 	text-decoration: none;
 	border-bottom-width: 2px;
 	margin-top: -1px;
 
 }
-.newversion:active{
+.comments-notification:active{
 	border-bottom-width: 1px;
 	margin-top: 0px;
 }
-.newversion span {
-	margin-left: 7px;
-}
-.newversion span:hover {
-	text-decoration: underline;
-}
-.newversion span:active {
+.comments-notification span:active {
 	color: rgba(255, 255, 255, 0.8);
 }
-.newversion-date,
-.newversion-user {
+.comments-notification-title {
+	padding-left: 7px;
+	padding-top: 2px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	color: inherit;
+}
+.comments-notification-title:hover {
+	color: inherit;
+}
+.comments-notification-right,
+.comments-notification-left {
 	position: absolute;
 	text-align: center;
 	color: rgba(255, 255, 255, 0.4);
 	font-weight: normal;
 	font-size: 12px;
 }
-.newversion-date {
+
+.comments-notification-right:hover,
+.comments-notification-left:hover {
+	color: rgba(255, 255, 255, 0.4);
+}
+.comments-notification-right {
 	right: 7px;
 }
-.newversion-user {
+.comments-notification-left {
 	left: 7px;
 	display: none;
 }
@@ -334,7 +351,8 @@ body {
 }
 .comment-author img {
 	padding-right: 5px;
-		border-right: 1px solid silver;
+	border-right: 1px solid silver;
+	height: 70px;
 }
 .comment p {
 	margin-bottom: 0;
@@ -347,7 +365,7 @@ body {
 	font-size: 12px;
 	position: absolute;
 	right: 15px;
-	bottom: 5px;
+	bottom: 0px;
 }
 .comment-actions {
 	position: absolute;
@@ -473,14 +491,17 @@ body {
 		padding-top: 100px;
 	}
 	
-	.newversion {
+	.comments-notification {
 		text-align: center;
 	}
-	.newversion-date,
-	.newversion-user {
+	.comments-notification-title {
+		z-index: 0;
+	}
+	.comments-notification-right,
+	.comments-notification-left {
 		font-size: 15px;
 	}
-	.newversion-user {
+	.comments-notification-left {
 		display: inline;
 	}
 	.comment-author {
@@ -491,6 +512,7 @@ body {
 	.comment-author img {
 		padding: 0;
 		border: none;
+		height: 80px;
 	}
 	.comment-author h4 {
 		text-align: right
