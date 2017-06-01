@@ -740,6 +740,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity Models\ArticleVM.cs" />
+    <Compile Include="Models\Entity Models\AVersionVoteVM.cs" />
     <Compile Include="Models\Entity Models\CommentVM.cs" />
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />

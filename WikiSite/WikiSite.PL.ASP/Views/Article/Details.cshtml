@@ -1,50 +1,77 @@
-﻿@using System.Globalization
-@using WikiSite.PL.ASP.Models
+﻿@using WikiSite.PL.ASP.Models
 @model IEnumerable<WikiSite.PL.ASP.Models.ArticleVM>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+	var article = Model.ToArray()[0];
+	var versionNumber = 0;
+	var currentUserId = Guid.Parse(User.Identity.Name);
 }
 
 @section actions
 {
-    <li><a href="@Url.Action("Show", new { url = Model.ToArray()[0].ShortUrl, number = 0 })">К последней версии</a></li>
+    <li><a href="@Url.Action("Show", new { url = article.ShortUrl, number = 0 })">К последней опубликованной</a></li>
+    <li><a href="@Url.Action("Index", "Comments", new { article = article.ShortUrl, number = 0 })">К обсуждению</a></li>
 }
 
 <h1 class="page-header">
-    <a href="@Url.Action("Show", new { url = Model.ToArray()[0].ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
-    @ViewBag.Title
+    <a href="@Url.Action("Show", new { url = article.ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
+	Обсуждение статьи <span class="text-primary">@article.Heading</span>
 </h1>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Номер</th>
-        <th>Дата создания</th>
-        <th class="hidden-xs">Автор</th>
-        <th>Подтверждена</th>
-    </tr>
-    </thead>
-    <tbody>
-    @{
-        var i = 1;
-        foreach (var version in Model)
-        {
-            <tr>
-                <td>@i</td>
-                <td class="table-max-width-200">
-                    <a href="@Url.Action("Show", "Article", new {url = version.ShortUrl, number = i})" class="btn btn-link btn-xs">@version.LastEditDate.ToString(CultureInfo.CurrentCulture)</a>
-                </td>
-                <td class="table-max-width-100 hidden-xs">
-                    <a href="@Url.Action("Details", "User", new {id = UserVM.GetUser(version.EditionAuthorId).ShortId})" class="btn btn-link btn-xs">
-                        @UserVM.GetUser(version.EditionAuthorId).Nickname
-                    </a>
-                </td>
-                <td>@version.IsApproved</td>
-            </tr>
-            i++;
-        }
-    }
-    </tbody>
-</table>
+<ul class="a-versions">
+	@foreach (var version in Model)
+	{
+		versionNumber++;
+		var likes = AVersionVoteVM.CountVotesFor(version.VersionId);
+		var dislikes = AVersionVoteVM.CountVotesAgainst(version.VersionId);
+		var likesRatio = likes / (likes + dislikes);
+		var dislikesRatio = dislikes / (likes + dislikes);
+		var userVote = AVersionVoteVM.GetVote(currentUserId, version.VersionId);
+		var curUserVoteForClass = userVote != null && userVote.IsLike ? "voted" : "";
+		var curUserVoteAgainstClass = userVote != null && !userVote.IsLike ? "voted" : "";
+		var curUseBtnForClass = curUserVoteForClass != "" ? "active" : "";
+		var curUseBtnAgainstClass = curUserVoteAgainstClass != "" ? "active" : "";
+		var verdictFaClass = version.IsApproved ? "fa-check-circle-o for" : "fa-times-circle-o against";
 
+		<li>
+			<a href="@Url.Action("Show", new { url = article.ShortUrl, number = versionNumber })"></a>
+			<ul class="a-version-info">
+				<li>
+					<label>Правка</label>
+					<h2>@versionNumber</h2>
+				</li>
+				<li class="grow">
+					<label>Автор правки</label>
+					<h2>@UserVM.GetUser(version.EditionAuthorId).Nickname</h2>
+				</li>
+				<li class="hidden-xs">
+					<label>Дата правки</label>
+					<h2>@version.LastEditDate.ToString("dd.MM.yy hh:mm")</h2>
+				</li>
+				<li class="a-version-votes">
+					<label>Голоса</label>
+					<h2>
+						<span class="metrics">
+							<span class="for @curUserVoteForClass">@likes</span>/<span class="against @curUserVoteAgainstClass">@dislikes</span>
+						</span>
+						<span class="buttons">
+							<a href="#!" class="btn btn-xs btn-success @curUseBtnForClass"><i class="fa fa-thumbs-up"></i></a>/
+							<a href="#!" class="btn btn-xs btn-danger @curUseBtnAgainstClass"><i class="fa fa-thumbs-down"></i></a>
+						</span>
+					</h2>
+				</li>
+				<li>
+					<label>Вердикт</label>
+					<h2 class="a-version-votes">
+						<i class="fa @verdictFaClass"></i>
+					</h2>
+				</li>
+			</ul>
+			<div class="progress">
+				<div class="progress-bar progress-bar-success" style="width: @likesRatio%"></div>
+				<div class="progress-bar progress-bar-danger" style="width: @dislikesRatio%"></div>
+			</div>
+		</li>
+	}
+</ul>

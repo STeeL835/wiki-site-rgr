@@ -319,7 +319,6 @@ body {
 	font-weight: normal;
 	font-size: 12px;
 }
-
 .comments-notification-right:hover,
 .comments-notification-left:hover {
 	color: rgba(255, 255, 255, 0.4);
@@ -407,6 +406,106 @@ body {
 	right: 0;
 	z-index: 15;
 	border-radius: 0;
+}
+
+ul.a-versions {
+	padding: 0;
+	border: 1px solid #ddd;
+}
+ul.a-versions,
+ul.a-version-info{
+	padding: 0;
+	list-style: none;
+}
+ul.a-version-info{
+	display: flex;
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-bottom: 3px
+}
+ul.a-version-info > * {
+	margin: 0 3px;
+}
+ul.a-versions > li {
+	position: relative;
+	mar
+}
+ul.a-versions > li > a {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+ul.a-versions > li:hover {
+	text-decoration: none;
+	background: #eee;
+}
+ul.a-version-info > *.grow{
+	flex-grow: 1;
+	min-width: 20px;
+	overflow: hidden;
+}
+.a-version-info label {
+	display: block;
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+}
+.a-version-info h2,
+.a-version-info h2 a{
+	margin: 0;
+	padding: 0 0 0 2px;
+	font-size: 25px;
+	color:#555;
+	font-weight: bold;
+}
+.a-version-votes {
+	position: relative;
+	z-index: 1;
+}
+.a-version-votes .buttons {
+	display: none;
+}
+.a-version-votes .buttons a {
+	font-size: 12px;
+	margin: 0;
+	padding-right: 5px;
+	padding-left: 5px;
+	color: white;
+}
+.a-version-votes:hover .metrics{
+	display: none;
+}
+.a-version-votes:hover .buttons{
+	display: block;
+	margin-top: -1px;
+}
+.a-version-votes .voted{
+	padding: 0px 2px;
+	border-radius: 5px;
+}
+.a-version-votes .for{
+	color: forestgreen;
+}
+.a-version-votes .for.voted{
+	background-color: forestgreen;
+	color: white;
+}
+.a-version-votes .against{
+	color: indianred;
+}
+.a-version-votes .against.voted{
+	background-color: indianred;
+	color: white;
+}
+.a-versions .progress {
+	border-radius: 0;
+	border-width: 0;
+	height: 4px;
+	margin: 0;
 }
 
 @media (max-width: 767px){
