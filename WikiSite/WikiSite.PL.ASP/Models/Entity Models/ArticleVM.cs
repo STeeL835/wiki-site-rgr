@@ -113,7 +113,10 @@ namespace WikiSite.PL.ASP.Models
             }
         }
 
-        public string ShortUrl { get; private set; }
+        public string ShortUrl {
+            get { return HttpUtility.UrlDecode(_shortUrl); }
+            set { _shortUrl = value; }
+        }
 
         public DateTime CreationDate
         {
@@ -186,6 +189,7 @@ namespace WikiSite.PL.ASP.Models
         #region Static
 
         private static IArticlesBLL _bll;
+        private string _shortUrl;
 
         static ArticleVM()
         {

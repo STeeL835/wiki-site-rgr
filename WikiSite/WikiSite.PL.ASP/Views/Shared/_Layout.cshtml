@@ -1,4 +1,5 @@
-﻿@using WikiSite.PL.ASP.Classes
+﻿@using System.Text
+@using WikiSite.PL.ASP.Classes
 @using WikiSite.PL.ASP.Models
 <!DOCTYPE html>
 <html>
@@ -71,8 +72,18 @@
 		
 		<!-- Log in panel -->
 		@if (!Request.IsAuthenticated)
-		{
-			<form class="login-form animated" method="post" action="/Auth/Login?ReturnUrl=@HttpContext.Current.Request.RawUrl">
+        {
+            <!--Its can be the greates crutch-->
+            var currentUrl = HttpContext.Current.Request.RawUrl;
+            //var criticalUrl = new StringBuilder(Url.Action("Show", "Article", new {url = "0"})).Replace("0", "").ToString();
+            //if (currentUrl.ToString().Contains(criticalUrl))
+            //{
+            //    var healthyUrl = new StringBuilder(Url.Action("ShowByGuid", "Article", new {articleId = "0"})).Replace("0", "").ToString();
+            //    var shortUrlOfArticle = new StringBuilder(currentUrl.ToString());
+            //    shortUrlOfArticle.Replace(criticalUrl, "");
+            //    currentUrl = new StringBuilder(healthyUrl).Append(ArticleVM.GetArticle(shortUrlOfArticle.ToString()).Id).ToString();
+            //}
+            <form class="login-form animated" method="post" action="/Auth/Login?ReturnUrl=@currentUrl">
 				@Html.AntiForgeryToken()
 				<div class="form-group stretch">
 					<label for="login-login">Логин или e-mail</label>
@@ -89,7 +100,7 @@
 						@Html.CheckBox("DontRememberMe")
 						<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
 					</label>
-					@Html.ActionLink("Регистрация", "Register", "Auth", new {ReturnUrl = HttpContext.Current.Request.RawUrl}, new {@class = "btn btn-link"})
+					@Html.ActionLink("Регистрация", "Register", "Auth", new {ReturnUrl = currentUrl}, new {@class = "btn btn-link"})
 					<input type="submit" class="btn btn-success" value="Войти">
 				</div>
 			</form>
