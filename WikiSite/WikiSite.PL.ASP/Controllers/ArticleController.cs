@@ -16,9 +16,9 @@ namespace WikiSite.PL.ASP.Controllers
             return View();
         }
         
-        public ActionResult ShowByGuid(Guid articleId, int number = 0)
+        public ActionResult ShowByGuid(Guid guid, int number = 0)
         {
-            return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl, number = number });
+            return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(guid).ShortUrl, number = number });
         }
         
         public ActionResult Show(string url, int number = 0)
@@ -54,7 +54,7 @@ namespace WikiSite.PL.ASP.Controllers
             {
                 this.AlertNextAction($"Произошла ошибка при добавлении статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
-            return RedirectToAction("Show", "Articles", new { url = ArticleVM.GetArticle(article.Id).ShortUrl });
+            return RedirectToAction("ShowByGuid", "Article", new { guid = article.Id });
         }
 
         [HttpGet][Authorize]
@@ -90,18 +90,18 @@ namespace WikiSite.PL.ASP.Controllers
                 this.AlertNextAction(
                     $"Произошла ошибка при изменении статьи \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
-            return RedirectToAction("Show", "Articles", new { url = ArticleVM.GetArticle(version.Id).ShortUrl});
+            return RedirectToAction("ShowByGuid", "Article", new { guid = version.Id });
         }
 
         [HttpGet][Authorize]
-        public ActionResult UpdateByGuid(Guid articleId)
+        public ActionResult UpdateByGuid(Guid guid)
         {
-            return RedirectToAction("Update", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });
+            return RedirectToAction("Update", "Article", new { url = ArticleVM.GetArticle(guid).ShortUrl });
         }
 
-        public ActionResult DetailsByGuid(Guid articleId)
+        public ActionResult DetailsByGuid(Guid guid)
         {
-            return RedirectToAction("Details", "Article", new { url = ArticleVM.GetArticle(articleId).ShortUrl });
+            return RedirectToAction("Details", "Article", new { url = ArticleVM.GetArticle(guid).ShortUrl });
         }
 
         public ActionResult Details(string url)
