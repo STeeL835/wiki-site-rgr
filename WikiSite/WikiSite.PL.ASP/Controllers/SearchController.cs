@@ -22,9 +22,9 @@ namespace WikiSite.PL.ASP.Controllers
 			var users = UserVM.SearchUsers(query).ToArray();
 		        ViewBag.Users = users;
 
-		        // Articles
-		        var articles = new ArticleVM[0]; // TODO: [Articles][Search] Implement when done
-		        ViewBag.Articles = articles;
+		    // Articles
+		    var articles = ArticleVM.SearchArticles(query).ToArray(); // TODO: [Articles][Search] Implement when done
+		    ViewBag.Articles = articles;
 
 			return View();
         }

@@ -396,5 +396,47 @@ namespace WikiSite.BLL.Default
             versionDTO.Id = articleBDO.VersionId == default(Guid) ? Guid.NewGuid() : articleBDO.VersionId;
             return versionDTO;
         }
+
+	    /// <summary>
+	    /// Performs search in all latest versions' headers, then texts 
+	    /// and returns versions that apply the query
+	    /// </summary>
+	    /// <param name="query">text to search in article text</param>
+	    /// <returns>ArticleVersions DTOs</returns>
+	    public IEnumerable<ArticleBDO> SearchArticles(string query)
+	    {
+			if (string.IsNullOrWhiteSpace(query) || query.Length < 3)
+				throw new ArgumentNullException(nameof(query), "Search query should be more than 2 character long");
+
+			/* Wildcards support */
+			query = query.Replace("[", "[[]").Replace("%", "[%]").Replace("‌​_", "[_]"); // escaping sql wildcards
+			query = query.Replace("?", "_").Replace("*", "%"); //converting
+
+			var found = new List<ArticleBDO>();
+
+			/* Headers */
+			found.AddRange(_articleVersionsDAL.SearchInHeadings(query).Select(CreateArticleBDO));
+
+			/* Definitions */
+			found.AddRange(_articleVersionsDAL.SearchInDefinitions(query).Select(CreateArticleBDO));
+
+			/* Text */
+			found.AddRange(_articleVersionsDAL.SearchInText(query).Select(CreateArticleBDO));
+
+			/* GUID */
+			var id = Guid.Empty;
+			if (Guid.TryParse(query, out id))
+			{
+				// Article Id
+				try { found.Add(GetArticle(id)); }
+				catch (EntryNotFoundException) { } // but throws other exceptions
+
+				// Version Id
+				try { found.Add(GetVersionOfArticle(id)); }
+				catch (EntryNotFoundException) { } // but throws other exceptions
+			}
+
+			return found.Distinct(); // remove duplicates
+		}
     }
 }

@@ -731,6 +731,7 @@
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
     <Compile Include="Classes\ImageExtentions.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\AVersionsVotesController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -742,6 +743,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entity Models\ArticleVM.cs" />
+    <Compile Include="Models\Entity Models\AVersionVoteVM.cs" />
     <Compile Include="Models\Entity Models\CommentVM.cs" />
     <Compile Include="Models\Entity Models\ImageVM.cs" />
     <Compile Include="Models\Entity Models\RoleVM.cs" />
@@ -792,6 +794,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Search\" />
+    <Folder Include="Views\AVersionsVotes\" />
     <Folder Include="Views\Error\" />
     <Folder Include="Views\Image\" />
   </ItemGroup>

@@ -58,7 +58,7 @@
 
 @section actions {
 	<li>@Html.ActionLink("К статье", "Show", "Article", new { url = Article.ShortUrl }, null)</li>
-	<li>@Html.ActionLink("Все правки статьи", "Show", "Article", new { url = Article.ShortUrl }, null)</li>
+	<li>@Html.ActionLink("Все правки статьи", "Details", "Article", new { url = Article.ShortUrl }, null)</li>
 }
 
 <h1 class="page-header">
@@ -114,7 +114,7 @@
 										<span class="label label-primary">Автор статьи</span>
 									}
 								</div>
-								<em class="comment-date">@comment.DateOfCreation</em>
+								<em class="comment-date">@comment.DateOfCreation.ToString("dd.MM.yy HH:mm")</em>
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-9 col-lg-10">
@@ -128,11 +128,11 @@
 				var version = lastEdit = item.ArticleVersion;
 				editNumber++;
 				var editMessage = editNumber == 1 ? "Изначальная версия" : "Версия " + editNumber;
-				<a href="@Url.Action("Show", "Article", new {url = Article.ShortUrl, number = editNumber})" class="newversion">
-					<span class="newversion-user">@UserVM.GetUser(version.EditionAuthorId).Nickname</span>
-					<span>@editMessage</span>
-					<span class="newversion-date">@version.LastEditDate.ToString("dd.MM.yy hh:mm")</span>
-				</a>
+				<div class="comments-notification comments-notification-primary">
+					<a href="@Url.Action("Show", "Article", new {url = Article.ShortUrl, number = editNumber})" class="comments-notification-title">@editMessage</a>
+					<a href="@Url.Action("Details", "User", new { id = UserVM.GetUser(version.EditionAuthorId).ShortId })" class="comments-notification-left">@UserVM.GetUser(version.EditionAuthorId).Nickname</a>
+					<span class="comments-notification-right">@version.LastEditDate.ToString("dd.MM.yy HH:mm")</span>
+				</div>
 			}
 		}
 	</div>

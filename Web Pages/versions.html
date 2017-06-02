@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>My Name Jeff</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<!-- Other styles -->
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/bootstrap-overrides.css">
+	
+	<!-- Scripts -->	
+	<script src="https://use.fontawesome.com/d8dda53238.js"></script>
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div class="wrapper">
+		
+		<!-- Admin panel -->
+		<section class="topbar topbar-default">
+		
+			<a href="#!" class="sidebar-control btn btn-sm btn-inverse">
+				<span class="sr-only">Open sidebar</span>
+				<i class="fa fa-bars"></i>
+			</a>
+			
+			<a href="#!" id="login-control" class="btn btn-sm btn-success pull-right ">
+				<span class="sr-only">Войти</span>
+				<i class="fa fa-user"></i>
+			</a>
+			
+		</section>
+		
+		<!-- Log in panel -->
+		<form class="login-form animated" action="">
+			<div class="form-group stretch">
+				<label for="login-login">Логин</label>
+				<input class="form-control" id="login-login" name="login" placeholder="Логин" type="text">
+			</div>
+				
+			<div class="form-group stretch has-error">
+				<label for="login-pass">Пароль</label>
+				<input class="form-control" id="login-pass" name="password" placeholder="Пароль" type="password">
+			</div>
+				
+			<div class="form-group">
+				<input type="submit" class="btn btn-success pull-right" value="Войти">
+				<a href="#!" class="btn btn-link pull-right">Регистрация</a>
+			</div>
+		</form>
+		
+		<!-- Sidebar menu -->
+		<section class="sidebar animated sidebar-default">
+			<i class="sidebar-image" alt=""></i>
+			<ul>
+				<li class="logo"><a href="#!"><span class="sr-only">My name Jeff</span></a></li>
+				<li><input class="form-control" type="search" placeholder="Искать статью..."></li>
+				<li class="divider"></li>
+				<li><a href="#!">На главную страницу</a></li>
+				<li><a href="#!">Случайная статья</a></li>
+				<li class="divider"></li>
+				<li><a href="#!">Создать статью</a></li>
+				<li><a href="#!">Редактировать статью</a></li>
+				<li><a href="#!">Версии этой статьи</a></li>
+				<li><a href="#!">Перейти к обсуждению</a></li>
+			</ul>
+		</section>
+		
+		<!-- Content of a page -->
+		<section class="content animated">
+			<div class="container-fluid">
+				
+				<h1 class="page-header">
+					<a href="#!" title="К статье" data-toggle="tooltip" data-placement="left" class="btn btn-link page-back-button"><i class="fa fa-angle-left"></i></a>
+					Версии статьи <span class="text-primary">Блэд Нэвэльны</span>
+				</h1>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<ul class="a-versions">
+							<li>
+								<a href="#!"></a>
+								<ul class="a-version-info">
+									<li>
+										<label>Правка</label>
+											<h2>1</h2>
+									</li>
+									<li class="grow">
+										<label>Автор правки</label>
+										<h2>Чечбахтыр</h2>
+									</li>
+									<li class="hidden-xs">
+										<label>Дата правки</label>
+										<h2>14.05.2017 13:37</h2>
+									</li>
+									<li class="a-version-votes">
+										<label>Голоса</label>
+											<h2>
+												<span class="metrics">
+													<span class="for voted">30</span>/<span class="against">70</span>
+												</span>
+												<span class="buttons">
+													<a href="" class="btn btn-xs btn-success active"><i class="fa fa-thumbs-up"></i></a>/
+													<a href="" class="btn btn-xs btn-danger"><i class="fa fa-thumbs-down"></i></a>
+												</span>
+											</h2>
+									</li>
+									<li>
+										<label>Вердикт</label>
+											<h2 class="a-version-votes"><i class="fa fa-times-circle-o against"></i></h2>
+									</li>
+								</ul>
+								<div class="progress">
+								  <div class="progress-bar progress-bar-success" style="width: 30%"></div>
+								  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+								</div>
+							</li>
+							<li>
+								<a href="#!"></a>
+								<ul class="a-version-info">
+									<li>
+										<label>Правка</label>
+											<h2>2</h2>
+									</li>
+									<li class="grow">
+										<label>Автор правки</label>
+										<h2>STeeL835</h2>
+									</li>
+									<li class="hidden-xs">
+										<label>Дата правки</label>
+										<h2>14.05.2017 13:37</h2>
+									</li>
+									<li class="a-version-votes">
+										<label>Голоса</label>
+											<h2>
+												<span class="metrics">
+													<span class="for voted">65</span>/<span class="against">35</span>
+												</span>
+												<span class="buttons">
+													<a href="" class="btn btn-xs btn-success active"><i class="fa fa-thumbs-up"></i></a>/
+													<a href="" class="btn btn-xs btn-danger"><i class="fa fa-thumbs-down"></i></a>
+												</span>
+											</h2>
+									</li>
+									<li>
+										<label>Вердикт</label>
+											<h2 class="a-version-votes"><i class="fa fa-check-circle-o for"></i></h2>
+									</li>
+								</ul>
+								<div class="progress">
+								  <div class="progress-bar progress-bar-success" style="width: 65%"></div>
+								  <div class="progress-bar progress-bar-danger" style="width: 35%"></div>
+								</div>
+							</li>
+							<li>
+								<a href="#!"></a>
+								<ul class="a-version-info">
+									<li>
+										<label>Правка</label>
+											<h2>1</h2>
+									</li>
+									<li class="grow">
+										<label>Автор правки</label>
+										<h2>Чечбахтыр</h2>
+									</li>
+									<li class="hidden-xs">
+										<label>Дата правки</label>
+										<h2>14.05.2017 13:37</h2>
+									</li>
+									<li class="a-version-votes">
+										<label>Голоса</label>
+											<h2>
+												<span class="metrics">
+													<span class="for voted">30</span>/<span class="against">70</span>
+												</span>
+												<span class="buttons">
+													<a href="" class="btn btn-xs btn-success active"><i class="fa fa-thumbs-up"></i></a>/
+													<a href="" class="btn btn-xs btn-danger"><i class="fa fa-thumbs-down"></i></a>
+												</span>
+											</h2>
+									</li>
+									<li>
+										<label>Вердикт</label>
+											<h2 class="a-version-votes"><i class="fa fa-times against"></i></h2>
+									</li>
+								</ul>
+								<div class="progress">
+								  <div class="progress-bar progress-bar-success" style="width: 30%"></div>
+								  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</section>
+		
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/jquery.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>

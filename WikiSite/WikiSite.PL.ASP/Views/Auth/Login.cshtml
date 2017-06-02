@@ -25,7 +25,7 @@
 	<div class="form-group">
 		<input type="submit" value="Войти" class="btn btn-success pull-right">
 		@Html.ActionLink("Регистрация", "Register", null, new { @class = "btn btn-link pull-right" })
-		<label class="btn btn-checkbox btn-trans pull-right">
+		<label class="btn btn-checkbox btn-trans pull-right" data-toggle="tooltip" data-placement="top" title="Не запоминать меня">
 			@Html.CheckBoxFor(model => model.DontRememberMe)
 			<span><i class="fa fa-user-secret" aria-hidden="true"></i></span>
 		</label>

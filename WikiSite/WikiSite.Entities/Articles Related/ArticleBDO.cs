@@ -22,5 +22,36 @@ namespace WikiSite.Entities
         public string Definition { get; set; }
         public string Text { get; set; }
         public Guid ImageId { get; set; }
+
+	    /// <summary>Determines whether the specified object is equal to the current object.</summary>
+	    /// <returns>true if the specified object  is equal to the current object; otherwise, false.</returns>
+	    /// <param name="obj">The object to compare with the current object. </param>
+	    public override bool Equals(object obj)
+	    {
+		    var bdo = obj as ArticleBDO;
+			if (bdo == null) return false;
+		    return Equals(bdo);
+	    }
+
+	    protected bool Equals(ArticleBDO other)
+	    {
+		    return Id.Equals(other.Id) && AuthorId.Equals(other.AuthorId) && VersionId.Equals(other.VersionId) && EditionAuthorId.Equals(other.EditionAuthorId) && ContentId.Equals(other.ContentId) && ImageId.Equals(other.ImageId);
+	    }
+
+	    /// <summary>Serves as the default hash function. </summary>
+	    /// <returns>A hash code for the current object.</returns>
+	    public override int GetHashCode()
+	    {
+		    unchecked
+		    {
+			    var hashCode = Id.GetHashCode();
+			    hashCode = (hashCode * 397) ^ AuthorId.GetHashCode();
+			    hashCode = (hashCode * 397) ^ VersionId.GetHashCode();
+			    hashCode = (hashCode * 397) ^ EditionAuthorId.GetHashCode();
+			    hashCode = (hashCode * 397) ^ ContentId.GetHashCode();
+			    hashCode = (hashCode * 397) ^ ImageId.GetHashCode();
+			    return hashCode;
+		    }
+	    }
     }
 }

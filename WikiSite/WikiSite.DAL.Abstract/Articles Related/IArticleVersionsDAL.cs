@@ -107,5 +107,26 @@ namespace WikiSite.DAL.Abstract
         /// <param name="articleId">GUID of article to get</param>
         /// <param name="date">DateTime of version of article to get</param>
         int GetNumberOfVersion(Guid articleId, DateTime date);
-    }
+
+		/// <summary>
+		/// Performs search in all latest versions' headings and returns versions that apply the query
+		/// </summary>
+		/// <param name="query">text to search in headings</param>
+		/// <returns>ArticleVersions DTOs</returns>
+	    IEnumerable<ArticleVersionDTO> SearchInHeadings(string query);
+		
+		/// <summary>
+		/// Performs search in all latest versions' definitions and returns versions that apply the query
+		/// </summary>
+		/// <param name="query">text to search in definitions</param>
+		/// <returns>ArticleVersions DTOs</returns>
+	    IEnumerable<ArticleVersionDTO> SearchInDefinitions(string query);
+
+		/// <summary>
+		/// Performs search in all latest versions' texts and returns versions that apply the query
+		/// </summary>
+		/// <param name="query">text to search in article text</param>
+		/// <returns>ArticleVersions DTOs</returns>
+		IEnumerable<ArticleVersionDTO> SearchInText(string query);
+	}
 }
