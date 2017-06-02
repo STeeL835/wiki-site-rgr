@@ -46,7 +46,6 @@
     <Compile Include="Articles Related\ArticleContentDTO.cs" />
     <Compile Include="Articles Related\ArticleDTO.cs" />
     <Compile Include="Articles Related\ArticleVersionDTO.cs" />
-    <Compile Include="Articles Related\ArticleNBDO.cs" />
     <Compile Include="ImageDTO.cs" />
     <Compile Include="Users Related\RoleDTO.cs" />
     <Compile Include="Users Related\UserCredentialsDTO.cs" />

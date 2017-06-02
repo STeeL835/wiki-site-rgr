@@ -10,12 +10,12 @@
 
 @section actions
 {
-    <li><a href="@Url.Action("Show", new { url = article.ShortUrl, number = 0 })">К последней опубликованной</a></li>
+    <li><a href="@Url.Action("Show", new { url = article.ShortUrl })">К последней общедоступной версии</a></li>
     <li><a href="@Url.Action("Index", "Comments", new { article = article.ShortUrl})">К обсуждению</a></li>
 }
 
 <h1 class="page-header">
-    <a href="@Url.Action("Show", new { url = article.ShortUrl, number = 0 })" title="К последней версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
+    <a href="@Url.Action("Show", new { url = article.ShortUrl})" title="К последней общедоступной версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
 	Все правки статьи <span class="text-primary">@article.Heading</span>
 </h1>
 

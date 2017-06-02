@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Generator;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -13,39 +14,50 @@ namespace WikiSite.PL.ASP.Controllers
 {
     public class ImageController : Controller
     {
-        public static Guid AddImage(HttpPostedFileBase file)
+        public static Guid Add(HttpPostedFileBase file)
         {
-            if (file != null)
+            if (file == null) return ImageVM.DefaultImageGuid;
+            var tempData = new byte[file.ContentLength];
+            using (BinaryReader reader = new BinaryReader(file.InputStream))
             {
-                var tempData = new byte[file.ContentLength];
-                using (BinaryReader reader = new BinaryReader(file.InputStream))
+                for (int i = 0; i < tempData.Length; i++)
                 {
-                    for (int i = 0; i < tempData.Length; i++)
-                    {
-                        tempData[i] = reader.ReadByte();
-                    }
+                    tempData[i] = reader.ReadByte();
                 }
-                var image = new ImageVM(tempData, file.ContentType);
-                ImageVM.AddImage(image);
-                return image.Id;
             }
-            return ImageVM.DefaultImageGuid;
+            var image = new ImageVM(tempData, file.ContentType);
+            ImageVM.AddImage(image);
+            return image.Id;
         }
 
-        public ActionResult GetResizedImage(string url, int width, int height)
+        public ActionResult Get(Guid id)
         {
-            ImageVM imageSrc;
-            if (url != null)
-            {
-                imageSrc = ImageVM.GetImage(ArticleVM.GetArticle(url).ImageId);
-            }
+            var image = id == default(Guid) ? ImageVM.GetDefaultImage() : ImageVM.GetImage(id);
+            return File(image.Data, image.Type);
+        }
+
+        public ActionResult GetByUrl(string url, int number = 0)
+        {
+            if(url != null)
+                if (number != 0)
+                {
+                    return Get(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number).ImageId);
+                }
+                else
+                {
+                    return Get(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id).ImageId);
+                }
             else
             {
-                imageSrc = ImageVM.GetDefaultImage();
+                return Get(ImageVM.DefaultImageGuid);
             }
-            
+        }
+
+        public ActionResult GetResized(int width, int height, Guid id)
+        {
+            var imageVM = id == default(Guid) ? ImageVM.GetDefaultImage() : ImageVM.GetImage(id);
             Image image;
-            using (var ms = new MemoryStream(imageSrc.Data))
+            using (var ms = new MemoryStream(imageVM.Data))
             {
                 image = new Bitmap(ms);
             }
@@ -55,6 +67,23 @@ namespace WikiSite.PL.ASP.Controllers
             {
                 resizedImage.Save(streak, ImageFormat.Png);
                 return File(streak.ToArray(), "image/png");
+            }
+        }
+
+        public ActionResult GetResizedByUrl(int width, int height, string url, int number = 0)
+        {
+            if (url != null)
+                if (number != 0)
+                {
+                    return GetResized(width, height, ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number).ImageId);
+                }
+                else
+                {
+                    return GetResized(width, height, ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id).ImageId);
+                }
+            else
+            {
+                return GetResized(width, height, ImageVM.DefaultImageGuid);
             }
         }
     }

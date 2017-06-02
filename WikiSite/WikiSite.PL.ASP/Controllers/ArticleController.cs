@@ -12,10 +12,6 @@ namespace WikiSite.PL.ASP.Controllers
     public class ArticleController : Controller
     {
         // GET: Article
-        public ActionResult Index()
-        {
-            return View();
-        }
         
         public ActionResult ShowByGuid(Guid guid, int number = 0)
         {
@@ -25,9 +21,10 @@ namespace WikiSite.PL.ASP.Controllers
         public ActionResult Show(string url, int number = 0)
         {
             ViewBag.ShortUrl = url;
+            ViewBag.Number = number;
             if (number == 0)
             {
-                return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(url).Id));
+                return View(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id));
             }
             return View(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number));
         }
@@ -41,7 +38,7 @@ namespace WikiSite.PL.ASP.Controllers
         [HttpPost][Authorize]
         public ActionResult Create(HttpPostedFileBase file, ArticleVM article)
         {
-            article.ImageId = ImageController.AddImage(file);
+            article.ImageId = ImageController.Add(file);
             article.Id = Guid.NewGuid();
             article.AuthorId = Guid.Parse(User.Identity.Name);
             article.EditionAuthorId = article.AuthorId;
@@ -71,13 +68,13 @@ namespace WikiSite.PL.ASP.Controllers
             TempData["CreationDate"] = article.CreationDate;
             TempData["Heading"] = article.Heading;
 
-            return View(ArticleVM.GetLastVersionOftArticle(ArticleVM.GetArticle(url).Id));
+            return View(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id));
         }
 
         [HttpPost][Authorize]
         public ActionResult Update(HttpPostedFileBase file, ArticleVM version, bool isApproved = true)
         {
-            version.ImageId = ImageController.AddImage(file);
+            version.ImageId = ImageController.Add(file);
             version.Id = (Guid)TempData.Peek("Id");
             version.AuthorId = (Guid)TempData.Peek("AuthorId");
             version.EditionAuthorId = Guid.Parse(User.Identity.Name);
