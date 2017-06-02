@@ -43,6 +43,7 @@
     <Compile Include="Article Related\IArticlesBLL.cs" />
     <Compile Include="ArticleMeta Related\IArticleCommentsBLL.cs" />
     <Compile Include="ArticleMeta Related\IVersionVotesBLL.cs" />
+    <Compile Include="IImagesBLL.cs" />
     <Compile Include="User Related\IRolesBLL.cs" />
     <Compile Include="User Related\IUsersBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

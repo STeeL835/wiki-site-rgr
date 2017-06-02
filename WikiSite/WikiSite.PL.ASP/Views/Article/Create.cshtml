@@ -9,7 +9,7 @@
     @ViewBag.Title
 </h1>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Article", FormMethod.Post, new {enctype = "multipart/form-data"}))
 {
     @Html.Partial("~/Views/Shared/ArticlesEditorMDPartial.cshtml", Model)
     <div class="form-group">

@@ -72,7 +72,7 @@
 		
 		<!-- Log in panel -->
 		@if (!Request.IsAuthenticated)
-        {
+		{
             <!--Its can be the greates crutch-->
             var currentUrl = HttpContext.Current.Request.RawUrl;
             //var criticalUrl = new StringBuilder(Url.Action("Show", "Article", new {url = "0"})).Replace("0", "").ToString();

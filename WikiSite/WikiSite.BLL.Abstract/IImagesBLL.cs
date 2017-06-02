@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WikiSite.Entities;
 
-namespace WikiSite.DAL.Abstract
+namespace WikiSite.BLL.Abstract
 {
-    public interface IImagesDAL
+    public interface IImagesBLL
     {
         /// <summary>
         /// Adds image to database.

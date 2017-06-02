@@ -31,7 +31,7 @@ namespace WikiSite.DAL.SQL
                 sqlCom.Parameters.AddWithValue("@heading", content.Heading);
                 sqlCom.Parameters.AddWithValue("@definition", content.Definition);
                 sqlCom.Parameters.AddWithValue("@text", content.Text);
-                sqlCom.Parameters.AddWithValue("@main_image", content.MainImage);
+                sqlCom.Parameters.AddWithValue("@main_image", content.ImageId);
                 connection.Open();
 
                 addedRows = sqlCom.ExecuteNonQuery();
@@ -62,7 +62,7 @@ namespace WikiSite.DAL.SQL
                         Heading = (string) reader["Heading"],
                         Definition = (string) reader["Definition"],
                         Text = (string) reader["Text"],
-                        MainImage = (Guid) reader["Main_Image"]
+                        ImageId = (Guid) reader["Main_Image"]
                     };
                 }
             }

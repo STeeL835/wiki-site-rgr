@@ -23,4 +23,10 @@
         display: block;
         text-align: right;
     }
+
+    .head-thumbnail input[type=file] {
+        margin: 0 0 0 auto;
+        width: 260px;
+        overflow: hidden;
+    }
 }

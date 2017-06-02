@@ -355,7 +355,7 @@ namespace WikiSite.BLL.Default
                 Heading = contentDTO.Heading,
                 Definition = contentDTO.Definition,
                 Text = contentDTO.Text,
-                MainImage = contentDTO.MainImage
+                ImageId = contentDTO.ImageId
             };
         }
 
@@ -377,7 +377,7 @@ namespace WikiSite.BLL.Default
                 Heading = articleBDO.Heading,
                 Definition = articleBDO.Definition,
                 Text = articleBDO.Text,
-                MainImage = articleBDO.MainImage
+                ImageId = articleBDO.ImageId
             };
             contentDTO.Id = articleBDO.ContentId == default(Guid) ? Guid.NewGuid() : articleBDO.ContentId;
             return contentDTO;

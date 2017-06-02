@@ -29,7 +29,7 @@ namespace WikiSite.Caretakers
 
         public static void Check(int number, string message = "Number is default value.")
         {
-            if (number == default(int)) throw new ArgumentNullException(nameof(number), message);
+            if (number <= default(int)) throw new ArgumentNullException(nameof(number), message);
         }
 
         public static void Check(ArticleBDO bdo)
@@ -46,6 +46,11 @@ namespace WikiSite.Caretakers
             Check(bdo.EditionAuthorId, "Article BDO doesn't contain edition author id.");
             Check(bdo.Definition, "Article BDO doesn't contain a definition.");
             Check(bdo.Text, "Article BDO doesn't contain a text.");
+        }
+
+        public static void Check(byte[] bytes, string message = "Array of bytes is null.")
+        {
+            if(bytes == null) throw new ArgumentNullException(nameof(bytes), message);
         }
     }
 }

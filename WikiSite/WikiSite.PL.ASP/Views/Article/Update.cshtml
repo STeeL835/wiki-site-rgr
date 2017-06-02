@@ -8,7 +8,12 @@
     @ViewBag.Title
 </h1>
 
-<form method="post" class="form-override">
+@using (Html.BeginForm("Update", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.Partial("~/Views/Shared/ArticlesEditorMDPartial.cshtml", Model)
-    <button class="button-override">Отправить</button>
-</form>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <input type="submit" value="Отправить" class="btn btn-default button-override" />
+        </div>
+    </div>
+}

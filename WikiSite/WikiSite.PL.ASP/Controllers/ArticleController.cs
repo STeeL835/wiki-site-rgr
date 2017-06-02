@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -38,8 +39,9 @@ namespace WikiSite.PL.ASP.Controllers
         }
 
         [HttpPost][Authorize]
-        public ActionResult Create(ArticleVM article)
+        public ActionResult Create(HttpPostedFileBase file, ArticleVM article)
         {
+            article.ImageId = ImageController.AddImage(file);
             article.Id = Guid.NewGuid();
             article.AuthorId = Guid.Parse(User.Identity.Name);
             article.EditionAuthorId = article.AuthorId;
@@ -73,8 +75,9 @@ namespace WikiSite.PL.ASP.Controllers
         }
 
         [HttpPost][Authorize]
-        public ActionResult Update(ArticleVM version, bool isApproved = true)
+        public ActionResult Update(HttpPostedFileBase file, ArticleVM version, bool isApproved = true)
         {
+            version.ImageId = ImageController.AddImage(file);
             version.Id = (Guid)TempData.Peek("Id");
             version.AuthorId = (Guid)TempData.Peek("AuthorId");
             version.EditionAuthorId = Guid.Parse(User.Identity.Name);

@@ -23,7 +23,7 @@
 <header class="article-head">
     <div class="row">
         <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-            <img class="thumbnail" src="http://placehold.it/250" alt="">
+            <img class="thumbnail" src="@Url.Action("GetResizedImage", "Image", new { url = Model.ShortUrl, width = 250, height = 250 })" alt="">
         </div>
 
         <div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">

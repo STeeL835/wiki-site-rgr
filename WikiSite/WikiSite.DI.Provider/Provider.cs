@@ -17,12 +17,14 @@ namespace WikiSite.DI.Provider
         public static IArticleContentsDAL ArticleContentsDAO { get; private set; }
 		public static IVersionVotesDAL VersionVotesDAO { get; private set; }
 		public static IArticleCommentsDAL ArticleCommentsDAO { get; private set; }
+        public static IImagesDAL ImagesDAO { get; private set; }
 
-		public static IUsersBLL UsersBLO { get; private set; }
+        public static IUsersBLL UsersBLO { get; private set; }
 		public static IRolesBLL RolesBLO { get; private set; }
         public static IArticlesBLL ArticlesBLO { get; private set; }
 		public static IVersionVotesBLL VersionVotesBLO { get; private set; }
 		public static IArticleCommentsBLL ArticleCommentsBLO { get; private set; }
+        public static IImagesBLL ImagesBLO { get; private set; }
 
 		static Provider()
 		{
@@ -63,6 +65,7 @@ namespace WikiSite.DI.Provider
                     ArticleContentsDAO = new WikiSite.DAL.SQL.ArticleContentsDAO();
 					VersionVotesDAO = new WikiSite.DAL.SQL.VersionVotesDAO();
 					ArticleCommentsDAO = new WikiSite.DAL.SQL.ArticleCommentsDAO();
+                    ImagesDAO = new WikiSite.DAL.SQL.ImagesDAO();
 					break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [DAL] key value: {configValue}.");
@@ -79,7 +82,8 @@ namespace WikiSite.DI.Provider
                     ArticlesBLO = new WikiSite.BLL.Default.ArticleBLO(ArticlesDAO, ArticleVersionsDAO, ArticleContentsDAO);
 					VersionVotesBLO = new WikiSite.BLL.Default.VersionVotesBLO(VersionVotesDAO, ArticleVersionsDAO);
 					ArticleCommentsBLO = new WikiSite.BLL.Default.ArticleCommentsBLO(ArticleCommentsDAO);
-					break;
+				    ImagesBLO = new WikiSite.BLL.Default.ImagesBLO(ImagesDAO);
+                    break;
 				default:
 					throw new ApplicationException($"Incorrect configuration file. Inconsistent [BLL] key value: {configValue}.");
 			}

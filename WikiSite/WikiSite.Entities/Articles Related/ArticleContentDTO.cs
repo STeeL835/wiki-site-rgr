@@ -8,6 +8,6 @@ namespace WikiSite.Entities
         public string Heading { get; set; }
         public string Definition { get; set; }
         public string Text { get; set; }
-        public Guid MainImage { get; set; }
+        public Guid ImageId { get; set; }
     }
 }

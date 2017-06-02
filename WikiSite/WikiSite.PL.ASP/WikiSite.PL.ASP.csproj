@@ -729,11 +729,13 @@
     <Compile Include="Classes\DefaultRoleProvider.cs" />
     <Compile Include="Classes\HandleAllErrorsAttribute.cs" />
     <Compile Include="Classes\HtmlHelperExtentions.cs" />
+    <Compile Include="Classes\ImageExtentions.cs" />
     <Compile Include="Controllers\ArticleController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -741,6 +743,7 @@
     </Compile>
     <Compile Include="Models\Entity Models\ArticleVM.cs" />
     <Compile Include="Models\Entity Models\CommentVM.cs" />
+    <Compile Include="Models\Entity Models\ImageVM.cs" />
     <Compile Include="Models\Entity Models\RoleVM.cs" />
     <Compile Include="Models\Entity Models\UserCredentialsVM.cs" />
     <Compile Include="Models\Entity Models\UserVM.cs" />
@@ -790,6 +793,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Search\" />
     <Folder Include="Views\Error\" />
+    <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WikiSite.BLL.Abstract\WikiSite.BLL.Abstract.csproj">

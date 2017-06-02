@@ -24,7 +24,7 @@ namespace WikiSite.PL.ASP.Models
         private Guid _editionAuthorId;
         private string _definition;
         private string _text;
-        private Guid _mainImage;
+        private Guid _imageId;
         private Guid _versionId;
         private Guid _contentId;
 
@@ -178,11 +178,13 @@ namespace WikiSite.PL.ASP.Models
         }
 
         [Display(Name = "Картинка")]
-        public Guid MainImage {
-            get { return _mainImage; }
-            set {
-                //ErrorGuard.Check(value);
-                _mainImage = value;
+        public Guid ImageId
+        {
+            get { return _imageId; }
+            set
+            {
+                ErrorGuard.Check(value);
+                _imageId = value;
             }
         }
 
