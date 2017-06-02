@@ -441,6 +441,18 @@ namespace WikiSite.PL.ASP.Models
         {
             return _bll.GetNumberOfVersion(articleId, date);
         }
-        #endregion
-    }
+
+	    /// <summary>
+	    /// Performs search in all latest versions' headers, then texts 
+	    /// and returns versions that apply the query
+	    /// </summary>
+	    /// <param name="query">text to search in article text</param>
+	    /// <returns>Article VMs</returns>
+	    public static IEnumerable<ArticleVM> SearchArticles(string query)
+	    {
+		    return Mapper.Map<IEnumerable<ArticleVM>>(_bll.SearchArticles(query));
+	    }
+
+		#endregion
+	}
 }

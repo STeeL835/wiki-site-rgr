@@ -365,5 +365,90 @@ namespace WikiSite.DAL.SQL
             }
             throw new EntryNotFoundException($"Version for article with id {articleId} by time {date} has not found.");
         }
-    }
+
+	    /// <summary>
+	    /// Performs search in all latest versions' headings and returns versions that apply the query
+	    /// </summary>
+	    /// <param name="query">text to search in headings</param>
+	    /// <returns>ArticleVersions DTOs</returns>
+	    public IEnumerable<ArticleVersionDTO> SearchInHeadings(string query)
+	    {
+		    return SearchTemplate(query, Column.Heading);
+	    }
+
+	    /// <summary>
+	    /// Performs search in all latest versions' definitions and returns versions that apply the query
+	    /// </summary>
+	    /// <param name="query">text to search in article definitions</param>
+	    /// <returns>ArticleVersions DTOs</returns>
+	    public IEnumerable<ArticleVersionDTO> SearchInDefinitions(string query)
+	    {
+		    return SearchTemplate(query, Column.Definition);
+	    }
+		
+		/// <summary>
+	    /// Performs search in all latest versions' texts and returns versions that apply the query
+	    /// </summary>
+	    /// <param name="query">text to search in article text</param>
+	    /// <returns>ArticleVersions DTOs</returns>
+	    public IEnumerable<ArticleVersionDTO> SearchInText(string query)
+	    {
+		    return SearchTemplate(query, Column.Text);
+	    }
+
+	    private IEnumerable<ArticleVersionDTO> SearchTemplate(string query, Column column)
+	    {
+		    string col;
+		    switch (column)
+		    {
+			    case Column.Heading:
+				    col = "Heading";
+				    break;
+			    case Column.Text:
+				    col = "Text";
+				    break;
+			    case Column.Definition:
+				    col = "Definition";
+				    break;
+			    default:
+				    throw new ArgumentOutOfRangeException(nameof(column), column, null);
+		    }
+			using (var connection = new SqlConnection(ConnectionString))
+			{
+				var sqlCom = new SqlCommand("SELECT " +
+												"laVersions.Id, laVersions.Article_Id, laVersions.Content_Id, " +
+												"laVersions.Editor_Id, laVersions.Date_Of_Edition, laVersions.Is_Approved " +
+											"FROM [Articles] AS articles " +
+											"CROSS APPLY " +
+								 				"(SELECT TOP 1 * FROM [ArticleVersions] " +
+												"WHERE Article_Id = articles.Id AND Is_Approved = 1 " +
+												"ORDER BY Date_Of_Edition DESC) AS laVersions " +
+											"JOIN [ArticleContents] AS contents " +
+											"ON contents.Id = laVersions.Content_Id " +
+											$"WHERE LOWER([{col}]) LIKE '%'+@query+'%'", connection);
+				sqlCom.Parameters.AddWithValue("@query", query);
+				connection.Open();
+				var reader = sqlCom.ExecuteReader();
+				while (reader.Read())
+				{
+					yield return new ArticleVersionDTO
+					{
+						Id = (Guid)reader["Id"],
+						ArticleId = (Guid)reader["Article_Id"],
+						ContentId = (Guid)reader["Content_Id"],
+						LastEditDate = (DateTime)reader["Date_Of_Edition"],
+						EditionAuthorId = (Guid)reader["Editor_Id"],
+						IsApproved = (bool)reader["Is_Approved"]
+					};
+				}
+			}
+		}
+
+	    private enum Column
+	    {
+		    Heading,
+			Definition,
+			Text
+	    }
+	}
 }

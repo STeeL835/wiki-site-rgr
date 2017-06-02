@@ -368,6 +368,7 @@ body {
 }
 .comment-actions {
 	position: absolute;
+	z-index: 1;
 	right: 10px;
 }
 .user-about {
@@ -428,7 +429,6 @@ ul.a-version-info > * {
 }
 ul.a-versions > li {
 	position: relative;
-	mar
 }
 ul.a-versions > li > a {
 	position: absolute;
@@ -609,6 +609,10 @@ ul.a-versions > li:hover .a-version-votes.hoverable .buttons{
 		text-align: right;
 		border-right: 1px solid silver;
 	}
+	.comment-author+div {
+		border-left: 1px solid silver;
+		margin-left: -1px;
+	}
 	.comment-author img {
 		padding: 0;
 		border: none;
@@ -621,16 +625,19 @@ ul.a-versions > li:hover .a-version-votes.hoverable .buttons{
 		position: static;
 	}
 	.comment-actions {
-		display: none;
-	}
-	.comment:hover .comment-actions {
-		display: block;
-		z-index: 1;
+		opacity: 0.7;
 		background-color: white;
 		padding: 5px;
 		margin-right: -5px;
 		margin-top: -5px;
 		border-radius: 5px;
+	}
+	.no-touch .comment-actions {
+		display: none;
+		opacity: 1;
+	}
+	.no-touch .comment:hover .comment-actions {
+		display: block;
 	}
 }
 
