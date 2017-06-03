@@ -20,6 +20,7 @@ namespace WikiSite.PL.ASP.Controllers
         
         public ActionResult Show(string url, int number = 0)
         {
+            this.CatchAlert();
             ViewBag.ShortUrl = url;
             ViewBag.Number = number;
             if (number == 0)

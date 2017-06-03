@@ -17,6 +17,12 @@
     width: 100%;
 }
 
+.head-thumbnail input[type=file], .head-thumbnail div {
+    margin: auto;
+    width: 260px;
+    overflow: hidden;
+}
+
 @media(min-width: 768px) {
     .label-override {
         margin-top: 2px; /*ololololololo*/
@@ -24,9 +30,7 @@
         text-align: right;
     }
 
-    .head-thumbnail input[type=file] {
+    .head-thumbnail input[type=file], .head-thumbnail div {
         margin: 0 0 0 auto;
-        width: 260px;
-        overflow: hidden;
     }
 }

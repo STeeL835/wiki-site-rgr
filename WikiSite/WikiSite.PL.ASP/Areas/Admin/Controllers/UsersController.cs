@@ -130,7 +130,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 		}
 		public ActionResult Details(int id)
 	    {
-			return RedirectToAction("Details", "User", new { id, area = "Default" });
+			return RedirectToAction("Details", "User", new { id, area = "" });
 	    }
 
 		public ActionResult DeleteByGuid(Guid id)
@@ -149,7 +149,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 				this.AlertNextAction($"Произошла ошибка при удалении пользователя {user.Nickname}({user.ShortId}). Проверьте выполнение вручную.",
 					AlertType.Danger);
 			}
-	        return RedirectToAction("Index", "Home", new { area = "Default"});
+	        return RedirectToAction("Index", "Home", new { area = ""});
 	    }
 
 		// Admin/Users/Search?query=query
