@@ -12,6 +12,7 @@
 {
     <li><a href="@Url.Action("Index", "Comments", new {article = article.ShortUrl})">К обсуждению</a></li>
     <li><a href="@Url.Action("Show", new {url = article.ShortUrl})">К последней подтверждённой версии</a></li>
+    <li class="divider"></li>
     @if (User.IsInRole("admin"))
     {
         <li><a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить статью</a></li>

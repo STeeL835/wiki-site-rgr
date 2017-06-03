@@ -66,7 +66,7 @@ namespace WikiSite.PL.ASP.Models
 
         private static IImagesBLL _bll;
         public static Guid DefaultImageGuid {
-            get { return Guid.Parse("d7a8ef9e-004d-40b1-9c05-99e2413665d7");}
+            get { return Guid.Parse("4f2d22b0-4af3-46be-a3c4-ae74b5b5d1ca");}
         }
 
         static ImageVM()

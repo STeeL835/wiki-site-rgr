@@ -115,6 +115,21 @@ namespace WikiSite.PL.ASP.Controllers
             return View(versions);
         }
 
+        public ActionResult Approve(Guid id, bool type = false)
+        {
+            var article = ArticleVM.GetArticle(ArticleVM.GetVersionOfArticle(id).Id);
+            if (ArticleVM.ApproveVersionOfArticle(id))
+            {
+                this.AlertNextAction($"Подтверждённость версии \"{ArticleVM.GetNumberOfVersion(id)}\" для статьи \"{article.Heading} ({article.ShortUrl})\" успешно изменена.", AlertType.Success);
+            }
+            else
+            {
+                this.AlertNextAction(
+                    $"Произошла ошибка при изменении подтверждённости версии \"{ArticleVM.GetNumberOfVersion(id)}\" для статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
+            }
+            return RedirectToAction("ShowByGuid", "Article", new { guid = article.Id });
+        }
+
         public JsonResult IsHeadingExist(string heading)
         {
             var throwError = ArticleVM.IsShortUrlExist(HttpUtility.UrlEncode(heading.ToLower().Trim()));
