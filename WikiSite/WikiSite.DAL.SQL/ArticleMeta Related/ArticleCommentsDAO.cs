@@ -157,7 +157,7 @@ namespace WikiSite.DAL.SQL
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				var sqlCom = new SqlCommand("SELECT * FROM [ArticleComments] " +
-											"WHERE Article_Id = @id", connection);
+											"WHERE Author_Id = @id", connection);
 				sqlCom.Parameters.AddWithValue("@id", userId);
 
 				connection.Open();

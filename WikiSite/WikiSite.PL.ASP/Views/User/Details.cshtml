@@ -8,9 +8,14 @@
     ViewBag.Title = $"Пользователь {Model.Nickname}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-	ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
-	ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
-	ViewBag.Comments = CommentVM.GetCommentsForUser(Model.Id).ToArray(); 
+    Guid CurrentUserId = Guid.Empty;
+    if (Request.IsAuthenticated)
+    {
+        CurrentUserId = Guid.Parse(User.Identity.Name);
+    }
+    ViewBag.Articles = ArticleVM.GetAllArticles(Model.Id).ToArray();
+    ViewBag.Versions = ArticleVM.GetAllVersionByAuthor(Model.Id).ToArray();
+    ViewBag.Comments = CommentVM.GetCommentsForUser(Model.Id).ToArray();
 }
 
 @section actions
@@ -186,16 +191,60 @@
 			<!-- Comments-->
 			<div class="tab-pane fade" id="comments">
 				<div class="col-xs-12">
-					@if (ViewBag.Comments.Length == 0)
+					@if (((CommentVM[])ViewBag.Comments).Length == 0)
 					{
 						<div class="not-found">
 							<i class="fa fa-frown-o"></i>
 							<h3>Похоже, что этот пользователь ничего не комментил</h3>
 						</div>
 					}
-					else /* TODO: [Comments] Implement when done */
+					else
 					{
-						<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organiclomoretrofannypacklo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craftbeer,iphoneskateboardlocavorecarles etsy salvia banksy hoodie helvetica. DIY synth PBR banksyirony.Leggingsgentrify squid 8-bitcredpitchfork.</p>
+					    foreach (CommentVM item in (CommentVM[])ViewBag.Comments)
+					     {
+					        var comment = item;
+					             var user = UserVM.GetUser(comment.AuthorId);
+					             <div class="comment list-group-item">
+					                 <div class="row">
+					                     @if (Request.IsAuthenticated && (CurrentUserId == comment.AuthorId || User.IsInRole("admin") || User.IsInRole("moderator")))
+					                     {
+					                         <div class="comment-actions">
+					                             <a href="@Url.Action("Edit", "Comments", new {id = comment.Id})" title="Редактировать" data-toggle="tooltip" data-placement="top" class="btn btn-sm btn-inverse">
+					                                 <i class="fa fa-pencil"></i>
+					                             </a>
+					                             <a href="#!" tabindex="0" role="button" data-trigger="focus" data-toggle="confirm-popover" data-placement="left" class="btn btn-sm btn-danger">
+					                                 <i class="fa fa-trash"></i>
+					                             </a>
+					                             <output hidden>
+					                                 <a href="@Url.Action("Delete", "Comments", new {id = comment.Id})" class="btn btn-danger btn-sm">Удалить бесповоротно</a>
+					                             </output>
+					                         </div>
+					                     }
+					                     <div class="comment-author col-xs-12 col-sm-3 col-lg-2">
+					                         <a href="@Url.Action("Details", "User", new {id = user.ShortId})">
+					                             <img src="https://www.gravatar.com/avatar/@UserCredentialsVM.GetEmailHash(comment.AuthorId)?s=80&d=retro" alt="Изображение профиля">
+					                         </a>
+					                         <div class="comment-author-info">
+					                             <h4 class="comment-nickname"><a href="@Url.Action("Details", "User", new {id = user.ShortId})">@user.Nickname</a></h4>
+					                             <div>
+					                                 @if (RoleVM.UserIsInRole("admin", user.Id))
+					                                 {
+					                                     <span class="label label-warning">Админ</span>
+					                                 }
+					                                 @if (RoleVM.UserIsInRole("moderator", user.Id))
+					                                 {
+					                                     <span class="label label-success">Модератор</span>
+					                                 }
+					                             </div>
+					                             <em class="comment-date">@comment.DateOfCreation.ToString("dd.MM.yy HH:mm")</em>
+					                         </div>
+					                     </div>
+					                     <div class="col-xs-12 col-sm-9 col-lg-10">
+					                         @Html.Markdown(comment.Text)
+					                     </div>
+					                 </div>
+					             </div>
+					         }
 					}
 				</div>
 			</div>
