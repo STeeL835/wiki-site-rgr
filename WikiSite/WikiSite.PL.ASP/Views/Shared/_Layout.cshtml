@@ -44,8 +44,9 @@
 			
 			@if (Request.IsAuthenticated)
 			{
+			    bool showAdminButton = false;
 				<ul class="pull-right list-inline list-unstyled">
-					@if (User.IsInRole("Admin"))
+					@if (User.IsInRole("Admin") && showAdminButton)
 					{
 						<li>@Html.ActionLink("Админка", "Index", "Home", new { area="Admin" }, new { @class = "btn btn-warning btn-xs" })</li>
 					}

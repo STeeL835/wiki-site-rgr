@@ -66,7 +66,7 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
                 this.AlertNextAction(
                     $"Произошла ошибка при удалении статьи \"{article.Heading} ({article.ShortUrl})\". Проверьте выполнение вручную.", AlertType.Danger);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Home", new {area = "Default"});
         }
 
         [HttpGet]

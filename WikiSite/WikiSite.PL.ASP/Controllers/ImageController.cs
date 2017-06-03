@@ -30,13 +30,13 @@ namespace WikiSite.PL.ASP.Controllers
             return image.Id;
         }
 
-        public ActionResult Get(Guid id)
+        public FileResult Get(Guid id)
         {
             var image = id == default(Guid) ? ImageVM.GetDefaultImage() : ImageVM.GetImage(id);
             return File(image.Data, image.Type);
         }
 
-        public ActionResult GetByUrl(string url, int number = 0)
+        public FileResult GetByUrl(string url, int number = 0)
         {
             if(url != null)
                 if (number != 0)
@@ -53,7 +53,7 @@ namespace WikiSite.PL.ASP.Controllers
             }
         }
 
-        public ActionResult GetResized(int width, int height, Guid id)
+        public FileResult GetResized(int width, int height, Guid id)
         {
             var imageVM = id == default(Guid) ? ImageVM.GetDefaultImage() : ImageVM.GetImage(id);
             Image image;
@@ -70,7 +70,7 @@ namespace WikiSite.PL.ASP.Controllers
             }
         }
 
-        public ActionResult GetResizedByUrl(int width, int height, string url, int number = 0)
+        public FileResult GetResizedByUrl(int width, int height, string url, int number = 0)
         {
             if (url != null)
                 if (number != 0)

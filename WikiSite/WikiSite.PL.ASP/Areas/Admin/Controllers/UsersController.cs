@@ -149,8 +149,8 @@ namespace WikiSite.PL.ASP.Areas.Admin.Controllers
 				this.AlertNextAction($"Произошла ошибка при удалении пользователя {user.Nickname}({user.ShortId}). Проверьте выполнение вручную.",
 					AlertType.Danger);
 			}
-			return RedirectToAction("Index");
-		}
+	        return RedirectToAction("Index", "Home", new { area = "Default"});
+	    }
 
 		// Admin/Users/Search?query=query
 	    public ActionResult Search(string query)

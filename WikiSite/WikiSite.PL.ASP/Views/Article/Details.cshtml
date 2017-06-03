@@ -10,12 +10,42 @@
 
 @section actions
 {
-    <li><a href="@Url.Action("Show", new { url = article.ShortUrl })">К последней общедоступной версии</a></li>
-    <li><a href="@Url.Action("Index", "Comments", new { article = article.ShortUrl})">К обсуждению</a></li>
+    <li><a href="@Url.Action("Index", "Comments", new {article = article.ShortUrl})">К обсуждению</a></li>
+    <li><a href="@Url.Action("Show", new {url = article.ShortUrl})">К последней подтверждённой версии</a></li>
+    @if (User.IsInRole("admin"))
+    {
+        <li><a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить статью</a></li>
+    }
+}
+
+<!-- OnDelete Modal Window -->
+@if (Request.IsAuthenticated && User.IsInRole("admin")) // No need to load this if action isn't available
+{
+    <div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Удаление всех версий статьи @Model[0].Heading</h4>
+                </div>
+                <div class="modal-body">
+                    Это действие необратимо. Нет, серьёзно, подумой!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <a href="@Url.Action("Delete", "Articles", new {area = "Admin", shortUrl = Model[0].ShortUrl})" class="btn btn-danger">Удалить навсегда</a>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 <h1 class="page-header">
-    <a href="@Url.Action("Show", new { url = article.ShortUrl})" title="К последней общедоступной версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
+    <a href="@Url.Action("Show", new { url = article.ShortUrl})" title="К последней подтверждённой версии" class="btn btn-link page-back-button hidden-xs"><i class="fa fa-angle-left"></i></a>
 	Все правки статьи <span class="text-primary">@article.Heading</span>
 </h1>
 

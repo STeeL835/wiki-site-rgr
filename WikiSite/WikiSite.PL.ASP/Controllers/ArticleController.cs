@@ -12,7 +12,7 @@ namespace WikiSite.PL.ASP.Controllers
     public class ArticleController : Controller
     {
         // GET: Article
-        
+
         public ActionResult ShowByGuid(Guid guid, int number = 0)
         {
             return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(guid).ShortUrl, number = number });

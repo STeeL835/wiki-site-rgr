@@ -18,7 +18,7 @@
 		<div class="input-group input-group-lg">
 			@Html.TextBox("query", (string)ViewBag.SearchQuery, new { @class = "form-control", placeholder = "Введите запрос, поддерживаются метасимволы поиска '*' и '?'" })
 			<span class="input-group-btn">
-				<button type="button" class="btn btn-inverse"><i class="fa fa-search"></i></button>
+				<button type="submit" class="btn btn-inverse"><i class="fa fa-search"></i></button>
 			</span>
 		</div>
 	}
@@ -49,7 +49,7 @@
 						@foreach (ArticleVM article in ViewBag.Articles)
 						{
 							<a href="@Url.Action("Show", "Article", new { url = article.ShortUrl })" class="list-group-item">
-								<img src="http://placehold.it/80" alt="Изображение статьи @article.Heading">
+								<img src="@Url.Action("GetResizedByUrl", "Image", new { width = 80, height = 80, url = article.ShortUrl})" alt="Изображение статьи @article.Heading">
 								<div class="text">
 									<h3 class="list-group-item-heading">@article.Heading</h3>
 									<p class="list-group-item-text">@article.Definition</p>
