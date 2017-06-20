@@ -18,7 +18,7 @@
     <li><a href="@Url.Action("Details", new {url = Model.ShortUrl})">Версии этой статьи</a></li>
     <li><a href="@Url.Action("Index", "Comments", new {article = Model.ShortUrl})">Перейти к обсуждению</a></li>
     <li class="divider"></li>
-    @*@if (Request.IsAuthenticated && (User.IsInRole("moderator") || User.IsInRole("admin")))
+    @if (Request.IsAuthenticated && (User.IsInRole("moderator") || User.IsInRole("admin")))
     {
         if (!Model.IsApproved)
         {
@@ -28,7 +28,7 @@
         {
             <li><a href="#!" data-toggle="modal" data-target="#disapprove-modal">Разутвердить версию</a></li>
         }
-    }*@
+    }
     @if (Request.IsAuthenticated && User.IsInRole("admin"))
     {
         <li><a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить статью</a></li>
@@ -62,7 +62,7 @@
 }
 
 <!-- OnApprove Modal Window -->
-@*@if (Request.IsAuthenticated && User.IsInRole("admin")) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator"))) // No need to load this if action isn't available
 {
     <div id="approve-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -85,10 +85,10 @@
             </div>
         </div>
     </div>
-}*@
+}
 
 <!-- OnDisapprove Modal Window -->
-@*@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator"))) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator"))) // No need to load this if action isn't available
 {
     <div id="disapprove-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -111,13 +111,13 @@
             </div>
         </div>
     </div>
-}*@
+}
 
 <!-- Head of an article (title/description) -->
 <header class="article-head">
     <div class="row">
         <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-            <img class="thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new { width = 250, height = 250, url = ViewBag.ShortUrl , number = ViewBag.Number})" alt="">
+            <img class="thumbnail article-thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new { width = 250, height = 250, url = ViewBag.ShortUrl , number = ViewBag.Number})" alt="">
         </div>
 
         <div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">

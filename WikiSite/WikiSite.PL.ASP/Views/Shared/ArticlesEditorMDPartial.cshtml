@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
     <div id="image-editormd" class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
         @Html.LabelFor(model => model.ImageId, htmlAttributes: new { @class = "control-label label-override" })
-        <img class="thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new { width = 250, height = 250, url = Model.ShortUrl })" alt="">
+        <img class="thumbnail article-thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new { width = 250, height = 250, url = Model.ShortUrl })" alt="">
         <input type="file" accept="image/*" name="file" class="btn btn-default" id="uploadInput"/> 
         <div id="e-fileinfo" class="text-danger"></div>
     </div>

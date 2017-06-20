@@ -23,6 +23,12 @@
     overflow: hidden;
 }
 
+.article-thumbnail {
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+}
+
 @media(min-width: 768px) {
     .label-override {
         margin-top: 2px; /*ololololololo*/

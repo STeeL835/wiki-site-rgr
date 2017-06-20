@@ -327,8 +327,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", GetVersion(versionId).ArticleId);
                 sqlCom.Parameters.AddWithValue("@id", versionId);
 
@@ -336,7 +335,7 @@ namespace WikiSite.DAL.SQL
                 var reader = sqlCom.ExecuteReader();
                 while (reader.Read())
                 {
-                    return (int)reader["Number"];
+                    return (int)(long)reader["Number"];
                 }
             }
             throw new EntryNotFoundException();
@@ -351,8 +350,7 @@ namespace WikiSite.DAL.SQL
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
-                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id",
-                    connection);
+                var sqlCom = new SqlCommand("SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY Date_Of_Edition) AS Number, * FROM [ArticleVersions] WHERE(Article_Id = @article_id)) X WHERE Id = @id", connection);
                 sqlCom.Parameters.AddWithValue("@article_id", articleId);
                 sqlCom.Parameters.AddWithValue("@id", GetVersion(articleId, date).Id);
 
@@ -360,7 +358,7 @@ namespace WikiSite.DAL.SQL
                 var reader = sqlCom.ExecuteReader();
                 while (reader.Read())
                 {
-                    return (int)reader["Number"];
+                    return (int)(long)reader["Number"];
                 }
             }
             throw new EntryNotFoundException($"Version for article with id {articleId} by time {date} has not found.");
