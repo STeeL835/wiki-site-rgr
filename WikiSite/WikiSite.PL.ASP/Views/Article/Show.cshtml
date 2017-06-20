@@ -73,14 +73,14 @@
                             <i class="fa fa-times"></i>
                         </span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Подтверждение версии @ArticleVM.GetNumberOfVersion(Model.VersionId) для @Model.Heading</h4>
+                    <h4 class="modal-title" id="myModalLabel">Подтвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
                 </div>
                 <div class="modal-body">
                     Вы действительно хотите это сделать?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId})" class="btn btn-primary">Подтвердить</a>
+                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId})" class="btn btn-primary">OK</a>
                 </div>
             </div>
         </div>
@@ -99,14 +99,14 @@
                             <i class="fa fa-times"></i>
                         </span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Разутвердить версии @ArticleVM.GetNumberOfVersion(Model.VersionId) для @Model.Heading</h4>
+                    <h4 class="modal-title" id="myModalLabel">Разутвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
                 </div>
                 <div class="modal-body">
                     Вы действительно хотите это сделать?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId, type = false})" class="btn btn-primary">Подтвердить</a>
+                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId, type = false})" class="btn btn-primary">OK</a>
                 </div>
             </div>
         </div>

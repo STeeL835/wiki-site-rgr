@@ -115,10 +115,10 @@ namespace WikiSite.PL.ASP.Controllers
             return View(versions);
         }
 
-        public ActionResult Approve(Guid id, bool type = false)
+        public ActionResult Approve(Guid id, bool type = true)
         {
             var article = ArticleVM.GetArticle(ArticleVM.GetVersionOfArticle(id).Id);
-            if (ArticleVM.ApproveVersionOfArticle(id))
+            if (ArticleVM.ApproveVersionOfArticle(id, type))
             {
                 this.AlertNextAction($"Подтверждённость версии \"{ArticleVM.GetNumberOfVersion(id)}\" для статьи \"{article.Heading} ({article.ShortUrl})\" успешно изменена.", AlertType.Success);
             }
