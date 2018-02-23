@@ -165,13 +165,15 @@ namespace WikiSite.DAL.SQL
                 var reader = sqlCom.ExecuteReader();
                 while (reader.Read())
                 {
-                    return new ArticleDTO
-                    {
-                        Id = (Guid)reader["Id"],
-                        ShortUrl = (string)reader["Short_Url"],
-                        AuthorId = (Guid)reader["Author_Id"],
-                        CreationDate = (DateTime)reader["Date_Of_Creation"]
-                    };
+                    if ((string)reader["Short_Url"] != "guide")
+                        return new ArticleDTO
+                        {
+                            Id = (Guid)reader["Id"],
+                            ShortUrl = (string)reader["Short_Url"],
+                            AuthorId = (Guid)reader["Author_Id"],
+                            CreationDate = (DateTime)reader["Date_Of_Creation"]
+                        };
+                    else return GetRandomArticle();                    
                 }
             }
             throw new EntryNotFoundException("Article has not found.");
