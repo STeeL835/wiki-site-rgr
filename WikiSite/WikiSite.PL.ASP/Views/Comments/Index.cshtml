@@ -97,14 +97,14 @@
 							<div class="comment-author-info">
 								<h4 class="comment-nickname"><a href="@Url.Action("Details", "User", new {id = user.ShortId})">@user.Nickname</a></h4>
 								<div>
-									@if (RoleVM.UserIsInRole("admin", user.Id))
-									{
-										<span class="label label-warning">Админ</span>
-									}
-									@if (RoleVM.UserIsInRole("moderator", user.Id))
-									{
-										<span class="label label-success">Модератор</span>
-									}
+								    @if (RoleVM.UserIsInRole("admin", user.Id))
+								    {
+								        <span class="label label-warning">@RoleVM.GetRole(user.RoleId).Name</span>
+								    }
+								    @if (RoleVM.UserIsInRole("moderator", user.Id))
+								    {
+								        <span class="label label-success">@RoleVM.GetRole(user.RoleId).Name</span>
+								    }
 									@if (user.Id == lastEdit.EditionAuthorId)
 									{
 										<span class="label label-inverse">Автор правки</span>

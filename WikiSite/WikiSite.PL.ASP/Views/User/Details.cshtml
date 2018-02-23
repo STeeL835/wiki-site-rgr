@@ -69,7 +69,16 @@
 					<kbd>@Model.Id</kbd>
 				</div>
 			}
-			<span class="label label-success">@RoleVM.GetRole(Model.RoleId).Name</span>
+		    @if (RoleVM.UserIsInRole("admin", Model.Id))
+		    {
+		        <span class="label label-warning">@RoleVM.GetRole(Model.RoleId).Name</span>
+            }
+            else if (RoleVM.UserIsInRole("moderator", Model.Id))
+            {
+                <span class="label label-success">@RoleVM.GetRole(Model.RoleId).Name</span>
+            }
+            else { }
+
 			<h2>@Model.Nickname</h2>
 			<div class="stats">
 				<div>
@@ -200,7 +209,32 @@
 					}
 					else
 					{
-					    foreach (CommentVM item in (CommentVM[])ViewBag.Comments)
+					    <table class="table table-hover table-responsive col-xs-12">
+					        <thead>
+					        <tr>
+					            <th>URL статьи</th>
+					            <th>Страница обсуждения</th>
+					            <th class="hidden-xs">Дата комментирования</th>
+					        </tr>
+					        </thead>
+					        <tbody>
+					        @foreach (var comment in ViewBag.Comments)
+					        {
+					            var article = ArticleVM.GetArticle(comment.ArticleId);
+					            <tr>
+					                <td class="table-max-width-100">@article.ShortUrl</td>
+					                <td class="table-max-width-200">
+					                    <a href="@Url.Action("Index", "Comments", new {article = article.ShortUrl})" class="btn btn-link btn-xs">
+					                        @article.Heading
+					                    </a>
+					                </td>
+                                    <td class="hidden-xs">@comment.DateOfCreation.ToString(CultureInfo.CurrentCulture)</td>
+					            </tr>
+					        }
+					        </tbody>
+					    </table>
+
+					    @*foreach (CommentVM item in (CommentVM[])ViewBag.Comments)
 					     {
 					        var comment = item;
 					             var user = UserVM.GetUser(comment.AuthorId);
@@ -229,11 +263,11 @@
 					                             <div>
 					                                 @if (RoleVM.UserIsInRole("admin", user.Id))
 					                                 {
-					                                     <span class="label label-warning">Админ</span>
+                                                        <span class="label label-warning">@RoleVM.GetRole(user.RoleId).Name</span>
 					                                 }
 					                                 @if (RoleVM.UserIsInRole("moderator", user.Id))
 					                                 {
-					                                     <span class="label label-success">Модератор</span>
+                                                        <span class="label label-success">@RoleVM.GetRole(user.RoleId).Name</span>
 					                                 }
 					                             </div>
 					                             <em class="comment-date">@comment.DateOfCreation.ToString("dd.MM.yy HH:mm")</em>
@@ -244,7 +278,7 @@
 					                     </div>
 					                 </div>
 					             </div>
-					         }
+					         }*@
 					}
 				</div>
 			</div>
