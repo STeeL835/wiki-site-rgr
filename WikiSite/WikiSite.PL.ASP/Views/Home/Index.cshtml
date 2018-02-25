@@ -48,7 +48,7 @@
 <div class="row">
 
 	<div class="col-xs-12 col-sm-8 col-lg-9">
-		<div class="panel panel-success"> @{ /* TODO: [Articles] Implement when done */ }
+		<div class="panel panel-success"> 
 			<div class="panel-heading">
 				<h3 class="panel-title">Случайная статья</h3>
 			</div>
@@ -81,7 +81,7 @@
 			</div>
 			<ul class="list-group list-unstyled">
 				<li>
-					<a href="@Url.Action("Show","Article", new {url = ViewBag.GuideArticle.ShortUrl})" class="list-group-item"> @{ /* TODO: [Articles] Implement when done */ }
+					<a href="@Url.Action("Show","Article", new {url = ViewBag.GuideArticle.ShortUrl})" class="list-group-item"> 
 						<i class="fa fa-question"></i>
 						Как пользоваться сайтом
 					</a>
@@ -130,7 +130,6 @@
 					Читать могут все. Редактировать могут зарегистрированные пользователи. По умолчанию показывается последняя правка, можно голосовать за или против, если против перевешивает, то правка становится недоверенной. Модераторы отдают решающий голос.
 				</div>
 				<a href="@Url.Action("Show","Article", new {url = ViewBag.GuideArticle.ShortUrl})" class="list-group-item text-right">
-					@{ /* TODO: [Articles] Implement when done */ }
 					Подробнее
 					<i class="fa fa-arrow-right"></i>
 				</a>
@@ -144,10 +143,19 @@
 				<h3 class="panel-title">Последний комментарий</h3>
 			</div>
 			<div class="list-group">
-				<a href="@Url.Action("CommentsByGuid", "Comments", new {id = lastComment.ArticleId})" class="list-group-item">
-					<h4 class="list-group-item-heading">@UserVM.GetUser(lastComment.AuthorId).Nickname</h4>
-					<p class="list-group-item-text">@Html.Markdown(lastComment.Text)</p>
-				</a>
+				@if (lastComment != null)
+				{
+					<a href="@Url.Action("CommentsByGuid", "Comments", new {id = lastComment.ArticleId})" class="list-group-item">
+						<h4 class="list-group-item-heading">@UserVM.GetUser(lastComment.AuthorId).Nickname</h4>
+						<p class="list-group-item-text">@Html.Markdown(lastComment.Text)</p>
+					</a>
+				}
+				else
+				{
+					<p class="list-group-item">
+						Комментариев пока не наблюдается :(
+					</p>
+				}
 			</div>
 		</div>
 	</div>

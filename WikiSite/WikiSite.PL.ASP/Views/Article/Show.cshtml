@@ -127,38 +127,40 @@
 
 <!-- Head of an article (title/description) -->
 <header class="article-head">
-    <div class="row">
-        <div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-            <img class="thumbnail article-thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new {width = 250, height = 250, url = ViewBag.ShortUrl, number = ViewBag.Number})" alt="">
-        </div>
+	<div class="row">
+		
+		@if (User.IsInRole("admin"))
+		{
+			<div class="dropdown pull-right">
+				<button class="btn btn-inverse btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">ID info
+					<span class="caret"></span></button>
+				<ul class="dropdown-menu dropdown-menu-right">
+					<li class="dropdown-header text-right">ID: <kbd>@Model.Id</kbd></li>
+					<li class="dropdown-header text-right">Версия: <kbd>@Model.VersionId</kbd></li>
+					<li class="dropdown-header text-right">Контент: <kbd>@Model.ContentId</kbd></li>
+					<li class="dropdown-header text-right">Картинка: <kbd>@Model.ImageId</kbd></li>
+				</ul>
+			</div>
+		}
 
-        <div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
+		<div class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
+			<img class="thumbnail article-thumbnail" src="@Url.Action("GetResizedByUrl", "Image", new {width = 250, height = 250, url = ViewBag.ShortUrl, number = ViewBag.Number})" alt="">
+		</div>
 
-            @if (User.IsInRole("admin"))
-            {
-                <div>
-                    <kbd>ID: @Model.Id</kbd>
-                    <br/>
-                    <kbd>Версия: @Model.VersionId</kbd>
-                    <br/>
-                    <kbd>Контент: @Model.ContentId</kbd>
-                    <br/>
-                    <kbd>Картинка: @Model.ImageId</kbd>
-                </div>
-            }
-            @if (!Model.IsApproved)
-            {
-                <span class="label label-primary">Данная версия статьи не является подтверждённой</span>
-            }
-            <div class="article-title">
-                <span>@ViewBag.Title</span>
-            </div>
+		<div class="article-title-desc col-xs-12 col-sm-7 col-lg-8">
+			@if (!Model.IsApproved)
+			{
+				<span class="label label-primary">Данная версия статьи не является подтверждённой</span>
+			}
+			<div class="article-title">
+				<span>@ViewBag.Title</span>
+			</div>
 
-            <div class="article-desc">
-                @Html.Markdown(Model.Definition)
-            </div>
-        </div>
-    </div>
+			<div class="article-desc">
+				@Html.Markdown(Model.Definition)
+			</div>
+		</div>
+	</div>
 </header>
 
 <!-- Article itself -->

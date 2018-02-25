@@ -249,8 +249,9 @@ body {
 	align-items: flex-start;
 }
 .search-results .list-group-item img {
-	min-width: 80px;
+	height: 80px;
 	width: 80px;
+	object-fit: cover;
 	margin-right: 15px;
 }
 .search-results-users .list-group-item {

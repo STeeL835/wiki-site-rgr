@@ -23,7 +23,7 @@ namespace WikiSite.PL.ASP.Controllers
 		        ViewBag.Users = users;
 
 		    // Articles
-		    var articles = ArticleVM.SearchArticles(query).ToArray(); // TODO: [Articles][Search] Implement when done
+		    var articles = ArticleVM.SearchArticles(query).ToArray(); 
 		    ViewBag.Articles = articles;
 
 			return View();

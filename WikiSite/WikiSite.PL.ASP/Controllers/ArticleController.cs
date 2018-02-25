@@ -93,7 +93,7 @@ namespace WikiSite.PL.ASP.Controllers
         [HttpGet][Authorize]
         public ActionResult Update(string url)
         {
-            ViewBag.Title = $"Редактрование статьи \"{ArticleVM.GetArticle(url).Heading}\"";
+            ViewBag.Title = $"Редактирование статьи \"{ArticleVM.GetArticle(url).Heading}\"";
             ViewBag.ShortUrl = url;
 
             var article = ArticleVM.GetArticle(url);
