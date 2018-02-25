@@ -19,6 +19,7 @@ namespace WikiSite.PL.ASP.Models
         private Guid _id;
         private Guid _authorId;
         private string _heading;
+        private string _shortUrl;
         private DateTime _creationDate;
         private DateTime _lastEditDate;
         private Guid _editionAuthorId;
@@ -211,7 +212,6 @@ namespace WikiSite.PL.ASP.Models
         #region Static
 
         private static IArticlesBLL _bll;
-        private string _shortUrl;
 
         static ArticleVM()
         {

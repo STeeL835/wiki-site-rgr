@@ -12,8 +12,6 @@ namespace WikiSite.PL.ASP.Controllers
 {
     public class ArticleController : Controller
     {
-        // GET: Article
-
         public ActionResult ShowByGuid(Guid guid, int number = 0)
         {
             try
@@ -93,10 +91,9 @@ namespace WikiSite.PL.ASP.Controllers
         [HttpGet][Authorize]
         public ActionResult Update(string url)
         {
-            ViewBag.Title = $"Редактирование статьи \"{ArticleVM.GetArticle(url).Heading}\"";
-            ViewBag.ShortUrl = url;
-
             var article = ArticleVM.GetArticle(url);
+            ViewBag.Title = $"Редактирование статьи \"{article.Heading}\"";
+            ViewBag.ShortUrl = url;
             TempData["Id"] = article.Id;
             TempData["AuthorId"] = article.AuthorId;
             TempData["CreationDate"] = article.CreationDate;
@@ -169,10 +166,11 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("ShowByGuid", "Article", new { guid = article.Id });
         }
 
-        public JsonResult IsHeadingExist(string heading)
+        public JsonResult IsHeadingExist(string heading, string oldHeading)
         {
-            var throwError = ArticleVM.IsShortUrlExist(HttpUtility.UrlEncode(heading.ToLower().Trim()));
-
+            var throwError = true;
+            if (Request.UrlReferrer.OriginalString.Contains("Create"))
+                throwError = ArticleVM.IsShortUrlExist(heading.ToLower().Trim());
             return Json(throwError, JsonRequestBehavior.AllowGet);
         }
     }
