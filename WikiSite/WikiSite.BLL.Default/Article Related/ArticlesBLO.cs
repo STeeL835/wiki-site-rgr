@@ -74,7 +74,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets article in last edit version from database.
+        /// Returns article in last edit version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BTO of article in last edit version</returns>
@@ -86,7 +86,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets article in last edit version from database.
+        /// Returns article in last edit version from database.
         /// </summary>
         /// <param name="shortUrl">Short URL of article to get</param>
         /// <returns>BTO of article in last edit version</returns>
@@ -98,7 +98,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a certain last edit version of article from database.
+        /// Returns a certain last edit version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BDO of last edit version of a article</returns>
@@ -109,7 +109,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a certain last approved version of article from database.
+        /// Returns a certain last approved version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BDO of last approved version of a article</returns>
@@ -120,7 +120,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a certain version of article from database.
+        /// Returns a certain version of article from database.
         /// </summary>
         /// <param name="articleVersionId">GUID of version of article to get</param>
         /// <returns>Article BDO</returns>
@@ -131,7 +131,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a certain version of article from database.
+        /// Returns a certain version of article from database.
         /// </summary>
         /// <param name="articleId">GIUD of article to get</param>
         /// <param name="date">DateTime of version of article to get</param>
@@ -144,7 +144,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a certain version of article from database.
+        /// Returns a certain version of article from database.
         /// </summary>
         /// <remarks>
         /// Number is calculated by date.
@@ -160,7 +160,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets all articles form database.
+        /// Returns all articles form database.
         /// </summary>
         /// <returns>Articles' BDOs</returns>
         public IEnumerable<ArticleBDO> GetAllArticles()
@@ -185,7 +185,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets all articles form database, which created by author.
+        /// Returns all articles form database, which created by author.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' BDOs</returns>
@@ -212,7 +212,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets all version of article from database.
+        /// Returns all version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>Articles' BDOs</returns>
@@ -232,7 +232,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets all version, which created by author, from database.
+        /// Returns all version, which created by author, from database.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' BDOs</returns>
@@ -307,7 +307,7 @@ namespace WikiSite.BLL.Default
         }
 
         /// <summary>
-        /// Gets a random article from database.
+        /// Returns a random article from database.
         /// </summary>
         /// <returns></returns>
         public ArticleBDO GetRandomArticle()
@@ -438,5 +438,15 @@ namespace WikiSite.BLL.Default
 
 			return found.Distinct(); // remove duplicates
 		}
+
+        /// <summary>
+        /// Returns a guide article from database.
+        /// </summary>
+        /// <returns></returns>
+        public ArticleBDO GetGuideArticle()
+        {
+            var article = _articlesDAL.GetGuideArticle();
+            return CreateArticleBDO(_articleVersionsDAL.GetLastApprovedVersion(article.Id));
+        }
     }
 }
