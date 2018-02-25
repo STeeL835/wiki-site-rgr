@@ -19,36 +19,42 @@ namespace WikiSite.DAL.Abstract
         bool RemoveArticle(Guid articleId);
 
         /// <summary>
-        /// Gets a certain article from database.
+        /// Returns a certain article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>Article DTO</returns>
         ArticleDTO GetArticle(Guid articleId);
 
         /// <summary>
-        /// Gets a certain article from database.
+        /// Returns a certain article from database.
         /// </summary>
         /// <param name="shortUrl">Short URL of article to get</param>
         /// <returns>Article DTO</returns>
         ArticleDTO GetArticle(string shortUrl);
 
         /// <summary>
-        /// Gets all articles from database.
+        /// Returns all articles from database.
         /// </summary>
         /// <returns>Articles' DTOs</returns>
         IEnumerable<ArticleDTO> GetAllArticles();
 
         /// <summary>
-        /// Gets all articles form database, which created by author.
+        /// Returns all articles form database, which is created by author.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' DTOs</returns>
         IEnumerable<ArticleDTO> GetAllArticles(Guid authorId);
 
         /// <summary>
-        /// Gets a random article from database.
+        /// Returns a random article from database.
         /// </summary>
         /// <returns></returns>
         ArticleDTO GetRandomArticle();
+
+        /// <summary>
+        /// Returns a guide article from database.
+        /// </summary>
+        /// <returns></returns>
+        ArticleDTO GetGuideArticle();
     }
 }

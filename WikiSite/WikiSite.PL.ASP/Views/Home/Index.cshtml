@@ -2,10 +2,12 @@
 @using WikiSite.PL.ASP.Classes
 
 @{
-	Layout = "../Shared/_Layout.cshtml";
+    Layout = "../Shared/_Layout.cshtml";
     ViewBag.Title = "My Name Jeff";
     ViewBag.RandomArticle = ArticleVM.GetRandomArticle();
-	var lastComment = CommentVM.GetLatestComment();
+    ViewBag.GuideArticle = ArticleVM.GetGuideArticle();
+
+    var lastComment = CommentVM.GetLatestComment();
 }
 
 <div class="row">
@@ -79,7 +81,7 @@
 			</div>
 			<ul class="list-group list-unstyled">
 				<li>
-					<a href="@Url.Action("Show","Article", new {url = ArticleVM.GetArticle(Guid.Parse("2c19dc89-a4a2-4eb3-9b58-6229d247eced")).ShortUrl})" class="list-group-item"> @{ /* TODO: [Articles] Implement when done */ }
+					<a href="@Url.Action("Show","Article", new {url = ViewBag.GuideArticle.ShortUrl})" class="list-group-item"> @{ /* TODO: [Articles] Implement when done */ }
 						<i class="fa fa-question"></i>
 						Как пользоваться сайтом
 					</a>
@@ -127,7 +129,7 @@
 				<div class="list-group-item">
 					Читать могут все. Редактировать могут зарегистрированные пользователи. По умолчанию показывается последняя правка, можно голосовать за или против, если против перевешивает, то правка становится недоверенной. Модераторы отдают решающий голос.
 				</div>
-				<a href="@Url.Action("Show","Article", new {url = ArticleVM.GetArticle(Guid.Parse("2c19dc89-a4a2-4eb3-9b58-6229d247eced")).ShortUrl})" class="list-group-item text-right">
+				<a href="@Url.Action("Show","Article", new {url = ViewBag.GuideArticle.ShortUrl})" class="list-group-item text-right">
 					@{ /* TODO: [Articles] Implement when done */ }
 					Подробнее
 					<i class="fa fa-arrow-right"></i>

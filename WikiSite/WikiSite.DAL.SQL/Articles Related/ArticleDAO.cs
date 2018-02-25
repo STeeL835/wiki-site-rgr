@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Linq;
 using WikiSite.DAL.Abstract;
 using WikiSite.Entities;
 
@@ -45,7 +46,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets all articles from database.
+        /// Returns all articles from database.
         /// </summary>
         /// <returns>Articles' DTOs</returns>
         public IEnumerable<ArticleDTO> GetAllArticles()
@@ -70,7 +71,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets all articles form database, which created by author.
+        /// Returns all articles form database, which created by author.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' DTOs</returns>
@@ -97,7 +98,7 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets a certain article from database.
+        /// Returns a certain article from database.
         /// </summary>
         /// <param name="shortUrl">Short URL of article to get</param>
         /// <returns>Article DTO</returns>
@@ -121,11 +122,11 @@ namespace WikiSite.DAL.SQL
                     };
                 }
             }
-            return null;
+            throw new EntryNotFoundException($"Article with url {shortUrl} has not found.");
         }
 
         /// <summary>
-        /// Gets a certain article from database.
+        /// Returns a certain article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>Article DTO</returns>
@@ -153,27 +154,50 @@ namespace WikiSite.DAL.SQL
         }
 
         /// <summary>
-        /// Gets a random article from database.
+        /// Returns a guide article from database.
         /// </summary>
         /// <returns></returns>
-        public ArticleDTO GetRandomArticle()
+        public ArticleDTO GetGuideArticle()
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            return GetArticle(ConfigurationManager.AppSettings["GuideShortUrl"]);
+        }
+
+        /// <summary>
+        /// Returns a random article from database.
+        /// </summary>
+        /// <returns></returns>
+        public ArticleDTO GetRandomArticle() //TODO: FIX
+        {
+            var i = 0;
+            while (i < 3)
             {
-                var sqlCom = new SqlCommand("SELECT TOP 1 * FROM [Articles] ORDER BY NEWID()", connection);
-                connection.Open();
-                var reader = sqlCom.ExecuteReader();
-                while (reader.Read())
+                var tempdata = new ArticleDTO();
+                using (var connection = new SqlConnection(ConnectionString))
                 {
-                    if ((string)reader["Short_Url"] != "guide")
-                        return new ArticleDTO
+                    var sqlCom = new SqlCommand("SELECT TOP 1 * FROM [Articles] ORDER BY NEWID()", connection);
+                    connection.Open();
+                    var reader = sqlCom.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        tempdata = new ArticleDTO
                         {
                             Id = (Guid)reader["Id"],
                             ShortUrl = (string)reader["Short_Url"],
                             AuthorId = (Guid)reader["Author_Id"],
                             CreationDate = (DateTime)reader["Date_Of_Creation"]
                         };
-                    else return GetRandomArticle();                    
+                        if (tempdata.ShortUrl != ConfigurationManager.AppSettings["GuideShortUrl"])
+                            return tempdata;
+                        else i++;
+                    }
+                }
+                if (i >= 3)
+                {
+                    var articles = GetAllArticles().ToList();
+                    if (articles.Count > 1)
+                        i = 0;
+                    else if (articles.Count == 1)
+                        return tempdata;
                 }
             }
             throw new EntryNotFoundException("Article has not found.");

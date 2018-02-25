@@ -27,28 +27,28 @@ namespace WikiSite.BLL.Abstract
         bool UpdateArticle(ArticleBDO article);
 
         /// <summary>
-        /// Gets article in last edit version from database.
+        /// Returns article in last edit version from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BTO of article in last edit version</returns>
         ArticleBDO GetArticle(Guid articleId);
 
         /// <summary>
-        /// Gets article in last edit version from database.
+        /// Returns article in last edit version from database.
         /// </summary>
         /// <param name="shortUrl">Short URL of article to get</param>
         /// <returns>BTO of article in last edit version</returns>
         ArticleBDO GetArticle(string shortUrl);
 
         /// <summary>
-        /// Gets a certain last edit version of article from database.
+        /// Returns a certain last edit version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BTO of last edit version of a article</returns>
         ArticleBDO GetLastVersionOftArticle(Guid articleId);
 
         /// <summary>
-        /// Gets a certain last approved version of article from database.
+        /// Returns a certain last approved version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>BTO of last approved version of a article</returns>
@@ -62,7 +62,7 @@ namespace WikiSite.BLL.Abstract
         ArticleBDO GetVersionOfArticle(Guid articleVersionId);
 
         /// <summary>
-        /// Gets a certain version of article from database.
+        /// Returns a certain version of article from database.
         /// </summary>
         /// <param name="articleId">GIUD of article to get</param>
         /// <param name="date">DateTime of version of article to get</param>
@@ -70,7 +70,7 @@ namespace WikiSite.BLL.Abstract
         ArticleBDO GetVersionOfArticle(Guid articleId, DateTime date);
 
         /// <summary>
-        /// Gets a certain version of article from database.
+        /// Returns a certain version of article from database.
         /// </summary>
         /// <remarks>
         /// Number is calculated by date.
@@ -81,27 +81,27 @@ namespace WikiSite.BLL.Abstract
         ArticleBDO GetVersionOfArticle(Guid articleId, int number);
 
         /// <summary>
-        /// Gets all articles form database.
+        /// Returns all articles form database.
         /// </summary>
         /// <returns>Articles' BDOs</returns>
         IEnumerable<ArticleBDO> GetAllArticles();
 
         /// <summary>
-        /// Gets all articles, which created by author, form database.
+        /// Returns all articles, which created by author, form database.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' BDOs</returns>
         IEnumerable<ArticleBDO> GetAllArticles(Guid authorId);
 
         /// <summary>
-        /// Gets all version of article from database.
+        /// Returns all version of article from database.
         /// </summary>
         /// <param name="articleId">GUID of article to get</param>
         /// <returns>Articles' BDOs</returns>
         IEnumerable<ArticleBDO> GetAllVersionOfArticle(Guid articleId);
 
         /// <summary>
-        /// Gets all version, which created by author, from database.
+        /// Returns all version, which created by author, from database.
         /// </summary>
         /// <param name="authorId">GUID of author to get</param>
         /// <returns>Articles' BDOs</returns>
@@ -148,7 +148,7 @@ namespace WikiSite.BLL.Abstract
         bool IsShortUrlExist(string shortUrl);
 
         /// <summary>
-        /// Gets a random article from database.
+        /// Returns a random article from database.
         /// </summary>
         /// <returns></returns>
         ArticleBDO GetRandomArticle();
@@ -173,5 +173,11 @@ namespace WikiSite.BLL.Abstract
 		/// <param name="query">text to search in article text</param>
 		/// <returns>ArticleVersions DTOs</returns>
 		IEnumerable<ArticleBDO> SearchArticles(string query);
-	}
+
+        /// <summary>
+        /// Returns a guide article from database.
+        /// </summary>
+        /// <returns></returns>
+        ArticleBDO GetGuideArticle();
+    }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WikiSite.DAL.Abstract;
 using WikiSite.PL.ASP.Classes;
 using WikiSite.PL.ASP.Models;
 
@@ -15,19 +16,51 @@ namespace WikiSite.PL.ASP.Controllers
 
         public ActionResult ShowByGuid(Guid guid, int number = 0)
         {
-            return RedirectToAction("Show", "Article", new { url = ArticleVM.GetArticle(guid).ShortUrl, number = number });
+            try
+            {
+                return RedirectToAction("Show", "Article", new {url = ArticleVM.GetArticle(guid).ShortUrl, number = number});
+            }
+            catch (EntryNotFoundException e)
+            {
+                var error = new ErrorVM(
+                    header: "404",
+                    title: "Статья не найдена",
+                    message: $"Статья с Guid {guid} не найдена. " +
+                             $"Проверьте url в адресной строке или, если это не ваша вина, " +
+                             $"обратитесь к администратору.",
+                    exceptionDetails: e.ToString()
+                );
+                return View("Error", error);
+            }
         }
         
         public ActionResult Show(string url, int number = 0)
         {
             this.CatchAlert();
-            ViewBag.ShortUrl = url;
-            ViewBag.Number = number;
-            if (number == 0)
+            ArticleVM article;
+            try
             {
-                return View(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id));
+                ViewBag.ShortUrl = url;
+                ViewBag.Number = number;
+                if (number == 0)
+                {
+                    article = ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id);
+                }
+                else article = ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number);
             }
-            return View(ArticleVM.GetVersionOfArticle(ArticleVM.GetArticle(url).Id, number));
+            catch (EntryNotFoundException e)
+            {
+                var error = new ErrorVM(
+                    header: "404",
+                    title: "Статья не найдена",
+                    message: $"Статья с URL {url} не найдена. " +
+                             $"Проверьте url в адресной строке или, если это не ваша вина, " +
+                             $"обратитесь к администратору.",
+                    exceptionDetails: e.ToString()
+                );
+                return View("Error", error);
+            }
+            return View(article);
         }
 
         [HttpGet][Authorize]
@@ -68,6 +101,7 @@ namespace WikiSite.PL.ASP.Controllers
             TempData["AuthorId"] = article.AuthorId;
             TempData["CreationDate"] = article.CreationDate;
             TempData["Heading"] = article.Heading;
+            TempData["ImageId"] = article.ImageId;
 
             return View(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id));
         }
@@ -75,13 +109,18 @@ namespace WikiSite.PL.ASP.Controllers
         [HttpPost][Authorize]
         public ActionResult Update(HttpPostedFileBase file, ArticleVM version, bool isApproved = true)
         {
-            version.ImageId = ImageController.Add(file);
             version.Id = (Guid)TempData.Peek("Id");
             version.AuthorId = (Guid)TempData.Peek("AuthorId");
             version.EditionAuthorId = Guid.Parse(User.Identity.Name);
             version.CreationDate = (DateTime)TempData.Peek("CreationDate");
             version.LastEditDate = DateTime.Now;
             version.IsApproved = isApproved;
+
+            if (file != null)
+                version.ImageId = ImageController.Add(file);
+            else
+                version.ImageId = (Guid)TempData.Peek("ImageId");
+
             if (ArticleVM.UpdateArticle(version))
             {
                 this.AlertNextAction($"Статья \"{(string)TempData.Peek("Heading")} ({version.ShortUrl})\" успешно изменена.", AlertType.Success);
