@@ -169,7 +169,7 @@ namespace WikiSite.PL.ASP.Controllers
         public JsonResult IsHeadingExist(string heading, string oldHeading)
         {
             var throwError = true;
-            if (Request.UrlReferrer.OriginalString.Contains("Create"))
+            if (Request.UrlReferrer != null && Request.UrlReferrer.OriginalString.Contains("Create"))
                 throwError = ArticleVM.IsShortUrlExist(heading.ToLower().Trim());
             return Json(throwError, JsonRequestBehavior.AllowGet);
         }
