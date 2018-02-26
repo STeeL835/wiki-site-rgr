@@ -5,7 +5,7 @@
 <header class="row article-head">
     @Html.AntiForgeryToken()
     <div id="image-editormd" class="head-thumbnail col-xs-12 col-sm-5 col-lg-4">
-        @Html.LabelFor(model => model.ImageId, htmlAttributes: new { @class = "control-label label-override" })
+        @Html.LabelFor(model => model.ImageId, htmlAttributes: new { @class = "control-label label-override", @id = "imageHeader" })
         <img class="thumbnail article-thumbnail" id="outputImage" src="@Url.Action("GetResizedByUrl", "Image", new { width = 250, height = 250, url = Model.ShortUrl })" alt="">
         <input type="file" accept="image/*" name="file" class="btn btn-default" id="uploadInput" />
         <div id="exepthionInfo" class="text-danger"></div>
@@ -99,20 +99,6 @@
                   "  });                                                           " +
                   "}                                                               ";
         @Html.RequireLocalScript(str)
-
-        @*var str0 = "function handleFileSelect(evt) {                                                           " +
-                   "    var file = evt.target.files;                                                           " +
-                   "    var f = file[0];                                                                       " +
-                   "    var reader = new FileReader();                                                         " +
-                   "    reader.onload = (function(theFile) {                                                   " +
-                   "        return function(e) {                                                               " +
-                   "            document.getElementById('outputImage').src = e.target.result;                  " +
-                   "        };                                                                                 " +
-                   "    })(f);                                                                                 " +
-                   "    reader.readAsDataURL(f);                                                               " +
-                   "}                                                                                          " +
-                   "document.getElementById('uploadInput').addEventListener('change', handleFileSelect, false);";
-       @Html.RequireLocalScript(str0)*@                                                                                                                                                                                                          
     }                                                                                                                                                   
 @Html.RequireScript("/Scripts/Editor.md/languages/ru-ru.js")
 }
