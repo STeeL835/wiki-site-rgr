@@ -59,8 +59,7 @@
         @Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })
     </div>
 </article>
-
-
+@Html.RequireScript("/Scripts/custom/special-main.js")
 @Html.RequireScript("/Scripts/jquery.validate.min.js")
 @Html.RequireScript("/Scripts/jquery.validate.unobtrusive.min.js")
 @Html.RequireScript("/Scripts/foolproof/mvcfoolproof.unobtrusive.min.js")
@@ -100,5 +99,4 @@
         @Html.RequireLocalScript(str)
     }                                                                                                                                                   
 @Html.RequireScript("/Scripts/Editor.md/languages/ru-ru.js")
-@Html.RequireScript("/Scripts/custom/special-main.js")
 }
