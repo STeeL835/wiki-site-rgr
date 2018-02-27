@@ -67,7 +67,6 @@
 
 @if (!Request.Browser.IsMobileDevice)
 {
-    @Html.RequireScript("/Scripts/custom/special-main.js")
     @Html.RequireStyle("/Scripts/Editor.md/css/editormd.css")
     @Html.RequireScript("/Scripts/Editor.md/editormd.js")
     {
@@ -101,4 +100,5 @@
         @Html.RequireLocalScript(str)
     }                                                                                                                                                   
 @Html.RequireScript("/Scripts/Editor.md/languages/ru-ru.js")
+@Html.RequireScript("/Scripts/custom/special-main.js")
 }
