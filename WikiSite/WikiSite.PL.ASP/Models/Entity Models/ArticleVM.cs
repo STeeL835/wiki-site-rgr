@@ -101,7 +101,7 @@ namespace WikiSite.PL.ASP.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Название")]
-        [MinLength(5, ErrorMessage = "Минимальное количество символов - 5")]
+        [MinLength(1, ErrorMessage = "Минимальное количество символов - 5")]
         [MaxLength(50, ErrorMessage = "Максимальное количество символов - 50")]
         [Remote("IsHeadingExist", "Article", AreaReference.UseRoot, ErrorMessage = "Такой заголовок уже существует. Воспользуйтесь редактированием.")]
         public string Heading

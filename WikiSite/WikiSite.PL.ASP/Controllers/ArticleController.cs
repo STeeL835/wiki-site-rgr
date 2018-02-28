@@ -67,7 +67,7 @@ namespace WikiSite.PL.ASP.Controllers
             return View(new ArticleVM());
         }
 
-        [HttpPost][Authorize]
+        [HttpPost][Authorize][ValidateInput(false)] // validator triggers on markdown. We have XSS Sanitizer, that makes text safe after markdown, and also SQL checks parameters for injection. 
         public ActionResult Create(HttpPostedFileBase file, ArticleVM article)
         {
             article.ImageId = ImageController.Add(file);
@@ -103,7 +103,7 @@ namespace WikiSite.PL.ASP.Controllers
             return View(ArticleVM.GetLastApprovedVersionOfArticle(ArticleVM.GetArticle(url).Id));
         }
 
-        [HttpPost][Authorize]
+        [HttpPost][Authorize][ValidateInput(false)]
         public ActionResult Update(HttpPostedFileBase file, ArticleVM version, bool isApproved = true)
         {
             version.Id = (Guid)TempData.Peek("Id");

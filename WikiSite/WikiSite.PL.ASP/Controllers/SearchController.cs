@@ -12,9 +12,9 @@ namespace WikiSite.PL.ASP.Controllers
         {
 		    ViewBag.SearchQuery = query;
 
-			if (query == null || query.Length < 3)
+			if (string.IsNullOrEmpty(query))
 			{
-				this.Alert("Длина строки должна быть больше 2 символов", AlertType.Info);
+				this.Alert("Строка должна быть не пустой", AlertType.Info);
 				return View();
 			}
 

@@ -165,7 +165,26 @@
 
 <!-- Article itself -->
 <article class="row">
-    <div class="col-xs-12">
-        @Html.Markdown(Model.Text)
-    </div>
+	<div class="col-xs-12">
+		@Html.Markdown(Model.Text)
+	</div>
+	<div class="col-xs-12">
+		<hr>
+		<div class="row">
+			@{
+				var author = UserVM.GetUser(Model.AuthorId);
+				var editor = UserVM.GetUser(Model.EditionAuthorId);
+			}
+			<div class="col-xs-12 col-sm-3 col-md-3"><span class="text-muted">@Model.LastEditDate</span>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-3">
+				Создал:
+				<a href="@Url.Action("Index", "User", new {id = author.ShortId})">@author.Nickname</a>
+			</div>
+			<div class="col-xs-12 col-sm-4 col-md-3">
+				Изменил:
+				<a href="@Url.Action("Index", "User", new {id = editor.ShortId})">@editor.Nickname</a>
+			</div>
+		</div>
+	</div>
 </article>
