@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom\special-styles.css" />
+    <Content Include="Content\Images\favicon.png" />
     <Content Include="Content\Images\logo-full-inverse.png" />
     <Content Include="Content\Images\logo-full.png" />
     <Content Include="Content\Images\logo-inverse.png" />
