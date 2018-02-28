@@ -303,7 +303,17 @@ namespace WikiSite.BLL.Default
         /// <returns>Whether heading is exist or not</returns>
         public bool IsShortUrlExist(string shortUrl)
         {
-            return _articlesDAL.GetArticle(shortUrl) == null;
+            var result = false;
+            try
+            {
+                result = _articlesDAL.GetArticle(shortUrl) != null;
+            }
+            catch (EntryNotFoundException e)
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         /// <summary>

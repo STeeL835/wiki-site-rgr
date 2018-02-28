@@ -170,7 +170,7 @@ namespace WikiSite.PL.ASP.Controllers
         {
             var throwError = true;
             if (Request.UrlReferrer != null && Request.UrlReferrer.OriginalString.Contains("Create"))
-                throwError = ArticleVM.IsShortUrlExist(heading.ToLower().Trim());
+                throwError = !ArticleVM.IsShortUrlExist(heading.ToLower().Trim());
             return Json(throwError, JsonRequestBehavior.AllowGet);
         }
     }
