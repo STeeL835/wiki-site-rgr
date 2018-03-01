@@ -77,14 +77,6 @@
 		{
             <!--Its can be the greates crutch-->
             var currentUrl = HttpContext.Current.Request.RawUrl;
-            //var criticalUrl = new StringBuilder(Url.Action("Show", "Article", new {url = "0"})).Replace("0", "").ToString();
-            //if (currentUrl.ToString().Contains(criticalUrl))
-            //{
-            //    var healthyUrl = new StringBuilder(Url.Action("ShowByGuid", "Article", new {guid = "0"})).Replace("0", "").ToString();
-            //    var shortUrlOfArticle = new StringBuilder(currentUrl.ToString());
-            //    shortUrlOfArticle.Replace(criticalUrl, "");
-            //    currentUrl = new StringBuilder(healthyUrl).Append(ArticleVM.GetArticle(shortUrlOfArticle.ToString()).Id).ToString();
-            //}
             <form class="login-form animated" method="post" action="/Auth/Login?ReturnUrl=@currentUrl">
 				@Html.AntiForgeryToken()
 				<div class="form-group stretch">

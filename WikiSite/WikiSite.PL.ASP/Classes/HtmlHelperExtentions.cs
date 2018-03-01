@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Ganss.XSS;
 using Markdig;
 using Microsoft.Security.Application;
 
@@ -11,6 +12,12 @@ namespace WikiSite.PL.ASP.Classes
 {
     public static class HtmlHelperExtentions
     {
+	    static HtmlHelperExtentions()
+	    {
+		    Sanitizer = new HtmlSanitizer();
+		    Sanitizer.AllowedAttributes.Add("class"); // I know, classjacking, but bootstrap!
+		    Sanitizer.AllowedTags.Add("iframe"); // Youtube videos
+	    }
         public class ResourceInclude
         {
             public string Path { get; set; }
@@ -77,6 +84,8 @@ namespace WikiSite.PL.ASP.Classes
 
 		#region MarkdownHelper
 
+	    private static readonly HtmlSanitizer Sanitizer;
+
 	    private static MarkdownPipeline Pipeline { get; } = new MarkdownPipelineBuilder()
 		                                                             .UseAdvancedExtensions()
 		                                                             .UseBootstrap()
@@ -85,7 +94,7 @@ namespace WikiSite.PL.ASP.Classes
 
 		public static IHtmlString Markdown(this HtmlHelper html, string markText)
 		{
-			return html.Raw(Sanitizer.GetSafeHtmlFragment(Markdig.Markdown.ToHtml(markText, Pipeline)));
+			return html.Raw(Sanitizer.Sanitize(Markdig.Markdown.ToHtml(markText, Pipeline)));
 		}
 
 	    #endregion

@@ -4,6 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section js{
+	<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#preview-btn')
+				.click(function (e) {
+					e.preventDefault();
+					var text = $('#Text').val();
+					$.post('@Url.Action("Preview")', { input: text })
+						.done(function (data) {
+
+							$('#article-preview').html(data);
+						});
+				});
+		});
+	</script>
+}
+
+
 <h1 class="page-header">
     @ViewBag.Title
 </h1>
@@ -11,9 +30,13 @@
 @using (Html.BeginForm("Update", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.Partial("~/Views/Shared/ArticlesEditorMDPartial.cshtml", Model)
-    <div class="form-group">
-        <div class="col-xs-12">
-            <input type="submit" value="Отправить" class="btn btn-default button-override" id="submitButton"/>
-        </div>
-    </div>
+	<div class="form-group">
+		<div class="col-xs-12 col-sm-6">
+			<a href="#!" id="preview-btn" class="btn btn-default button-override" data-toggle="tooltip" data-placement="top" title="Как на самом деле это будет выглядеть">Предпросмотр содержания</a>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<input type="submit" value="Отправить" class="btn btn-success button-override" id="submitButton"/>
+		</div>
+	</div>
 }
+	<div id="article-preview"></div>

@@ -5,135 +5,140 @@
 @model WikiSite.PL.ASP.Models.ArticleVM
 
 @{
-    ViewBag.Title = $"{Model.Heading}";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = $"{Model.Heading}";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section actions
 {
-    @if (Request.IsAuthenticated)
-    {
-        <li>
-            <a href="@Url.Action("Update", new {url = Model.ShortUrl})">Редактировать статью</a>
-        </li>
-    }
-    <li>
-        <a href="@Url.Action("Details", new {url = Model.ShortUrl})">Версии этой статьи</a>
-    </li>
-    <li>
-        <a href="@Url.Action("Index", "Comments", new {article = Model.ShortUrl})">Перейти к обсуждению</a>
-    </li>
-    <li class="divider"></li>
-    @if (Request.IsAuthenticated && (User.IsInRole("moderator") || User.IsInRole("admin")))
-    {
-        if (!Model.IsApproved)
-        {
-            <li>
-                <a href="#!" data-toggle="modal" data-target="#approve-modal">Подтвердить версию</a>
-            </li>
-        }
-        else
-        {
-            <li>
-                <a href="#!" data-toggle="modal" data-target="#disapprove-modal">Разутвердить версию</a>
-            </li>
-        }
-    }
-    @if (Request.IsAuthenticated && User.IsInRole("admin"))
-    {
-        <li>
-            <a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить статью</a>
-        </li>
-    }
+	@if (Request.IsAuthenticated)
+	{
+		<li>
+			<a href="@Url.Action("Update", new {url = Model.ShortUrl})">Редактировать статью</a>
+		</li>
+	}
+	<li>
+		<a href="@Url.Action("Details", new {url = Model.ShortUrl})">Версии этой статьи</a>
+	</li>
+	<li>
+		<a href="@Url.Action("Index", "Comments", new {article = Model.ShortUrl})">Перейти к обсуждению</a>
+	</li>
+	<li class="divider"></li>
+	@if (Request.IsAuthenticated && (User.IsInRole("moderator") || User.IsInRole("admin")))
+	{
+		if (!Model.IsApproved)
+		{
+			<li>
+				<a href="#!" data-toggle="modal" data-target="#approve-modal">Подтвердить версию</a>
+			</li>
+		}
+		else
+		{
+			<li>
+				<a href="#!" data-toggle="modal" data-target="#disapprove-modal">Разутвердить версию</a>
+			</li>
+		}
+	}
+	@if (Request.IsAuthenticated && User.IsInRole("admin"))
+	{
+		@*<li>
+			<a href="#!" data-toggle="modal" data-target="#delete-version-modal">Удалить @(ViewBag.Number == 0 ? "последнюю версию" : ViewBag.Number + " версию")</a>
+		</li>*@
+		<li>
+			<a href="#!" data-toggle="modal" data-target="#delete-modal">Удалить статью</a>
+		</li>
+	}
 }
 
 <!-- OnDelete Modal Window -->
 @if (Request.IsAuthenticated && User.IsInRole("admin")) // No need to load this if action isn't available
 {
-    <div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            <i class="fa fa-times"></i>
-                        </span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Удаление всех версий статьи @Model.Heading</h4>
-                </div>
-                <div class="modal-body">
-                    Это действие необратимо. Нет, серьёзно, подумой!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="@Url.Action("Delete", "Articles", new {area = "Admin", shortUrl = Model.ShortUrl})" class="btn btn-danger">Удалить навсегда</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							<i class="fa fa-times"></i>
+						</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Удаление всех версий статьи @Model.Heading</h4>
+				</div>
+				<div class="modal-body">
+					Это действие необратимо. Нет, серьёзно, подумой!
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+					<a href="@Url.Action("Delete", "Articles", new {area = "Admin", shortUrl = Model.ShortUrl})" class="btn btn-danger">Удалить навсегда</a>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 <!-- OnApprove Modal Window -->
-@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator"))) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && Model.IsApproved) // No need to load this if action isn't available
 {
-    <div id="approve-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            <i class="fa fa-times"></i>
-                        </span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Подтвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
-                </div>
-                <div class="modal-body">
-                    Вы действительно хотите это сделать?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId})" class="btn btn-primary">OK</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="approve-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							<i class="fa fa-times"></i>
+						</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Подтвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
+				</div>
+				<div class="modal-body">
+					Вы действительно хотите это сделать?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+					<a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId})" class="btn btn-primary">OK</a>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 <!-- OnDisapprove Modal Window -->
-@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator"))) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && !Model.IsApproved) // No need to load this if action isn't available
 {
-    <div id="disapprove-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">
-                            <i class="fa fa-times"></i>
-                        </span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Разутвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
-                </div>
-                <div class="modal-body">
-                    Вы действительно хотите это сделать?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId, type = false})" class="btn btn-primary">OK</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="disapprove-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							<i class="fa fa-times"></i>
+						</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Разутвердить версию @ArticleVM.GetNumberOfVersion(Model.VersionId) для статьи @Model.Heading</h4>
+				</div>
+				<div class="modal-body">
+					Вы действительно хотите это сделать?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+					<a href="@Url.Action("Approve", "Article", new {area = "", id = Model.VersionId, type = false})" class="btn btn-primary">OK</a>
+				</div>
+			</div>
+		</div>
+	</div>
 }
 
 <!-- Head of an article (title/description) -->
 <header class="article-head">
 	<div class="row">
-		
+
 		@if (User.IsInRole("admin"))
 		{
 			<div class="dropdown pull-right">
-				<button class="btn btn-inverse btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">ID info
-					<span class="caret"></span></button>
+				<button class="btn btn-inverse btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
+					ID info
+					<span class="caret"></span>
+				</button>
 				<ul class="dropdown-menu dropdown-menu-right">
 					<li class="dropdown-header text-right">ID: <kbd>@Model.Id</kbd></li>
 					<li class="dropdown-header text-right">Версия: <kbd>@Model.VersionId</kbd></li>
@@ -175,7 +180,8 @@
 				var author = UserVM.GetUser(Model.AuthorId);
 				var editor = UserVM.GetUser(Model.EditionAuthorId);
 			}
-			<div class="col-xs-12 col-sm-3 col-md-3"><span class="text-muted">@Model.LastEditDate</span>
+			<div class="col-xs-12 col-sm-3 col-md-3">
+				<span class="text-muted">@Model.LastEditDate</span>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-3">
 				Создал:

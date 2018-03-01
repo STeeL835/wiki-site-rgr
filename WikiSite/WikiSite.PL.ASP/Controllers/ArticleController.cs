@@ -166,6 +166,12 @@ namespace WikiSite.PL.ASP.Controllers
             return RedirectToAction("ShowByGuid", "Article", new { guid = article.Id });
         }
 
+		[HttpPost][ValidateInput(false)]
+	    public ActionResult Preview(string input)
+	    {
+		    return PartialView((object)input);
+	    }
+
         public JsonResult IsHeadingExist(string heading, string oldHeading)
         {
             var throwError = true;
