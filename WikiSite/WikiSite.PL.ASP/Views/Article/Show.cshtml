@@ -77,7 +77,7 @@
 }
 
 <!-- OnApprove Modal Window -->
-@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && Model.IsApproved) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && !Model.IsApproved) // No need to load this if action isn't available
 {
 	<div id="approve-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
@@ -103,7 +103,7 @@
 }
 
 <!-- OnDisapprove Modal Window -->
-@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && !Model.IsApproved) // No need to load this if action isn't available
+@if (Request.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("moderator")) && Model.IsApproved) // No need to load this if action isn't available
 {
 	<div id="disapprove-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
