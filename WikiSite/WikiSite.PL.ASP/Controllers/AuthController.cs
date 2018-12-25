@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Web.Security;
 using log4net;
@@ -12,10 +14,16 @@ namespace WikiSite.PL.ASP.Controllers
 	    private static EmailAddressAttribute _emailChecker = new EmailAddressAttribute();
 	    public static ILog Log = LogManager.GetLogger(typeof(AuthController));
 
+		private readonly TimeSpan LoginAttemptCooldown = TimeSpan.FromMinutes(3);
+		private const int LoginAttemptsAllowed = 5;
+	    private List<DateTime> LoginAttempts { get; set; } = new List<DateTime>(LoginAttemptsAllowed);
+
+
 		// GET: Login
 		[AllowAnonymousOnly]
 		public ActionResult Login()
-        {
+		{
+			CheckLoginAttempts();
             return View();
         }
 
@@ -25,6 +33,17 @@ namespace WikiSite.PL.ASP.Controllers
 	    {
 		    if (ModelState.IsValid)
 		    {
+			    if (CheckLoginAttempts()) return View(model);
+
+			    if (LoginAttempts.Count > 5)
+			    {
+				    this.Alert("Вы ввели данные неправильно более 5 раз, подождите 3 минуты, прежде чем вы сможете попытаться войти снова", AlertType.Info);
+				    return View(model);
+			    }
+
+			    LoginAttempts.Add(DateTime.Now);
+			    Session[nameof(LoginAttempts)] = LoginAttempts;
+
 			    var user = UserVM.GetUser(model);
 			    if (user != null)
 			    {
@@ -38,8 +57,32 @@ namespace WikiSite.PL.ASP.Controllers
 			return View(model);
 	    }
 
+		/// <summary>
+		/// Counts amount of login attempts and alerts if there are more than allowed
+		/// </summary>
+		/// <returns>whether user has exceeded amount of attemptsto login</returns>
+	    private bool CheckLoginAttempts()
+	    {
+		    if (Session[nameof(LoginAttempts)] == null)
+			    Session[nameof(LoginAttempts)] = LoginAttempts;
+		    else
+		    {
+			    LoginAttempts = ((List<DateTime>) Session[nameof(LoginAttempts)]);
+		    }
 
-		[AllowAnonymousOnly]
+		    LoginAttempts.RemoveAll(attemptTime => DateTime.Now - attemptTime > LoginAttemptCooldown);
+
+		    if (LoginAttempts.Count > LoginAttemptsAllowed)
+		    {
+			    this.Alert("Вы ввели данные неправильно более 5 раз, подождите 3 минуты, прежде чем вы сможете попытаться войти снова", AlertType.Info);
+			    return true;
+		    }
+
+		    return false;
+	    }
+
+
+	    [AllowAnonymousOnly]
 		public ActionResult Register()
 	    {
 		    return View();

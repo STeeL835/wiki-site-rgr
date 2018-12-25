@@ -155,6 +155,7 @@
     <Content Include="Content\Images\logo-inverse.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\sidebar.jpg" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\Editor.md\css\editormd.css" />
     <Content Include="Scripts\Editor.md\css\editormd.logo.css" />
     <Content Include="Scripts\Editor.md\css\editormd.logo.min.css" />

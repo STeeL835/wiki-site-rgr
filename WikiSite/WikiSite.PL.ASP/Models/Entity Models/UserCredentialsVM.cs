@@ -51,7 +51,7 @@ namespace WikiSite.PL.ASP.Models
 				_email = value;
 			}
 		}
-		[Required][Display(Name = "Пароль")]
+		[Required(ErrorMessage = "Пароль не должен быть короче 8 символов")][Display(Name = "Пароль")]
 		[DataType(DataType.Password)]
 		public string Password
 		{

@@ -1,47 +1,47 @@
-(function(){
+﻿(function(){
     var factory = function (exports) {
         var lang = {
             name : "ru-ru",
             description : "Open source online Markdown editor.",
             tocTitle    : "Table of Contents",
             toolbar : {
-                undo             : "Undo(Ctrl+Z)",
-                redo             : "Redo(Ctrl+Y)",
-                bold             : "Bold",
-                del              : "Strikethrough",
-                italic           : "Italic",
-                quote            : "Block quote",
-                ucwords          : "Words first letter convert to uppercase",
-                uppercase        : "Selection text convert to uppercase",
-                lowercase        : "Selection text convert to lowercase",
-                h1               : "Heading 1",
-                h2               : "Heading 2",
-                h3               : "Heading 3",
-                h4               : "Heading 4",
-                h5               : "Heading 5",
-                h6               : "Heading 6",
-                "list-ul"        : "Unordered list",
-                "list-ol"        : "Ordered list",
-                hr               : "Horizontal rule",
-                link             : "Link",
-                "reference-link" : "Reference link",
-                image            : "Image",
-                code             : "Code inline",
-                "preformatted-text" : "Preformatted text / Code block (Tab indent)",
-                "code-block"     : "Code block (Multi-languages)",
-                table            : "Tables",
-                datetime         : "Datetime",
+                undo             : "Отменить(Ctrl+Z)",
+                redo             : "Вернуть(Ctrl+Y)",
+                bold             : "Полужирный",
+                del              : "Зачеркнутый",
+                italic           : "Наклонный",
+                quote            : "Цитата",
+                ucwords          : "Конвертировать первые буквы слов в заглавные",
+                uppercase        : "Заменить выделенный текст заглавными буквами",
+				lowercase        : "Заменить выделенный текст строчными буквами",
+                h1               : "Заголовок 1",
+				h2               : "Заголовок 2",
+				h3               : "Заголовок 3",
+				h4               : "Заголовок 4",
+				h5               : "Заголовок 5",
+				h6               : "Заголовок 6",
+                "list-ul"        : "Ненумерованный список",
+                "list-ol"        : "Нумерованный список",
+                hr               : "Горизонтальная линия",
+                link             : "Ссылка",
+                "reference-link" : "Ссылка на ссылку",
+                image            : "Изображение",
+                code             : "Вставка кода",
+                "preformatted-text" : "Неформатированный текст / Блок кода (с табуляцией)",
+                "code-block"     : "Блок кода (Несколько языков)",
+                table            : "Таблицы",
+                datetime         : "Дата и время",
                 emoji            : "Emoji",
-                "html-entities"  : "HTML Entities",
-                pagebreak        : "Page break",
-                watch            : "Unwatch",
-                unwatch          : "Watch",
-                preview          : "HTML Preview (Press Shift + ESC exit)",
-                fullscreen       : "Fullscreen (Press ESC exit)",
-                clear            : "Clear",
-                search           : "Search",
-                help             : "Help",
-                info             : "About " + exports.title
+                "html-entities"  : "HTML элементы",
+                pagebreak        : "Разрыв страницы",
+                watch            : "Отключить предпросмотр",
+                unwatch          : "Включить предпросмотр",
+                preview          : "HTML предпросмотр (Shift + ESC для выхода)",
+                fullscreen       : "Полноэкранный режим (ESC для выхода)",
+                clear            : "Очистить",
+                search           : "Поиск",
+                help             : "Помощь",
+                info             : "О " + exports.title
             },
             buttons : {
                 enter  : "Enter",
@@ -50,48 +50,48 @@
             },
             dialog : {
                 link : {
-                    title    : "Link",
-                    url      : "Address",
-                    urlTitle : "Title",
-                    urlEmpty : "Error: Please fill in the link address."
+                    title    : "Ссылка",
+                    url      : "Адрес",
+                    urlTitle : "Название",
+                    urlEmpty : "Ошибка: Пожалуйста, укажите адрес."
                 },
                 referenceLink : {
-                    title    : "Reference link",
-                    name     : "Name",
-                    url      : "Address",
+                    title    : "Ярлык на ссылку",
+                    name     : "Название",
+                    url      : "Адрес",
                     urlId    : "ID",
-                    urlTitle : "Title",
-                    nameEmpty: "Error: Reference name can't be empty.",
-                    idEmpty  : "Error: Please fill in reference link id.",
-                    urlEmpty : "Error: Please fill in reference link url address."
+                    urlTitle : "Имя ссылки",
+                    nameEmpty: "Ошибка: Имя ярлыка не может быть пустым.",
+                    idEmpty  : "Ошибка: Пожалуйста, укажите ID ярлыка ссылки.",
+                    urlEmpty : "Ошибка: Пожалуйста, укажите адрес ссылки."
                 },
                 image : {
-                    title    : "Image",
-                    url      : "Address",
-                    link     : "Link",
-                    alt      : "Title",
-                    uploadButton     : "Upload",
-                    imageURLEmpty    : "Error: picture url address can't be empty.",
-                    uploadFileEmpty  : "Error: upload pictures cannot be empty!",
-                    formatNotAllowed : "Error: only allows to upload pictures file, upload allowed image file format:"
+                    title    : "Изображение",
+                    url      : "Ссылка на изображение",
+                    link     : "Ссылка-изображение",
+                    alt      : "Текст при наведении",
+                    uploadButton     : "Загрузить",
+                    imageURLEmpty    : "Ошибка: Ссылка на изображение не может быть пустой.",
+                    uploadFileEmpty  : "Ошибка: Невозможно загрузить пустой файл!",
+                    formatNotAllowed : "Ошибка: Возможна только загрузка изображений определенного формата:"
                 },
                 preformattedText : {
-                    title             : "Preformatted text / Codes", 
-                    emptyAlert        : "Error: Please fill in the Preformatted text or content of the codes."
+                    title             : "Неформатированный текст / Код", 
+                    emptyAlert        : "Ошибка: Поле не может быть пустым."
                 },
                 codeBlock : {
-                    title             : "Code block",         
-                    selectLabel       : "Languages: ",
-                    selectDefaultText : "select a code language...",
-                    otherLanguage     : "Other languages",
-                    unselectedLanguageAlert : "Error: Please select the code language.",
-                    codeEmptyAlert    : "Error: Please fill in the code content."
+                    title             : "Блок кода",         
+                    selectLabel       : "Языки: ",
+                    selectDefaultText : "Выберите язык кода...",
+                    otherLanguage     : "Другие языки",
+                    unselectedLanguageAlert : "Ошибка: Выберите язык.",
+                    codeEmptyAlert    : "Ошибка: Заполните поле для кода."
                 },
                 htmlEntities : {
-                    title : "HTML Entities"
+                    title : "HTML элементы"
                 },
                 help : {
-                    title : "Help"
+                    title : "Помощь"
                 }
             }
         };

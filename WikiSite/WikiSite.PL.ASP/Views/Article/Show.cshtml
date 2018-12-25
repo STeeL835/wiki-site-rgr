@@ -185,11 +185,11 @@
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-3">
 				Создал:
-				<a href="@Url.Action("Index", "User", new {id = author.ShortId})">@author.Nickname</a>
+				<a href="@Url.Action("Details", "User", new {id = author.ShortId})">@author.Nickname</a>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-3">
 				Изменил:
-				<a href="@Url.Action("Index", "User", new {id = editor.ShortId})">@editor.Nickname</a>
+				<a href="@Url.Action("Details", "User", new {id = editor.ShortId})">@editor.Nickname</a>
 			</div>
 		</div>
 	</div>
